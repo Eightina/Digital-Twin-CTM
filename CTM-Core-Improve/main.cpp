@@ -88,6 +88,7 @@ int main( int argc,char *argv[] ){
 	printf("\n\nRESULTS\n\n");
 
 	//simulation before optimization
+	start = clock();
 	initial_control();
 	initial_occupation( exist_vehicle[0] );
 	initial_diverge_flow();
@@ -95,21 +96,22 @@ int main( int argc,char *argv[] ){
 	
 
 	//solve network timing
-	start = clock();
-	delay1 = netopt();
+	//start = clock();
+	//delay1 = netopt();
 
 	//simulation after optimization
-	initial_diverge_flow();
-	delay2 = simulate( 1, settings.get_max_ticks() );
+	//initial_diverge_flow();
+	//delay2 = simulate( 1, settings.get_max_ticks() );
 
 	//print results
 	printf( "Total delay (before optimization): %7.2lf veh*sec.\n", delay0 );
-	printf( "Total delay (after network optimization): %7.2lf veh*sec.\n", delay1 );
-	printf( "Total delay (simulate best timing plan): %7.2lf veh*sec.\n", delay2 );
+	//printf( "Total delay (after network optimization): %7.2lf veh*sec.\n", delay1 );
+	//printf( "Total delay (simulate best timing plan): %7.2lf veh*sec.\n", delay2 );
 	printf( "Running time: %.3f seconds.\n\n", double(clock() - start)/CLOCKS_PER_SEC);
 	
 	//output files
-	printoccup(inputname, delay2);
+	//printoccup(inputname, delay2);
+	printoccup(inputname, delay0);
 	printplan(inputname);
 	printdelay(inputname);
 	printf( "Timing plan output files\n >>t_%s.txt\n",&inputname[2] );

@@ -22,8 +22,8 @@ void printoccup(char namestr[], float delay){
 	char outputname[256];
 	//strcat(outputname,&namestr[2]);
 	//strcat(outputname,".txt");
-	sprintf(outputname,"o_%s.txt",&namestr[2]);
-	out = fopen( outputname,"w" );
+	sprintf(outputname, "o_%s.txt", &namestr[2]);
+	out = fopen( outputname, "w" );
 
 	fputs("Green Signal Cell Occupation Output File.\n",out);
 	fputs("----------------------------------------\n",out);
