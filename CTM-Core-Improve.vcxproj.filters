@@ -13,6 +13,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{2e940265-6bf5-4573-acc2-2b281561d79d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ctm-core-improve\arc.cpp">
@@ -114,5 +117,13 @@
   <ItemGroup>
     <None Include="ctm-core-improve\debug\BuildLog.htm" />
     <None Include="ctm-core-improve\release\BuildLog.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CTM-Core-Improve\i_Test.txt">
+      <Filter>input</Filter>
+    </Text>
+    <Text Include="CTM-Core-Improve\i_Test2.txt">
+      <Filter>input</Filter>
+    </Text>
   </ItemGroup>
 </Project>

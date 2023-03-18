@@ -17,7 +17,7 @@ extern short index_next_cell[MAX_CELL][MAX_CELL];
 
 using Cell::merge;
 
-cell::cell():id(0),on_arc(0),in_flow(-1.0),out_flow(-1.0){
+cell::cell() : id(0), on_arc(0), in_flow(-1.0), out_flow(-1.0) {
 	/*if( !signals.empty() ) signals.clear();*/
 	if( !previous_cell.empty() ) previous_cell.clear();
 	if( !next_cell.empty() ) next_cell.clear();

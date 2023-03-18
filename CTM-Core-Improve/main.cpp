@@ -33,10 +33,10 @@ incident incidents[MAX_INCIDENT];
 
 short index_next_cell[MAX_CELL][MAX_CELL];
 
-int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
-	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
+int origin_set[MAX_ORIGIN_CELL], normal_set[MAX_NORMAL_CELL],
+	diverge_set[MAX_DIVERGE_CELL], merge_set[MAX_MERGE_CELL], destination_set[MAX_DESTINATION_CELL];
 
-int origin_size = 0,normal_size = 0,diverge_size = 0,merge_size = 0,destination_size = 0;
+int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
 
 float exist_vehicle[MAX_CLOCK][MAX_CELL];
 float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
@@ -64,24 +64,23 @@ void print_start(){
 	printf(" under the terms of the GNU General Public License 3.0.\n\n");
 	printf(" Development Team: Zhang Kai, Wang Yi, Xiong Yiliang.\n");
 	printf(" Institution: Southwest Jiaotong University.\n");
-	printf(" Last Update: April 2008.\n\n\n");
-	printf(" ******* Green Signal is running now. *******\n\n");
+	printf(" Last Update: April 2008.\n\n\n");	printf(" ******* Green Signal is running now. *******\n\n");
 }
 
 int main( int argc,char *argv[] ){
 
-	char inputname[256] = "i_Test";
+	char inputname[256] = "i_Test2";
 	float delay1, delay2, delay0;
 	int start;
 
 	print_start();
 
-	//if( argc != 2 ){
-	//	puts( "Please input the name of the file:" );
-	//	gets( inputname );
-	//}
-	//else
-	//	strcpy( inputname,argv[1] );
+	if( argc != 2 ){
+		puts( "Please input the name of the file:" );
+		gets_s( inputname );
+	}
+	else
+		strcpy( inputname,argv[1] );
 
 	//input file
 	scanfile( inputname );

@@ -376,9 +376,9 @@ void input_event( FILE *in ){
 
 void scanfile( char namestr[] ){
 	char full_name[256];
-	strcpy(full_name,namestr);
-	strcat( full_name,".txt");
-	FILE *in = fopen( full_name,"r" );
+	strcpy( full_name, namestr );
+	strcat( full_name, ".txt" );
+	FILE *in = fopen( full_name, "r" );
 	if( in == NULL ){
 		Log = new debug(namestr);
 		char str[256];

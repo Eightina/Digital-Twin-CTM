@@ -79,10 +79,10 @@ public:
 	void add_next_cell( const int& i );
 	void add_diverge_coeff( const float& g );
 
-	void add_next_cell( const int& i,const float& g );
-	void add_next_cell( const int& i,const float& g,const int& t );
+	void add_next_cell( const int& i, const float& g );
+	void add_next_cell( const int& i, const float& g, const int& t );
 
-	void add_demand( const int& clock,const float& traffic );
+	void add_demand( const int& clock, const float& traffic );
 
 	inline void diverge_update_flow();
 	inline void merge_update_flow();
@@ -110,7 +110,7 @@ private:
 				max_flow,
 				jam_density,delta;
 	
-	ivector<int>		previous_cell,next_cell,
+	ivector<int>		previous_cell, next_cell,
 						/*signals,*/turning;
 	ivector<float>	diverge_coeff;
 
@@ -118,7 +118,7 @@ private:
 
 	float	max_vehicle;
 
-	int temp_origin_demand_id,num_demand;
+	int temp_origin_demand_id, num_demand;
 
 	int on_intersection;
 
@@ -128,83 +128,87 @@ private:
 
 extern cell cells[MAX_CELL];
 
-inline void cell::add_at_phase( const int& cell_id,const int& phase_id ){
+inline void cell::add_at_phase( const int& cell_id, const int& phase_id ){
 	int i = 0;
 	while( next_cell[i] != cell_id ) ++i;
 	at_phase[i].push_back(phase_id);
 }
 
+// S(t)
 inline float cell::send_flow(int cn){ 
 	if(type != diverge)
-		return Min( max_flow,exist_vehicle[present_clock - 1][id] );
+		return Min( max_flow, exist_vehicle[present_clock - 1][id] );
 
 	int i = index_next_cell[id][cn];
 	//for( i = 0; i < next_cell.size(); i++ )
 	//	if( next_cell[i] == cn )	break;
 
-	if( on_intersection < 0 ) 
-		return Min( max_flow*diverge_coeff[i],diverge_flow[index_diverge_cell[id]][i] );
+	if ( on_intersection < 0 ) 
+		return Min( max_flow*diverge_coeff[i], diverge_flow[index_diverge_cell[id]][i] );
 
 	else {
-		if( at_phase[i].empty() )
-			return Min( max_flow*diverge_coeff[i],diverge_flow[index_diverge_cell[id]][i] );
+		if ( at_phase[i].empty() )
+			return Min( max_flow*diverge_coeff[i], diverge_flow[index_diverge_cell[id]][i] );
 		else {
 			for( int j = 0; j < at_phase[i].top; ++j )
 				if( omega[present_clock][on_intersection][at_phase[i][j]] )
-					return Min( max_flow*diverge_coeff[i],diverge_flow[index_diverge_cell[id]][i] );
+					return Min( max_flow*diverge_coeff[i], diverge_flow[index_diverge_cell[id]][i] );
 		}
 	}
 	return 0.0;
 }
 
-inline float cell::receive_flow(){
-	return Min( max_flow,delta*(max_vehicle-exist_vehicle[present_clock - 1][id]) );
+// R(t)
+inline float cell::receive_flow() {
+	return Min( max_flow, delta * (max_vehicle - exist_vehicle[present_clock - 1][id]) );
 }
 
 
 inline void cell::set_out_flow( const float& out, int next_cell_id){ 
-	if(type == diverge){
+	if ( type == diverge ) {
 		int i = index_next_cell[id][next_cell_id];
 		/*for( i = 0; i < next_cell.size(); i++ )
 			if(next_cell_id == next_cell[i])	break;*/
 		diverge_flow[index_diverge_cell[id]][i] -= out;
-		diverge_flow[index_diverge_cell[id]][i] += in_flow*diverge_coeff[i];
+		diverge_flow[index_diverge_cell[id]][i] += in_flow * diverge_coeff[i];
 		out_flow += out;
 	}
-	else
-		out_flow = out; 
+	else {
+		out_flow = out;
+	}
 }
 
-inline void cell::diverge_update_flow(){
+// y_ij(t)
+inline void cell::diverge_update_flow() {
 	//In flow.
 	in_flow = Min( cells[previous_cell[0]].send_flow(id), receive_flow() );
-	cells[previous_cell[0]].set_out_flow(in_flow,id);
+	cells[previous_cell[0]].set_out_flow(in_flow, id);
 	out_flow = 0.0;
 }
 
-inline void cell::merge_update_flow(){
+inline void cell::merge_update_flow() {
 
 	float sum_send_flow = 0.0, pre_send_flow, this_receive_flow, part_in_flow;
 
-	for( int i = 0; i < previous_cell.size(); ++i ){
+	for ( int i = 0; i < (int)previous_cell.size(); ++i ) {
 		//Assert( previous_cell[i]>=0 );
 		sum_send_flow += cells[previous_cell[i]].send_flow(id);
 	}
 	in_flow = 0.0;
 	for( int i = 0; i < (int)previous_cell.size(); ++i ){
 		pre_send_flow = cells[previous_cell[i]].send_flow(id);
-		this_receive_flow = pre_send_flow/sum_send_flow * receive_flow();
+		this_receive_flow = pre_send_flow / sum_send_flow * receive_flow();
 		part_in_flow = Min( pre_send_flow, this_receive_flow );
 		in_flow += part_in_flow;
 		//Set flow for previous cell.
-		cells[previous_cell[i]].set_out_flow( part_in_flow, id);
+		cells[previous_cell[i]].set_out_flow( part_in_flow, id );
 	}
 }
 
 inline void cell::destination_update_flow(){
 	in_flow = cells[previous_cell[0]].send_flow();
 	out_flow = send_flow();
-	cells[previous_cell[0]].set_out_flow(in_flow,id);
+	cells[previous_cell[0]].set_out_flow( in_flow, id );
 }
 
 inline void cell::normal_update_flow(){
