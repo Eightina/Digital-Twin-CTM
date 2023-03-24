@@ -133,10 +133,6 @@
     <ClInclude Include="ctm-core-improve\update.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ctm-core-improve\debug\BuildLog.htm" />
-    <None Include="ctm-core-improve\release\BuildLog.htm" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="CTM-Core-Improve\i_Test.txt" />
     <Text Include="CTM-Core-Improve\i_Test2.txt" />
   </ItemGroup>

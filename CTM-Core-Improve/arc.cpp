@@ -13,33 +13,34 @@ extern cell cells[];
 extern debug* Log;
 //#include "arc.h"
 
-arc::arc():id(0),up_node(0),down_node(0),
-		max_speed(0.0),max_flow(0.0),jam_density(0.0),delta(0.0){
+arc::arc(): id(0), up_node(0), down_node(0), max_speed(0.0), 
+			max_flow(0.0), jam_density(0.0), delta(0.0) {
 			//std::cout<<gg[0]<<std::endl;
 }
 
-arc::arc( int i,int un,int dn,float ms,float mf,float jd,float del = -1.0):
-		id(i),up_node(un),down_node(dn),max_speed(ms),
-		max_flow(mf),jam_density(jd),delta(del){
-			if( delta < 0.0 ){
-				delta = max_flow*settings.clock_tick/
-					(jam_density*max_speed - settings.clock_tick*max_flow);
+arc::arc( int i, int un, int dn, float ms,
+	float mf, float jd, float del = -1.0):
+		id(i), up_node(un), down_node(dn), max_speed(ms),
+		max_flow(mf), jam_density(jd), delta(del) {
+			if ( delta < 0.0 ) {
+				delta = max_flow * settings.clock_tick /
+					(jam_density * max_speed - settings.clock_tick * max_flow);
 			}
 			size++;
 			nodes[un].set_arc(i);
 			nodes[dn].set_arc(i);
 			length = nodes[up_node].get_pos().dist(	nodes[down_node].get_pos() );
-			cell_length = settings.cell_length_factor*max_speed*settings.clock_tick;
+			cell_length = settings.cell_length_factor * max_speed * settings.clock_tick;
 			num_cell = (int)floor( length/cell_length );
-			if( num_cell < 2 ){
+			if ( num_cell < 2 ) {
 				char str[256];
 				sprintf( str,"In Arc#%03d  num_cell < 2 ",id );
 				Log->throws(str);
 			}
 			//create_cell();
-	}
+}
 
-void arc::create_cell(){
+void arc::create_cell() {
 	float LL = length;
 	first_cell = cell::size + 1;
 	last_cell = first_cell + num_cell - 1;

@@ -9,7 +9,7 @@ class setting{
 public:
 	
 	setting();
-	setting( int,int,int,float,int,int );
+	setting( int, int, int, float, int, int );
 
 	// start_time or end_time [ 0,24*60*60 ]
 	int start_time,end_time;
@@ -25,7 +25,7 @@ public:
 	float cell_length_factor;
 
 	int max_ticks;
-	int get_max_ticks(){	return max_ticks; }
+	int get_max_ticks() { return max_ticks; }
 
 	// the yellow time
 	int yellow_time;

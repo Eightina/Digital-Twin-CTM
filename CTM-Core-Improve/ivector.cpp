@@ -14,4 +14,4 @@
 //
 //template<typename T>
 //ivector<T>::~ivector(){ delete [] a; top = 0; }
-//
+

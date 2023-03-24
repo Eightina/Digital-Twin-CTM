@@ -115,10 +115,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ctm-core-improve\debug\BuildLog.htm" />
-    <None Include="ctm-core-improve\release\BuildLog.htm" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="CTM-Core-Improve\i_Test.txt">
       <Filter>input</Filter>
     </Text>
