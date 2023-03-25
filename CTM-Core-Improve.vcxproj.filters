@@ -95,12 +95,6 @@
     <ClInclude Include="ctm-core-improve\ivector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ctm-core-improve\localopt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ctm-core-improve\netopt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ctm-core-improve\node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,10 +115,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CTM-Core-Improve\i_Test.txt">
+    <Text Include="i_Test.txt">
       <Filter>input</Filter>
     </Text>
-    <Text Include="CTM-Core-Improve\i_Test2.txt">
+    <Text Include="i_Test2.txt">
       <Filter>input</Filter>
     </Text>
   </ItemGroup>

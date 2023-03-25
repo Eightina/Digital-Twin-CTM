@@ -60,7 +60,8 @@ void initial_control(){
 	memset(omega,false,sizeof(omega) );
 	char str[256],_str[256];
 	int istr = 0;
-	for( int i = 1; i <= intersection::size; ++i ){
+	//for( int i = 1; i <= intersection::size; ++i ){
+	for( int i = 0; i < intersections.size(); ++i) {
 		int min_green = (int)ceil(intersections[i].get_min_green()*1.0/settings.clock_tick);
 		int g=0,p=0;
 		for( int j = 1; j <= settings.get_max_ticks(); j++ ){
@@ -75,7 +76,7 @@ void initial_control(){
 
 	//Output initial timing plan.
 	Log->process("Initial Timing Plan...");
-	for( int i = 1; i <= intersection::size; ++i ){
+	for( int i = 0; i < intersections.size(); ++i ){
 		sprintf(_str,"Intersection %03d",i);
 		Log->process(_str);
 		for( int j = 1; j <= settings.get_max_ticks(); ++j ){

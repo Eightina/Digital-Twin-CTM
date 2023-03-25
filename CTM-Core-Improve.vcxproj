@@ -125,8 +125,6 @@
     <ClInclude Include="ctm-core-improve\intersection.h" />
     <ClInclude Include="ctm-core-improve\iqueue.h" />
     <ClInclude Include="ctm-core-improve\ivector.h" />
-    <ClInclude Include="ctm-core-improve\localopt.h" />
-    <ClInclude Include="ctm-core-improve\netopt.h" />
     <ClInclude Include="ctm-core-improve\node.h" />
     <ClInclude Include="ctm-core-improve\nodeopt.h" />
     <ClInclude Include="ctm-core-improve\output.h" />
@@ -135,8 +133,8 @@
     <ClInclude Include="CTM-Core-Improve\simulation.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CTM-Core-Improve\i_Test.txt" />
-    <Text Include="CTM-Core-Improve\i_Test2.txt" />
+    <Text Include="i_Test.txt" />
+    <Text Include="i_Test2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

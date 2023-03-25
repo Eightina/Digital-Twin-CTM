@@ -7,7 +7,7 @@
 #include <cstdlib>
 using namespace std;
 
-extern intersection intersections[MAX_INTERSECTION];
+extern vector<intersection> intersections;
 
 float netopt(){
 	float pre_delay = 0.0,total_delay = 0.0;
@@ -16,7 +16,7 @@ float netopt(){
 	do{
 		printf("  Iterative #%d\n",++iterative);
 		pre_delay = total_delay;
-		for( i = 1; i <= intersection::size; ++i )
+		for( i = 1; i <= intersections.size(); ++i)
 		{	
 			total_delay = localopt(i);
 			printf( "  Intersection #%d, total delay = %.2f\n", i, total_delay );

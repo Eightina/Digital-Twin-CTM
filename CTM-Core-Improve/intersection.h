@@ -55,7 +55,7 @@ public:
 class intersection{
 public:
 
-	int size;
+	//int size;
 	intersection();
 	intersection( int i,int t,int px,int py );
 	intersection( int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );

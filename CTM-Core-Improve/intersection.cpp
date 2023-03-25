@@ -53,7 +53,7 @@ intersection::intersection():id(0),type(0),pos(0,0),
 
 
 intersection::intersection( int i,int t,int px,int py ):id(i),type(t),pos(px,py){
-			size++;
+			//size++;
 			if( !connected_nodes.empty() ) connected_nodes.clear();
 			if( !phases.empty() ) phases.clear();
 }
@@ -61,7 +61,7 @@ intersection::intersection( int i,int t,int px,int py ):id(i),type(t),pos(px,py)
 intersection::intersection( int i,int t,int px,int py,
 		int min_g,int max_g,int rturn,int num_p ):id(i),type(t),pos(px,py),
 		min_green(min_g),max_green(max_g),right_turning(rturn!=0),num_phases(num_p){
-			size++;
+			//size++;
 
 			min_green_ticks = (int)ceil(min_green*1.0/settings.clock_tick);
 			max_green_ticks = (int)floor(max_green*1.0/settings.clock_tick);

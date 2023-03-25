@@ -1,6 +1,6 @@
 
 #include <iostream>
-//#include <vector>
+#include <vector>
 
 #include "ivector.h"
 #include "node.h"
@@ -23,37 +23,38 @@
 using namespace std;
 
 
-//int present_clock;
-//setting settings;
-//node nodes[MAX_NODE];
-//arc arcs[MAX_ARC];
-//cell cells[MAX_CELL];
+int present_clock;
+setting settings;
+node nodes[MAX_NODE];
+arc arcs[MAX_ARC];
+cell cells[MAX_CELL];
 //intersection intersections[MAX_INTERSECTION];
-//incident incidents[MAX_INCIDENT];
-//
-//short index_next_cell[MAX_CELL][MAX_CELL];
-//
-//int origin_set[MAX_ORIGIN_CELL], normal_set[MAX_NORMAL_CELL],
-//	diverge_set[MAX_DIVERGE_CELL], merge_set[MAX_MERGE_CELL], destination_set[MAX_DESTINATION_CELL];
-//
-//int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
-//
-//float exist_vehicle[MAX_CLOCK][MAX_CELL];
-//float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
-//bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
-//
-//int index_diverge_cell[MAX_CELL];
-//int number_diverge_cell;
-//
-//
-//float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
-//demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]; // if demand not changed then remain the same
-//int temp_origin_demand_size = 0;
-//
-//
-//debug *Log;
-//
-//float vehicle[MAX_CELL];
+vector<intersection> intersections;
+incident incidents[MAX_INCIDENT];
+
+short index_next_cell[MAX_CELL][MAX_CELL];
+
+int origin_set[MAX_ORIGIN_CELL], normal_set[MAX_NORMAL_CELL],
+	diverge_set[MAX_DIVERGE_CELL], merge_set[MAX_MERGE_CELL], destination_set[MAX_DESTINATION_CELL];
+
+int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
+
+float exist_vehicle[MAX_CLOCK][MAX_CELL];
+float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
+bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
+
+int index_diverge_cell[MAX_CELL];
+int number_diverge_cell;
+
+
+float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
+demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]; // if demand not changed then remain the same
+int temp_origin_demand_size = 0;
+
+
+debug *Log;
+
+float vehicle[MAX_CELL];
 
 void print_start(){
 

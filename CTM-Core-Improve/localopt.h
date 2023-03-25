@@ -29,7 +29,7 @@ extern int origin_size,normal_size,diverge_size,merge_size,destination_size;
 extern float		exist_vehicle[MAX_CLOCK][MAX_CELL];
 extern float		diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
 extern int			index_diverge_cell[MAX_CELL];
-extern intersection intersections[MAX_INTERSECTION];
+extern std::vector<intersection> intersections;
 extern incident		incidents[MAX_INCIDENT];
 extern bool			omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
 extern debug		*Log;

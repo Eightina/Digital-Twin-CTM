@@ -12,7 +12,7 @@
 #include "localopt.h"
 
 extern float exist_vehicle[][MAX_CELL];
-extern intersection intersections[MAX_INTERSECTION];
+extern std::vector<intersection> intersections;
 extern cell cells[MAX_CELL];
 extern setting settings;
 extern arc arcs[MAX_ARC];
@@ -36,7 +36,7 @@ void printoccup(char namestr[], float delay){
 	fprintf( out,"~\n\n" );
 	int i,j,k;
 
-	fprintf( out,"%d nodes, %d arcs, %d intersections, %d ticks\n\n",node::size,arc::size,intersection::size,settings.get_max_ticks());
+	fprintf( out,"%d nodes, %d arcs, %d intersections, %d ticks\n\n",node::size,arc::size, intersections.size(), settings.get_max_ticks());
 	
 	//Output arcs and cells.
 	coordinate first,last,interval;
@@ -69,8 +69,8 @@ void printoccup(char namestr[], float delay){
 
 	//Output intersections.
 	coordinate pos;
-	for( i = 1; i <= intersection::size; ++i ){
-		fprintf( out,"intersection %d\n",i );
+	for( i = 0; i < intersections.size(); ++i ){
+		fprintf( out,"intersection %d\n",i + 1 );
 		pos = intersections[i].get_pos();
 		fprintf( out,"coordinate (%d, %d)\n",pos.x,pos.y );
 		//Output phases.
@@ -124,9 +124,9 @@ void printplan( char namestr[] ){
 	localtime(&run);
 	fprintf( out,"The Date: \t%s",ctime(&run) );
 	fprintf( out,"~\n\n" );
-	fprintf( out,"%d intersections, %d ticks\n\n",intersection::size,settings.get_max_ticks() );
-	for( int i = 1; i <= intersection::size; ++i ){
-		fprintf( out,"intersection %d\n",i );
+	fprintf( out,"%d intersections, %d ticks\n\n", intersections.size(),settings.get_max_ticks() );
+	for( int i = 0; i < intersections.size(); ++i ){
+		fprintf( out,"intersection %d\n",i + 1 );
 		intersections[i].print_phases(out);
 		/*fprintf( out,"%d phases\n",intersections[i].get_num_phases() );
 		int count_id = 1;

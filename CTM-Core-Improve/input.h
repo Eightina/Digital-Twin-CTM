@@ -32,7 +32,8 @@ extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
 extern int index_diverge_cell[MAX_CELL];
 extern int number_diverge_cell;
 
-extern intersection intersections[MAX_INTERSECTION];
+//extern std::vector<intersection> intersections;
+extern vector<intersection> intersections;
 extern incident incidents[MAX_INCIDENT];
 extern debug *Log;
 extern float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
@@ -283,8 +284,9 @@ void input_intersection( FILE *in ){
 	char str[256];
 	if( type ){
 		fscanf( in,"%d%d%d%d",&min_g,&max_g,&right_t,&num_phase );
-		int tmp_intersection_size = intersection::size + 1;
-		intersections[tmp_intersection_size] = intersection( id,type,x,y,min_g,max_g,right_t,num_phase );
+		//int tmp_intersection_size = intersections.size() + 1;
+		//intersections[tmp_intersection_size] = intersection( id,type,x,y,min_g,max_g,right_t,num_phase );
+		intersections.emplace_back(id, type, x, y, min_g, max_g, right_t, num_phase);
 		
 		while( true ){
 			memset(str,0,256);
@@ -296,13 +298,15 @@ void input_intersection( FILE *in ){
 			int i;
 			sscanf( str,"%d",&i );
 			Assert(i>=0);
-			intersections[tmp_intersection_size].add_node(i);
+			//intersections[tmp_intersection_size].add_node(i);
+			intersections.back().add_node(i);
 			if( str[id] == '\n' ) break;
 		}
 	}
 	else{
-		int tmp_intersection_size = intersection::size + 1;
-		intersections[tmp_intersection_size] = intersection( id,type,x,y );
+		//int tmp_intersection_size = intersection::size + 1;
+		//intersections[tmp_intersection_size] = intersection( id,type,x,y );
+		intersections.emplace_back(id, type, x, y);
 	}
 	Log->process("Input intersection successfully...");
 }
@@ -319,6 +323,7 @@ void input_phase( FILE *in ){
 	Log->process("Going to input phase...");
 	int id_inter,id_phase,from_arc,to_arc;
 	fscanf( in,"%d%d%d%d",&id_inter,&id_phase,&from_arc,&to_arc );
+	id_inter--;
 	intersections[id_inter].add_phase( id_phase,from_arc,to_arc );
 
 	int from_cell_id = arcs[from_arc].get_last_cell();
@@ -343,7 +348,7 @@ void input_control( FILE *in ){
 		skip(in);
 	}
 	//Log->process("Input control successfully...");
-	sprintf(str,"The size of intersection is: %d ...",intersection::size );
+	sprintf(str,"The size of intersection is: %d ...",intersections.size() );
 	Log->process(str);
 	Log->process("Input control successfully...");
 }
