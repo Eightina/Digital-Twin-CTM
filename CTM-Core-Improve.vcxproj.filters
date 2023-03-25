@@ -54,6 +54,9 @@
     <ClCompile Include="ctm-core-improve\vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CTM-Core-Improve\simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ctm-core-improve\arc.h">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ctm-core-improve\update.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTM-Core-Improve\simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

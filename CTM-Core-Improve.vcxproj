@@ -110,6 +110,7 @@
     <ClCompile Include="ctm-core-improve\node.cpp" />
     <ClCompile Include="ctm-core-improve\setting.cpp" />
     <ClCompile Include="ctm-core-improve\vector.cpp" />
+    <ClCompile Include="CTM-Core-Improve\simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ctm-core-improve\arc.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="ctm-core-improve\output.h" />
     <ClInclude Include="ctm-core-improve\setting.h" />
     <ClInclude Include="ctm-core-improve\update.h" />
+    <ClInclude Include="CTM-Core-Improve\simulation.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CTM-Core-Improve\i_Test.txt" />

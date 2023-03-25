@@ -109,6 +109,6 @@ void intersection::print_phases( FILE *out ){
 }
 
 
-int intersection::size = 0;
+//int intersection::size = 0;
 
 
