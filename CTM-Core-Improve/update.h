@@ -19,7 +19,7 @@
 
 extern int			present_clock;
 extern setting		settings;
-extern node			nodes[MAX_NODE];
+extern std::vector<node> nodes;
 extern std::vector<arc> arcs;
 extern std::vector<cell> cells;
 extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],

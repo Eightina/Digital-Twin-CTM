@@ -20,7 +20,7 @@
 
 extern int present_clock;
 extern setting settings;
-extern node nodes[MAX_NODE];
+extern std::vector<node> nodes;
 extern std::vector<arc> arcs;
 extern std::vector<cell> cells;
 extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
@@ -121,23 +121,25 @@ void input_geometry( FILE *in ){
 	int id,type,x,y;
 	Log->process("Going to input node...");
 	//memset(str,0,1024);
+	if (nodes.empty()) nodes.push_back(node());
 	while( fscanf( in,"%s",str ),strcmpi(str,"arc") ){
 		fscanf( in,"%d%d%d%d",&id,&type,&x,&y );
-		int tmp_node_size = node::size + 1;
-		nodes[tmp_node_size] = node( id,type,x,y );
+		//int tmp_node_size = node::size + 1;
+		//nodes[tmp_node_size] = node( id,type,x,y );
+		nodes.emplace_back(id, type, x, y);
 		skip(in);
 	}
 
 	char sstr[256];
 	Log->process("Input node successfully...");
 	//memset(sstr,0,256);
-	sprintf(sstr,"The size of node is: %d...",node::size );
+	sprintf(sstr, "The size of node is: %d...", nodes.size() );
 	Log->process(sstr);
 
 	int ai,anf,anl;
 	float as,af,ad,adel;
 	Log->process("Going to input arc...");
-	if (arcs.empty()) arcs.emplace_back(arc());
+	if (arcs.empty()) arcs.push_back(arc());
 	while( strcmpi(str,"end") ){
 		fscanf(in, "%d%d%d%f%f%f%f", &ai, &anf, &anl, &as, &af, &ad, &adel);
 		//int tmp_arc_size = arc::size + 1;

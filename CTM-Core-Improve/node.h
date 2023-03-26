@@ -3,10 +3,11 @@
 #define _node_H
 
 #include "coordinate.h"
+#include <vector>
 
 class node{
 public:
-	static int size;
+	//static int size;
 
 	node();
 	node( int i,int t,int _x,int _y,int ia = -1);

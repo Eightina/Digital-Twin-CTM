@@ -25,7 +25,8 @@
 
 int present_clock;
 setting settings;
-node nodes[MAX_NODE];
+//node nodes[MAX_NODE];
+std::vector<node> nodes;
 //arc arcs[MAX_ARC];
 std::vector<arc> arcs;
 //cell cells[MAX_CELL]; 

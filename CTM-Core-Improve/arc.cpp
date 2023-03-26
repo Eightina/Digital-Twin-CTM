@@ -6,7 +6,7 @@
 #include <math.h>
 //#include <iostream>
 
-extern node nodes[];
+extern std::vector<node> nodes;
 extern setting settings;
 extern std::vector<cell> cells;
 //extern int gg[];
