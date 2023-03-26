@@ -9,7 +9,8 @@ void initial_diverge_flow(){
 }
 
 void initial_occupation( float *vehicle ){
-	for( int i = 1; i <= cell::size; ++i ){
+	//for( int i = 1; i <= cell::size; ++i ){
+	for( int i = 1; i < cells.size(); ++i) {
 		vehicle[i] = settings.initial_occupation/100.0*cells[i].get_max_vehicle();
 	}
 }

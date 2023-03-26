@@ -9,7 +9,7 @@
 using namespace std;
 //#include <assert.h>
 
-extern cell cells[];
+extern std::vector<cell> cells;
 extern arc arcs[];
 extern setting settings;
 

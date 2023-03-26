@@ -6,7 +6,7 @@
 #include "arc.h"
 #include "demand.h"
 //#include <set>
-//#include <vector>
+#include <vector>
 #include "setting.h"
 //#include <assert.h>
 #include "debug.h"
@@ -126,7 +126,7 @@ private:
 
 };
 
-extern cell cells[MAX_CELL];
+extern std::vector<cell> cells;
 
 inline void cell::add_at_phase( const int& cell_id, const int& phase_id ){
 	int i = 0;

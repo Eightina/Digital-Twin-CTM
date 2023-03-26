@@ -14,7 +14,7 @@
 
 extern float exist_vehicle[][MAX_CELL];
 extern std::vector<intersection> intersections;
-extern cell cells[MAX_CELL];
+extern std::vector<cell> cells;
 extern setting settings;
 extern arc arcs[MAX_ARC];
 extern float delay_record[MAX_CLOCK];

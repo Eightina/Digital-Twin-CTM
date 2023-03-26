@@ -3,7 +3,7 @@
 #define _intersection_H
 
 #include "coordinate.h"
-//#include <vector>
+#include <vector>
 #include "cell.h"
 #include "arc.h"
 #include "base.h"
@@ -12,7 +12,7 @@
 #include "ivector.h"
 //#include <assert.h>
 
-extern cell cells[];
+extern std::vector<cell> cells;
 extern arc arcs[];
 extern setting settings;
 

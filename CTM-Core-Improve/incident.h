@@ -7,7 +7,7 @@
 #include "arc.h"
 #include "base.h"
 
-extern cell cells[MAX_CELL];
+extern std::vector<cell> cells;
 extern arc	arcs[MAX_ARC];
 extern int present_clock;
 extern setting settings;

@@ -21,7 +21,7 @@ extern int			present_clock;
 extern setting		settings;
 extern node			nodes[MAX_NODE];
 extern arc			arcs[MAX_ARC];
-extern cell			cells[MAX_CELL];
+extern std::vector<cell> cells;
 extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
 	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
 
@@ -60,7 +60,8 @@ inline void set_on_all(){
 }
 
 void update_flow( ) {
-	cell *cl = cells;
+	//cell *cl = cells;
+	std::vector<cell>& cl = cells;
 
 	for( int i = 0; i < origin_size; ++i )
 		cl[origin_set[i]].origin_update_flow();
@@ -87,8 +88,9 @@ void update_event(){
 
 float update_occupation() {
 	float delay = 0.0;
-	for( int i = 1; i <= cell::size; ++i )
-		if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)
+	//for (int i = 1; i <= cell::size; ++i) {
+	for (int i = 1; i < cells.size(); ++i) 
+		if (cells[i].get_type() != destination && cells[i].get_type() != origin) 
 			delay += cells[i].move_vehicle();
 	return delay;
 }
@@ -157,7 +159,8 @@ float simulate( int st, int et ){
 			incidents[i].occur();
 		}
 		update_flow();
-		for( int i = 1; i <= cell::size; ++i ){
+		//for( int i = 1; i <= cell::size; ++i ){
+		for (int i = 1; i < cells.size(); ++i) {
 			temp = exist_vehicle[it-1][i] - cells[i].out_flow;
 			exist_vehicle[it][i] = temp + cells[i].in_flow;
 			if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)

@@ -22,7 +22,7 @@ extern int present_clock;
 extern setting settings;
 extern node nodes[MAX_NODE];
 extern arc arcs[MAX_ARC];
-extern cell cells[MAX_CELL];
+extern std::vector<cell> cells;
 extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
 	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
 
@@ -228,7 +228,9 @@ void input_traffic(FILE *in){
 
 void classify_cell(){
 	origin_size = normal_size = diverge_size = merge_size = destination_size = 0;
-	for( int i = 1; i <= cell::size; ++i ){
+	//for( int i = 1; i <= cell::size; ++i ){
+	for (int i = 1; i < cells.size(); ++i) {
+
 		switch( cells[i].get_type() ){
 			case normal: normal_set[normal_size++] = (i); break;
 			case origin: origin_set[origin_size++] = (i); break;

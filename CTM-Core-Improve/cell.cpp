@@ -8,7 +8,7 @@ extern arc arcs[];
 extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
 extern int present_clock;
 extern setting settings;
-extern cell cells[MAX_CELL];
+extern std::vector<cell> cells;
 extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
 extern int index_diverge_cell[MAX_CELL];
 extern debug *Log;
@@ -32,11 +32,10 @@ cell::cell() : id(0), on_arc(0), in_flow(-1.0), out_flow(-1.0) {
 
 cell::cell( int i,int arc,cell_type t,float len ):
 	id(i),type(t),on_arc(arc),length(len){
-		Assert(size<MAX_CELL);
-		char str[256];
-		size++;
-		sprintf( str,"Create Cell#%03d successfully",size );
-		Log->process( str );
+		//Assert(cells.size()<MAX_CELL);
+		
+		//size++;
+		
 		max_speed = arcs[arc].get_max_speed();
 		max_flow = arcs[arc].get_max_flow()*settings.clock_tick;
 		jam_density = arcs[arc].get_jam_density();
@@ -134,4 +133,4 @@ void cell::add_next_cell( const int& i,const float& g,const int& t ){
 }
 
 
-int cell::size = 0;
+//int cell::size = 0;
