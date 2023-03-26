@@ -132,7 +132,6 @@
     <ClInclude Include="ctm-core-improve\iqueue.h" />
     <ClInclude Include="ctm-core-improve\ivector.h" />
     <ClInclude Include="ctm-core-improve\node.h" />
-    <ClInclude Include="ctm-core-improve\nodeopt.h" />
     <ClInclude Include="ctm-core-improve\output.h" />
     <ClInclude Include="ctm-core-improve\setting.h" />
     <ClInclude Include="ctm-core-improve\update.h" />

@@ -6,12 +6,12 @@
 #include <math.h>
 //#include <iostream>
 
-extern std::vector<node> nodes;
-extern setting settings;
-extern std::vector<cell> cells;
-//extern int gg[];
-extern debug* Log;
-//#include "arc.h"
+//extern std::vector<node> nodes;
+//extern setting settings;
+//extern std::vector<cell> cells;
+////extern int gg[];
+//extern debug* Log;
+////#include "arc.h"
 
 arc::arc(): id(0), up_node(0), down_node(0), max_speed(0.0), 
 			max_flow(0.0), jam_density(0.0), delta(0.0) {

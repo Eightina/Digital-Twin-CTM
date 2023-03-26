@@ -1,7 +1,7 @@
 #include "node.h"
 #include "debug.h"
 
-extern debug *Log;
+//extern debug *Log;
 
 
 node::node():id(0),type(0),x(0),y(0),pos(x,y){ }

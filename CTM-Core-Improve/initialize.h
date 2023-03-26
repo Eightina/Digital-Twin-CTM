@@ -61,7 +61,7 @@ void initial_control(){
 	memset(omega,false,sizeof(omega) );
 	char str[256],_str[256];
 	int istr = 0;
-	//for( int i = 1; i <= intersection::size; ++i ){
+	
 	for( int i = 0; i < intersections.size(); ++i) {
 		int min_green = (int)ceil(intersections[i].get_min_green()*1.0/settings.clock_tick);
 		int g=0,p=0;

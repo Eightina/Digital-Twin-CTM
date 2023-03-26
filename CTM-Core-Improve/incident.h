@@ -7,10 +7,10 @@
 #include "arc.h"
 #include "base.h"
 
-extern std::vector<cell> cells;
-extern std::vector<arc> arcs;
-extern int present_clock;
-extern setting settings;
+//extern std::vector<cell> cells;
+//extern std::vector<arc> arcs;
+//extern int present_clock;
+//extern setting settings;
 
 class incident{
 public:

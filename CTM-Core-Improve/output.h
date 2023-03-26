@@ -12,12 +12,12 @@
 #include "initialize.h"
 // #include "localopt.h"
 
-extern float exist_vehicle[][MAX_CELL];
-extern std::vector<intersection> intersections;
-extern std::vector<cell> cells;
-extern setting settings;
-extern std::vector<arc> arcs;
-extern float delay_record[MAX_CLOCK];
+//extern float exist_vehicle[][MAX_CELL];
+//extern std::vector<intersection> intersections;
+//extern std::vector<cell> cells;
+//extern setting settings;
+//extern std::vector<arc> arcs;
+//extern float delay_record[MAX_CLOCK];
 
 void printoccup(char namestr[], float delay){
 	FILE *out;

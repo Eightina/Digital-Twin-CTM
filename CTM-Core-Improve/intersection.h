@@ -12,13 +12,13 @@
 #include "ivector.h"
 //#include <assert.h>
 
-extern std::vector<cell> cells;
-extern std::vector<arc> arcs;
-extern setting settings;
-
-extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
-extern int present_clock;
-extern debug *Log;
+//extern std::vector<cell> cells;
+//extern std::vector<arc> arcs;
+//extern setting settings;
+//
+//extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
+//extern int present_clock;
+//extern debug *Log;
 
 //using std::vector;
 

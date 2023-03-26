@@ -98,9 +98,6 @@
     <ClInclude Include="ctm-core-improve\node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ctm-core-improve\nodeopt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ctm-core-improve\output.h">
       <Filter>Header Files</Filter>
     </ClInclude>

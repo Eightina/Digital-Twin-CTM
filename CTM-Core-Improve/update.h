@@ -17,23 +17,23 @@
 #include "debug.h"
 #include "ivector.h"
 
-extern int			present_clock;
-extern setting		settings;
-extern std::vector<node> nodes;
-extern std::vector<arc> arcs;
-extern std::vector<cell> cells;
-extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
-	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
-
-extern int origin_size,normal_size,diverge_size,merge_size,destination_size;
-extern float		exist_vehicle[MAX_CLOCK][MAX_CELL];
-extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
-extern int index_diverge_cell[MAX_CELL];
-extern std::vector<intersection> intersections;
-extern incident		incidents[MAX_INCIDENT];
-extern bool			omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
-extern debug		*Log;
-extern float		delay_record[MAX_CLOCK];
+//extern int			present_clock;
+//extern setting		settings;
+//extern std::vector<node> nodes;
+//extern std::vector<arc> arcs;
+//extern std::vector<cell> cells;
+//extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
+//	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
+//
+//extern int origin_size,normal_size,diverge_size,merge_size,destination_size;
+//extern float		exist_vehicle[MAX_CLOCK][MAX_CELL];
+//extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
+//extern int index_diverge_cell[MAX_CELL];
+//extern std::vector<intersection> intersections;
+//extern incident		incidents[MAX_INCIDENT];
+//extern bool			omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
+//extern debug		*Log;
+//extern float		delay_record[MAX_CLOCK];
 
 
 void modify_control(const int& I, const int& t0, const int& t1, const int& P){

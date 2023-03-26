@@ -13,18 +13,18 @@
 #include "ivector.h"
 
 
-extern std::vector<arc> arcs;
-extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
-extern int present_clock;
-extern setting settings;
-extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
-extern int index_diverge_cell[MAX_CELL];
-extern float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
-extern demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK];
-extern int temp_origin_demand_size;
-extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
-extern debug *Log;
-extern short index_next_cell[MAX_CELL][MAX_CELL];
+//extern std::vector<arc> arcs;
+//extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
+//extern int present_clock;
+//extern setting settings;
+//extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
+//extern int index_diverge_cell[MAX_CELL];
+//extern float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
+//extern demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK];
+//extern int temp_origin_demand_size;
+//extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
+//extern debug *Log;
+//extern short index_next_cell[MAX_CELL][MAX_CELL];
 
 //using std::set;
 //using std::vector;
