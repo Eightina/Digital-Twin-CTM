@@ -48,10 +48,10 @@ void arc::create_cell() {
 	last_cell = first_cell + num_cell - 1;
 	sprintf(Log->get_str(),"Arc#%03d: First Cell #%03d, Last Cell #%03d",id,first_cell,last_cell );
 	Log->process(Log->get_str());
-	int tmp_cell_size = cells.size();
+	int tmp_cell_size;
 	while ( LL >= 2*cell_length ){
 		LL -= cell_length;
-		//tmp_cell_size = cells.size();
+		tmp_cell_size = cells.size();
 		//cells[tmp_cell_size] = cell( tmp_cell_size,id,normal,cell_length );
 		//
 		cells.emplace_back(tmp_cell_size, id, normal, cell_length);
@@ -61,13 +61,13 @@ void arc::create_cell() {
 	}
 
 	if ( nodes[down_node].get_type() == 2 ){
-		//tmp_cell_size = cells.size();
+		tmp_cell_size = cells.size();
 		cells.emplace_back(tmp_cell_size, id, destination, LL);
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
 		Log->process(str);
 	} else {
-		//tmp_cell_size = cells.size();
+		tmp_cell_size = cells.size();
 		cells.emplace_back(tmp_cell_size, id, normal, LL );
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
