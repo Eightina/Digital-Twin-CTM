@@ -21,7 +21,7 @@
 extern int present_clock;
 extern setting settings;
 extern node nodes[MAX_NODE];
-extern arc arcs[MAX_ARC];
+extern std::vector<arc> arcs;
 extern std::vector<cell> cells;
 extern int origin_set[MAX_ORIGIN_CELL],normal_set[MAX_NORMAL_CELL],
 	diverge_set[MAX_DIVERGE_CELL],merge_set[MAX_MERGE_CELL],destination_set[MAX_DESTINATION_CELL];
@@ -137,17 +137,21 @@ void input_geometry( FILE *in ){
 	int ai,anf,anl;
 	float as,af,ad,adel;
 	Log->process("Going to input arc...");
+	if (arcs.empty()) arcs.emplace_back(arc());
 	while( strcmpi(str,"end") ){
-		fscanf( in,"%d%d%d%f%f%f%f",&ai,&anf,&anl,&as,&af,&ad,&adel );
-		int tmp_arc_size = arc::size + 1;
-		arcs[tmp_arc_size] = arc( ai,anf,anl,as,af,ad,adel );
-		arcs[tmp_arc_size].create_cell();
+		fscanf(in, "%d%d%d%f%f%f%f", &ai, &anf, &anl, &as, &af, &ad, &adel);
+		//int tmp_arc_size = arc::size + 1;
+		//int tmp_arc_size = arcs.size();
+		//arcs[tmp_arc_size] = arc( ai,anf,anl,as,af,ad,adel );
+		//arcs[tmp_arc_size].create_cell();
+		arcs.emplace_back(ai, anf, anl, as, af, ad, adel);
+		arcs.back().create_cell();
 		skip(in);
 		//memset(str,0,1024);
 		fscanf( in,"%s",str );
 	}
 	Log->process("Input arc successfully...");
-	sprintf(str,"The size of arc is: %d...",arc::size );
+	sprintf(str, "The size of arc is: %d...", arcs.size() );
 	Log->process(str);
 	Log->process("Input geometry successfully...");
 }

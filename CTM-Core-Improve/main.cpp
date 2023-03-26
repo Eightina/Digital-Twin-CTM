@@ -26,7 +26,8 @@
 int present_clock;
 setting settings;
 node nodes[MAX_NODE];
-arc arcs[MAX_ARC];
+//arc arcs[MAX_ARC];
+std::vector<arc> arcs;
 //cell cells[MAX_CELL]; 
 std::vector<cell> cells; // len is number of cells + 1
 //intersection intersections[MAX_INTERSECTION];

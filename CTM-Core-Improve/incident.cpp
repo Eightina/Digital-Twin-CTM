@@ -4,10 +4,10 @@
 #include "arc.h"
 #include "base.h"
 
-extern std::vector<cell> cells;
-extern arc	arcs[MAX_ARC];
-extern int present_clock;
-extern setting settings;
+//extern std::vector<cell> cells;
+//extern std::vector<arc> arcs;
+//extern int present_clock;
+//extern setting settings;
 
 incident::incident():id(0),distance(0.0),start_time(0),end_time(0),max_flow(0.0){}
 

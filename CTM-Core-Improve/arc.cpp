@@ -26,7 +26,7 @@ arc::arc( int i, int un, int dn, float ms,
 				delta = max_flow * settings.clock_tick /
 					(jam_density * max_speed - settings.clock_tick * max_flow);
 			}
-			size++;
+			//size++;
 			nodes[un].set_arc(i);
 			nodes[dn].set_arc(i);
 			length = nodes[up_node].get_pos().dist(	nodes[down_node].get_pos() );
@@ -86,4 +86,4 @@ void arc::create_cell() {
 	}
 }
 
-int arc::size = 0;
+//int arc::size = 0;

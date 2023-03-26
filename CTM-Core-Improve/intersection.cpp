@@ -9,13 +9,13 @@
 using namespace std;
 //#include <assert.h>
 
-extern std::vector<cell> cells;
-extern arc arcs[];
-extern setting settings;
-
-extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
-extern int present_clock;
-extern debug *Log;
+//extern std::vector<cell> cells;
+//extern std::vector<arc> arcs;
+//extern setting settings;
+//
+//extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
+//extern int present_clock;
+//extern debug *Log;
 
 phase::phase( int i ):id(i){
 	if( !from_arc.empty() ) from_arc.clear();

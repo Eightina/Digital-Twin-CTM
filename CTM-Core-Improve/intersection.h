@@ -13,7 +13,7 @@
 //#include <assert.h>
 
 extern std::vector<cell> cells;
-extern arc arcs[];
+extern std::vector<arc> arcs;
 extern setting settings;
 
 extern bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];

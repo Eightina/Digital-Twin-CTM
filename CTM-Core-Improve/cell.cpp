@@ -4,15 +4,15 @@
 #include <climits>
 #include "debug.h"
 
-extern arc arcs[];
-extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
-extern int present_clock;
-extern setting settings;
-extern std::vector<cell> cells;
-extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
-extern int index_diverge_cell[MAX_CELL];
-extern debug *Log;
-extern short index_next_cell[MAX_CELL][MAX_CELL];
+//extern std::vector<arc> arcs;
+//extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
+//extern int present_clock;
+//extern setting settings;
+//extern std::vector<cell> cells;
+//extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
+//extern int index_diverge_cell[MAX_CELL];
+//extern debug *Log;
+//extern short index_next_cell[MAX_CELL][MAX_CELL];
 
 
 using Cell::merge;

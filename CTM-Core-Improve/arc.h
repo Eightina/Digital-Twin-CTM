@@ -4,10 +4,11 @@
 
 #include "node.h"
 #include "setting.h"
+#include <vector>
 
 class arc{
 public:
-	static int size;
+	//static int size;
 
 	arc();
 

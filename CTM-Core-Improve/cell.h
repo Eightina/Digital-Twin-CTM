@@ -13,7 +13,7 @@
 #include "ivector.h"
 
 
-extern arc arcs[];
+extern std::vector<arc> arcs;
 extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
 extern int present_clock;
 extern setting settings;

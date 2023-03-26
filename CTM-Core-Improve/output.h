@@ -16,7 +16,7 @@ extern float exist_vehicle[][MAX_CELL];
 extern std::vector<intersection> intersections;
 extern std::vector<cell> cells;
 extern setting settings;
-extern arc arcs[MAX_ARC];
+extern std::vector<arc> arcs;
 extern float delay_record[MAX_CLOCK];
 
 void printoccup(char namestr[], float delay){
@@ -38,12 +38,14 @@ void printoccup(char namestr[], float delay){
 	fprintf( out,"~\n\n" );
 	int i,j,k;
 
-	fprintf( out,"%d nodes, %d arcs, %d intersections, %d ticks\n\n",node::size,arc::size, intersections.size(), settings.get_max_ticks());
+	fprintf( out,"%d nodes, %d arcs, %d intersections, %d ticks\n\n",
+		node::size, arcs.size(), intersections.size(), settings.get_max_ticks());
 	
 	//Output arcs and cells.
 	coordinate first,last,interval;
 	int first_id,last_id;
-	for( i = 1; i <= arc::size; ++i ){
+	//for( i = 1; i <= arc::size; ++i ){
+	for (i = 1; i < arcs.size(); ++i) {
 		first_id = arcs[i].get_up_node();
 		last_id = arcs[i].get_down_node();
 		first = nodes[first_id].get_pos();
