@@ -28,7 +28,7 @@ setting settings;
 node nodes[MAX_NODE];
 arc arcs[MAX_ARC];
 //cell cells[MAX_CELL]; 
-std::vector<cell> cells(MAX_CELL); // len is number of cells + 1
+std::vector<cell> cells; // len is number of cells + 1
 //intersection intersections[MAX_INTERSECTION];
 std::vector<intersection> intersections; // len is number of intersections
 incident incidents[MAX_INCIDENT];
@@ -85,7 +85,7 @@ int main( int argc,char *argv[] ){
 	}
 	else
 		strcpy( inputname, argv[1] );
-	cells = {};
+
 	//input file
 	scanfile( inputname );
 	

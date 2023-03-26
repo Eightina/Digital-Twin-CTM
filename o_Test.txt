@@ -1,7 +1,7 @@
 Green Signal Cell Occupation Output File.
 ----------------------------------------
 Output File: 	o_Test.txt
-The Date: 	Sun Mar 26 18:21:48 2023
+The Date: 	Sun Mar 26 18:24:27 2023
 Total delay: 	 19356.8418 vehi*sec.
 ~
 
