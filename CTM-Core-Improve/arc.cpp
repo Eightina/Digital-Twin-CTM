@@ -41,7 +41,7 @@ arc::arc( int i, int un, int dn, float ms,
 }
 
 void arc::create_cell() {
-	if (cells.empty()) cells.emplace_back();
+	if (cells.empty()) cells.push_back(cell());
 	Assert(cells.size() <= MAX_CELL + 1);
 	float LL = length;
 	first_cell = cells.size();

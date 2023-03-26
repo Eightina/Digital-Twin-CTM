@@ -47,7 +47,7 @@ public:
 	
 	cell();
 	cell( int i,int arc,cell_type t,float len );
-	static int size;
+	//static int size;
 
 	int			get_id()					const{ return id;			}
 	cell_type	get_type()					const{ return type;			}
