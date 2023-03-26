@@ -33,6 +33,7 @@ extern std::vector<intersection> intersections;
 extern incident		incidents[MAX_INCIDENT];
 extern bool			omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];
 extern debug		*Log;
+extern float		delay_record[MAX_CLOCK];
 
 
 void modify_control(const int& I, const int& t0, const int& t1, const int& P){
@@ -84,7 +85,7 @@ void update_event(){
 	}
 }
 
-float update_occupation( ) {
+float update_occupation() {
 	float delay = 0.0;
 	for( int i = 1; i <= cell::size; ++i )
 		if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)
@@ -120,32 +121,33 @@ float update_occupation( ) {
 //	return delay*settings.clock_tick;
 //}
 
-float simulate( float* vehicle,float *result,int st,int et ){
-	float delay = 0.0;
-	float temp = 0;
+//float simulate( float* vehicle,float *result,int st,int et ){
+//	float delay = 0.0;
+//	float temp = 0;
+//
+//	//Start simulation.
+//	for( int it = st+1; it <= et; ++it ){
+//
+//		present_clock = it;
+//		for( int i = 1; i <= incident::size; ++i ){
+//			incidents[i].occur();
+//		}
+//		update_flow();
+//		for( int i = 1; i <= cell::size; ++i ){
+//			temp = exist_vehicle[it-1][i] - cells[i].out_flow;
+//			exist_vehicle[it][i] = temp + cells[i].in_flow;
+//			if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)
+//				delay += temp;
+//		}
+//	}
+//
+//	return delay*settings.clock_tick;
+//}
 
-	//Start simulation.
-	for( int it = st+1; it <= et; ++it ){
-
-		present_clock = it;
-		for( int i = 1; i <= incident::size; ++i ){
-			incidents[i].occur();
-		}
-		update_flow();
-		for( int i = 1; i <= cell::size; ++i ){
-			temp = exist_vehicle[it-1][i] - cells[i].out_flow;
-			exist_vehicle[it][i] = temp + cells[i].in_flow;
-			if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)
-				delay += temp;
-		}
-	}
-
-	return delay*settings.clock_tick;
-}
-
-float simulate( int st,int et ){
+float simulate( int st, int et ){
 	float delay = 0.0f;
-	float temp = 0;
+	float temp = 0.0f;
+	float pre_delay = 0.0f;
 
 	//Start simulation.
 	for( int it = st; it <= et; ++it ){
@@ -161,6 +163,8 @@ float simulate( int st,int et ){
 			if(cells[i].get_type()!=destination&&cells[i].get_type()!=origin)
 				delay += temp;
 		}
+		delay_record[it] = delay - pre_delay;
+		pre_delay = delay;
 	}
 
 	return delay*settings.clock_tick;

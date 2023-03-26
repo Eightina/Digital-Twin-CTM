@@ -15,21 +15,22 @@
 #include "incident.h"
 #include "debug.h"
 #include "output.h"
-#include "nodeopt.h"
-#include "localopt.h"
-#include "netopt.h"
+// #include "nodeopt.h"
+// #include "localopt.h"
+// #include "netopt.h"
 #include "initialize.h"
 
-using namespace std;
+//using namespace std;
 
 
 int present_clock;
 setting settings;
 node nodes[MAX_NODE];
 arc arcs[MAX_ARC];
-cell cells[MAX_CELL];
+cell cells[MAX_CELL]; 
+//std::vector<cell> cells;// len is number of cells + 1
 //intersection intersections[MAX_INTERSECTION];
-vector<intersection> intersections;
+std::vector<intersection> intersections; // len is number of intersections
 incident incidents[MAX_INCIDENT];
 
 short index_next_cell[MAX_CELL][MAX_CELL];
@@ -50,7 +51,7 @@ int number_diverge_cell;
 float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL];
 demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]; // if demand not changed then remain the same
 int temp_origin_demand_size = 0;
-
+float delay_record[MAX_CLOCK];
 
 debug *Log;
 

@@ -9,13 +9,15 @@
 #include "base.h"
 #include "ivector.h"
 #include "update.h"
-#include "localopt.h"
+#include "initialize.h"
+// #include "localopt.h"
 
 extern float exist_vehicle[][MAX_CELL];
 extern std::vector<intersection> intersections;
 extern cell cells[MAX_CELL];
 extern setting settings;
 extern arc arcs[MAX_ARC];
+extern float delay_record[MAX_CLOCK];
 
 void printoccup(char namestr[], float delay){
 	FILE *out;
@@ -102,9 +104,10 @@ void printdelay( char namestr[] ){
 	double temp = 0.0;
 	fprintf( out,"%d ticks\n\n",settings.max_ticks );
 	fprintf( out,"#%04d\t%f\n",0,0.0 );
-	initial_diverge_flow();
+	//initial_diverge_flow();
 	for( int it = 1; it <= settings.max_ticks; ++it ){
-		fprintf( out,"#%04d\t%f\n",it,simulate(NULL,NULL,it-1,it) );
+		//fprintf( out,"#%04d\t%f\n",it,simulate(it-1,it) );
+		fprintf( out, "#%04d\t%f\n", it, delay_record[it - 1]);
 	}
 	fclose(out);
 }
