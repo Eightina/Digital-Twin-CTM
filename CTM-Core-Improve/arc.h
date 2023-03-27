@@ -1,10 +1,9 @@
 #ifndef _arc_H
 
 #define _arc_H 1
-
+#include "simulation.h"
 #include "node.h"
 #include "setting.h"
-#include "simulation.h"
 #include <vector>
 
 

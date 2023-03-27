@@ -2,9 +2,9 @@
 
 #define _node_H
 
+#include "simulation.h"
 #include "coordinate.h"
 #include <vector>
-#include "simulation.h"
 
 class node{
 public:

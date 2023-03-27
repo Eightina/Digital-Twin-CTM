@@ -10,11 +10,15 @@
 //#include "update.h"
 #include "coordinate.h"
 #include "intersection.h"
+#include "demand.h"
 //#include "input.h"
 #include "incident.h"
 #include "debug.h"
 //#include "output.h"
 //#include "initialize.h"
+#include <iostream>
+#include <vector>
+
 
 class simulation {
 public:

@@ -1,12 +1,12 @@
 #ifndef _incident_H
 
 #define _incident_H
-
+#include "simulation.h"
 #include "setting.h"
 #include "cell.h"
 #include "arc.h"
 #include "base.h"
-#include "simulation.h"
+
 
 //extern std::vector<cell> owner->cells;
 //extern std::vector<arc> owner->arcs;
@@ -16,8 +16,8 @@
 class incident{
 public:
 	static int size;
-	incident(simulation* incidentowner);
-	incident(simulation* incidentowner, int aa,float dist,int st,int et,float mf );
+	incident();
+	incident(int aa,float dist,int st,int et,float mf );
 	inline void occur();
 private:
 	simulation* owner;

@@ -60,8 +60,9 @@ intersection::intersection(simulation* intersectionowner, int i,int t,int px,int
 			if( !phases.empty() ) phases.clear();
 }
 
-intersection::intersection( int i,int t,int px,int py,
-		int min_g,int max_g,int rturn,int num_p ):id(i),type(t),pos(px,py),
+intersection::intersection(simulation* intersectionowner, int i,int t,int px,int py,
+		int min_g,int max_g,int rturn,int num_p ) : 
+	owner(intersectionowner),id(i),type(t),pos(px,py),
 		min_green(min_g),max_green(max_g),right_turning(rturn!=0),num_phases(num_p){
 			//size++;
 

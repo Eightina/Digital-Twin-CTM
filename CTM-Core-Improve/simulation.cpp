@@ -129,12 +129,12 @@ void simulation::input_geometry(FILE* in) {
 	int id, type, x, y;
 	Log->process("Going to input node...");
 	//memset(str,0,1024);
-	if (nodes.empty()) nodes.push_back(node());
+	if (nodes.empty()) nodes.push_back(node(this));
 	while (fscanf(in, "%s", str), strcmpi(str, "arc")) {
 		fscanf(in, "%d%d%d%d", &id, &type, &x, &y);
 		//int tmp_node_size = node::size + 1;
 		//nodes[tmp_node_size] = node( id,type,x,y );
-		nodes.emplace_back(id, type, x, y);
+		nodes.emplace_back(this, id, type, x, y);
 		skip(in);
 	}
 
@@ -147,14 +147,14 @@ void simulation::input_geometry(FILE* in) {
 	int ai, anf, anl;
 	float as, af, ad, adel;
 	Log->process("Going to input arc...");
-	if (arcs.empty()) arcs.push_back(arc());
+	if (arcs.empty()) arcs.push_back(arc(this));
 	while (strcmpi(str, "end")) {
 		fscanf(in, "%d%d%d%f%f%f%f", &ai, &anf, &anl, &as, &af, &ad, &adel);
 		//int tmp_arc_size = arc::size + 1;
 		//int tmp_arc_size = arcs.size();
 		//arcs[tmp_arc_size] = arc( ai,anf,anl,as,af,ad,adel );
 		//arcs[tmp_arc_size].create_cell();
-		arcs.emplace_back(ai, anf, anl, as, af, ad, adel);
+		arcs.emplace_back(this, ai, anf, anl, as, af, ad, adel);
 		arcs.back().create_cell();
 		skip(in);
 		//memset(str,0,1024);
@@ -295,7 +295,7 @@ void simulation::input_intersection(FILE* in) {
 		fscanf(in, "%d%d%d%d", &min_g, &max_g, &right_t, &num_phase);
 		//int tmp_intersection_size = intersections.size() + 1;
 		//intersections[tmp_intersection_size] = intersection( id,type,x,y,min_g,max_g,right_t,num_phase );
-		intersections.emplace_back(id, type, x, y, min_g, max_g, right_t, num_phase);
+		intersections.emplace_back(this, id, type, x, y, min_g, max_g, right_t, num_phase);
 
 		while (true) {
 			memset(str, 0, 256);
@@ -315,7 +315,7 @@ void simulation::input_intersection(FILE* in) {
 	else {
 		//int tmp_intersection_size = intersection::size + 1;
 		//intersections[tmp_intersection_size] = intersection( id,type,x,y );
-		intersections.emplace_back(id, type, x, y);
+		intersections.emplace_back(this, id, type, x, y);
 	}
 	Log->process("Input intersection successfully...");
 }

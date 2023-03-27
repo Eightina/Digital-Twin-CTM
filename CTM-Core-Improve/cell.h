@@ -1,7 +1,7 @@
 #ifndef _cell_H
 
 #define _cell_H
-
+#include "simulation.h"
 #include "base.h"
 #include "arc.h"
 #include "demand.h"
@@ -11,7 +11,7 @@
 //#include <assert.h>
 #include "debug.h"
 #include "ivector.h"
-#include "simulation.h"
+
 
 
 //extern std::vector<arc> arcs;

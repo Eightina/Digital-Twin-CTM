@@ -9,11 +9,11 @@
 //extern int present_clock;
 //extern setting owner->settings;
 
-incident::incident(simulation* incidentowner):
-	owner(incidentowner), id(0),distance(0.0),start_time(0),end_time(0),max_flow(0.0){}
+incident::incident():
+	id(0),distance(0.0),start_time(0),end_time(0),max_flow(0.0){}
 
-incident::incident(simulation* incidentowner, int aa,float dist,int st,int et,float mf ):
-	owner(incidentowner), at_arc(aa),distance(dist),start_time(st),end_time(et),max_flow(mf){
+incident::incident(int aa,float dist,int st,int et,float mf ):
+	at_arc(aa),distance(dist),start_time(st),end_time(et),max_flow(mf){
 
 	float len = owner->arcs[at_arc].get_cell_length();
 	at_cell = (int)ceil(distance / len) + owner->arcs[at_arc].get_first_cell() - 1;
