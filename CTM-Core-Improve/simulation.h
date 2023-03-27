@@ -10,21 +10,69 @@
 #include "update.h"
 #include "coordinate.h"
 #include "intersection.h"
-#include "input.h"
+//#include "input.h"
 #include "incident.h"
 #include "debug.h"
-#include "output.h"
-#include "initialize.h"
+//#include "output.h"
+//#include "initialize.h"
 
 class simulation {
 public:
 	simulation(char* inputname);
 
+	void initialize();
+
+	float excecute();
+
 	void print_start();
+
+	void output_result();
+
+	float delay0;
+
 
 
 private:
-	void initial_control() {};
+	
+
+	// input part
+	void skip(FILE* in);
+
+	void input_setting(FILE* in);
+
+	void input_geometry(FILE* in);
+
+	void input_traffic(FILE* in);
+
+	void classify_cell();
+
+	void initial_diverge_cell_index();
+
+	void initial_origin_demand();
+
+	void input_intersection(FILE* in);
+
+	void input_phase(FILE* in);
+
+	void input_control(FILE* in);
+
+	void input_event(FILE* in);
+
+	void scanfile(char namestr[]);
+
+	// initialize part
+	void initial_diverge_flow();
+
+	void initial_occupation(float* vehicle);
+
+	void initial_control();
+
+	void printoccup(char namestr[], float delay);
+
+	void printdelay(char namestr[]);
+
+	void printplan(char namestr[]);
+
 
 	int present_clock;
 	setting settings;
@@ -62,7 +110,10 @@ private:
 
 	float vehicle[MAX_CELL];
 
+	char simuname[256];
+
 	int start;
+
 
 
 	//int present_clock;

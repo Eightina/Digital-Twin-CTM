@@ -2,23 +2,24 @@
 #include <iostream>
 #include <vector>
 
-#include "ivector.h"
-#include "node.h"
-#include "setting.h"
-#include "arc.h"
-#include "cell.h"
-#include "base.h"
-#include "update.h"
-#include "coordinate.h"
-#include "intersection.h"
-#include "input.h"
-#include "incident.h"
-#include "debug.h"
-#include "output.h"
+//#include "ivector.h"
+//#include "node.h"
+//#include "setting.h"
+//#include "arc.h"
+//#include "cell.h"
+//#include "base.h"
+//#include "update.h"
+//#include "coordinate.h"
+//#include "intersection.h"
+//#include "input.h"
+//#include "incident.h"
+//#include "debug.h"
+//#include "output.h"
 // #include "nodeopt.h"
 // #include "localopt.h"
 // #include "netopt.h"
-#include "initialize.h"
+//#include "initialize.h"
+#include "simulation.h"
 
 //using namespace std;
 
@@ -59,62 +60,64 @@
 //
 //float vehicle[MAX_CELL];
 
-void print_start(){
-
-	printf("\n");
-	printf(" CTM Core Improve is a signalized intersection simulator based on Green Signal project \n");
-	printf(" implemented by cell transmission model \n");
-	printf(" CTM Core Improve is free software. You can redistribute it or modify it\n");
-	printf(" under the terms of the GNU General Public License 3.0.\n\n");
-	printf(" Green Signal Developer: Zhang Kai, Wang Yi, Xiong Yiliang.\n");
-	printf(" CTM Core Improve Developer: Orion Que @ Tongji University.\n");
-	printf(" Green Signal Last Update: April 2008.\n\n\n");
-	printf(" CTM Core Improve Last Update: March 2023.\n\n\n");
-	printf(" ******* CTM Core Improve is running now. *******\n\n");
-}
+//void print_start(){
+//
+//	printf("\n");
+//	printf(" CTM Core Improve is a signalized intersection simulator based on Green Signal project \n");
+//	printf(" implemented by cell transmission model \n");
+//	printf(" CTM Core Improve is free software. You can redistribute it or modify it\n");
+//	printf(" under the terms of the GNU General Public License 3.0.\n\n");
+//	printf(" Green Signal Developer: Zhang Kai, Wang Yi, Xiong Yiliang.\n");
+//	printf(" CTM Core Improve Developer: Orion Que @ Tongji University.\n");
+//	printf(" Green Signal Last Update: April 2008.\n\n\n");
+//	printf(" CTM Core Improve Last Update: March 2023.\n\n\n");
+//	printf(" ******* CTM Core Improve is running now. *******\n\n");
+//}
 
 int main( int argc,char *argv[] ){
 
-	char inputname[256] = "i_Test";
-	float delay1, delay2, delay0;
-	int start;
 
-	print_start();
 
-	if( argc != 2 ){
-		puts( "Please input the name of the file:" );
-		gets_s( inputname );
-	}
-	else
-		strcpy( inputname, argv[1] );
+	//char inputname[256] = "i_Test";
+	//float delay1, delay2, delay0;
+	//int start;
 
-	//input file
-	scanfile( inputname );
-	
-	printf("\n\nRESULTS\n\n");
+	//print_start();
 
-	//simulation
-	start = clock();
-	initial_control();
-	initial_occupation( exist_vehicle[0] );
-	initial_diverge_flow();
-	delay0 = simulate( 1, settings.get_max_ticks() );
-	
-	//print results
-	printf( "Total delay (before optimization): %7.2lf veh*sec.\n", delay0 );
-	printf( "Running time: %.3f seconds.\n\n", double(clock() - start) / CLOCKS_PER_SEC);
+	//if( argc != 2 ){
+	//	puts( "Please input the name of the file:" );
+	//	gets_s( inputname );
+	//}
+	//else
+	//	strcpy( inputname, argv[1] );
+
+	////input file
+	//scanfile( inputname );
+	//
+	//printf("\n\nRESULTS\n\n");
+
+	////simulation
+	//start = clock();
+	//initial_control();
+	//initial_occupation( exist_vehicle[0] );
+	//initial_diverge_flow();
+	//delay0 = simulate( 1, settings.get_max_ticks() );
+	//
+	////print results
+	//printf( "Total delay (before optimization): %7.2lf veh*sec.\n", delay0 );
+	//printf( "Running time: %.3f seconds.\n\n", double(clock() - start) / CLOCKS_PER_SEC);
 	
 	//output files
 	//printoccup(inputname, delay2);
-	printoccup(inputname, delay0);
-	printplan(inputname);
-	printdelay(inputname);
-	printf( "Timing plan output files\n >>t_%s.txt\n", &inputname[2] );
-	printf( "Cell occupation output files\n >>o_%s.txt\n", &inputname[2] );
-	printf( "Detail delay output files\n >>d_%s.txt\n", &inputname[2] );
-	printf( "\nProgram Terminated.\n\n");
+	//printoccup(inputname, delay0);
+	//printplan(inputname);
+	//printdelay(inputname);
+	//printf( "Timing plan output files\n >>t_%s.txt\n", &inputname[2] );
+	//printf( "Cell occupation output files\n >>o_%s.txt\n", &inputname[2] );
+	//printf( "Detail delay output files\n >>d_%s.txt\n", &inputname[2] );
+	//printf( "\nProgram Terminated.\n\n");
 
-	delete Log;
-	system("pause");
-	return 0;
+	//delete Log;
+	//system("pause");
+	//return 0;
 }
