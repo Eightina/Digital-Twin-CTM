@@ -4,15 +4,17 @@
 
 #include "node.h"
 #include "setting.h"
+#include "simulation.h"
 #include <vector>
 
-class arc{
+
+class arc {
 public:
 	//static int size;
 
-	arc();
+	arc( simulation* arcowner );
 
-	arc( int i,int un,int dn,float ms,float mf,float jd,float del );
+	arc( simulation* arcowner, int i, int un, int dn, float ms, float mf, float jd, float del );
 
 	int get_id()const{ return id; }
 	int get_up_node()const{ return up_node; }
@@ -36,6 +38,7 @@ public:
 	void create_cell();
 
 private:
+	simulation* owner;
 	int		id;
 	int		up_node,down_node;
 	float	max_speed,max_flow,jam_density,delta;

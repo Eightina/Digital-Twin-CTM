@@ -10,6 +10,7 @@
 #include "debug.h"
 #include "setting.h"
 #include "ivector.h"
+#include "simulation.h"
 //#include <assert.h>
 
 //extern std::vector<cell> cells;
@@ -31,6 +32,8 @@ public:
 	void add_flow( int _from,int _to );
 	/*inline void set_on();
 	inline void set_off();*/
+//private:
+//	simulation* owner;
 };
 
 
@@ -56,8 +59,8 @@ class intersection{
 public:
 
 	//int size;
-	intersection();
-	intersection( int i,int t,int px,int py );
+	intersection(simulation* intersectionowner);
+	intersection(simulation* intersectionowner, int i,int t,int px,int py );
 	intersection( int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
 
 	int get_id()const{			return id; }
@@ -79,6 +82,7 @@ public:
 	void print_phases(FILE *out);
 
 private:
+	simulation* owner;
 	int id;
 	int type;
 	coordinate pos;

@@ -78,7 +78,12 @@ int main( int argc,char *argv[] ){
 
 
 
-	//char inputname[256] = "i_Test";
+	char inputname[256] = "i_Test";
+	simulation simulator0(inputname);
+	simulator0.initialize();
+	simulator0.excecute();
+	simulator0.output_result();
+
 	//float delay1, delay2, delay0;
 	//int start;
 

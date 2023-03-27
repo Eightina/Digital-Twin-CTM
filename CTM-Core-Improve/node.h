@@ -4,13 +4,14 @@
 
 #include "coordinate.h"
 #include <vector>
+#include "simulation.h"
 
 class node{
 public:
 	//static int size;
 
-	node();
-	node( int i,int t,int _x,int _y,int ia = -1);
+	node(simulation* nodeowner);
+	node(simulation* nodeowner, int i,int t,int _x,int _y,int ia = -1);
 
 	int get_id()const{ return id; }
 	int get_type()const{ return type; }
@@ -21,6 +22,7 @@ public:
 	coordinate get_pos()const{ return pos; }
 
 private:
+	simulation* owner;
 	int id;
 	int type;
 	int x,y;
