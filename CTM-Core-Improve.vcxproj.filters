@@ -51,9 +51,6 @@
     <ClCompile Include="ctm-core-improve\setting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ctm-core-improve\vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CTM-Core-Improve\simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

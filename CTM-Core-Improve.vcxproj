@@ -115,7 +115,6 @@
     <ClCompile Include="ctm-core-improve\main.cpp" />
     <ClCompile Include="ctm-core-improve\node.cpp" />
     <ClCompile Include="ctm-core-improve\setting.cpp" />
-    <ClCompile Include="ctm-core-improve\vector.cpp" />
     <ClCompile Include="CTM-Core-Improve\simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
