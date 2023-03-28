@@ -49,6 +49,203 @@ void simulation::output_result() {
 	system("pause");
 }
 
+// shell part
+void simulation::shell_arc_emplace(int i, int un, int dn, float ms,
+		float mf, float jd, float del) {
+	if (del < 0.0) {
+		del = mf * settings.clock_tick /
+			(jd * ms - settings.clock_tick * mf);
+	}
+	nodes[un].set_arc(i);
+	nodes[dn].set_arc(i);
+	float l = nodes[un].get_pos().dist(nodes[dn].get_pos());
+	float cl = settings.cell_length_factor * ms * settings.clock_tick;
+
+	arcs.emplace_back(i, un, dn, ms, mf, jd, del, l, cl);
+	if (arcs.back().get_num_cell() < 2) {
+		char str[256];
+		sprintf(str, "In Arc#%03d  num_cell < 2 ", i);
+		Log->throws(str);
+	}
+}
+
+void simulation::shell_cell_emplace(int i, int arc, cell_type t, float len) {
+	Assert(cells.size() < MAX_CELL);
+	float max_speed = arcs[arc].get_max_speed();
+	float max_flow = arcs[arc].get_max_flow() * (settings.clock_tick);
+	float jam_density = arcs[arc].get_jam_density();
+	float delta = arcs[arc].get_delta();
+
+	cells.emplace_back(i, arc, t, len, max_speed, max_flow, jam_density, delta);
+
+
+};
+
+void simulation::shell_create_cell(arc& cell_owner) {
+	if (cells.empty()) cells.push_back(cell());
+	Assert(cells.size() <= MAX_CELL + 1);
+	float LL = cell_owner.get_length();
+	int tmp_id = cell_owner.get_id();
+	int tmp_first_cell = cells.size();
+	int tmp_last_cell = cell_owner.get_first_cell() + cell_owner.get_num_cell() - 1;
+	cell_owner.set_first_cell(tmp_first_cell);
+	cell_owner.set_last_cell(tmp_last_cell);
+	sprintf(Log->get_str(), "Arc#%03d: First Cell #%03d, Last Cell #%03d",
+				tmp_id,
+				tmp_first_cell,
+				tmp_last_cell
+			);
+	Log->process(Log->get_str());
+	int tmp_cell_size;
+	int tmp_cell_length = cell_owner.get_cell_length();
+	while (LL >= 2 * tmp_cell_length) {
+		LL -= tmp_cell_length;
+		tmp_cell_size = cells.size();
+		//owner->cells[tmp_cell_size] = cell( tmp_cell_size,id,normal,cell_length );
+		//
+		//cells.emplace_back(tmp_cell_size, id, normal, cell_length);
+		shell_cell_emplace(tmp_cell_size, tmp_id, normal, tmp_cell_length);
+		char str[256];
+		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
+		Log->process(str);
+	}
+
+	int tmp_type = nodes[cell_owner.get_down_node()].get_type();
+	if (tmp_type == 2) {
+		tmp_cell_size = cells.size();
+		//cells.emplace_back(tmp_cell_size, tmp_id, destination, LL);
+		shell_cell_emplace(tmp_cell_size, tmp_id, destination, LL);
+		char str[256];
+		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
+		Log->process(str);
+	}
+	else {
+		tmp_cell_size = cells.size();
+		//cells.emplace_back(tmp_cell_size, tmp_id, normal, LL);
+		shell_cell_emplace(tmp_cell_size, tmp_id, normal, LL);
+		char str[256];
+		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
+		Log->process(str);
+	}
+
+	if (tmp_type == 1) {
+		cells[tmp_first_cell].set_type(origin);
+	}
+
+	for (int i = tmp_first_cell + 1; i <= tmp_last_cell; ++i) {
+		cells[i].add_previous_cell(i - 1);
+	}
+	for (int i = tmp_first_cell; i < tmp_last_cell; ++i) {
+		cells[i].add_next_cell(i + 1);
+	}
+}
+
+inline void simulation::shell_diverge_update_flow(cell& cur_cell) {
+	int tmp_id = cur_cell.get_id();
+	int tmp_pv_cell0 = cur_cell.previous_cell[0];
+	//float tmp_in_flow = Min(cells[tmp_pv_cell0].send_flow(tmp_id), receive_flow());
+	float tmp_in_flow = Min(shell_send_flow(cells[tmp_pv_cell0], tmp_id), shell_receive_flow(cur_cell));
+	cur_cell.set_in_flow(tmp_in_flow);
+	shell_set_out_flow(cells[tmp_pv_cell0], tmp_in_flow, tmp_id);
+	cur_cell.out_flow = 0.0;
+}
+
+inline void simulation::shell_origin_update_flow(cell& cur_cell) {
+	cur_cell.in_flow = origin_demand[present_clock][cur_cell.get_temp_origin_demand_id()];
+}
+
+inline void simulation::shell_merge_update_flow(cell& cur_cell) {
+
+	float sum_send_flow = 0.0, pre_send_flow, this_receive_flow, part_in_flow;
+	int tmp_id = cur_cell.get_id();
+	ivector<int>& temp_pv_cell = cur_cell.previous_cell;
+	int tmp_previous_cell_size = temp_pv_cell.size();
+
+	for (int i = 0; i < tmp_previous_cell_size; ++i) {
+		//sum_send_flow += cells[temp_pv_cell[i]].send_flow(tmp_id);
+		sum_send_flow += shell_send_flow(cells[temp_pv_cell[i]], tmp_id);
+	}
+	cur_cell.set_in_flow(0.0);
+	for (int i = 0; i < tmp_previous_cell_size; ++i) {
+		pre_send_flow = shell_send_flow(cells[temp_pv_cell[i]], tmp_id);
+		this_receive_flow = pre_send_flow / sum_send_flow * shell_receive_flow(cur_cell);
+		part_in_flow = Min(pre_send_flow, this_receive_flow);
+		cur_cell.in_flow += part_in_flow;
+		//Set flow for previous cell.
+		shell_set_out_flow(cells[temp_pv_cell[i]], part_in_flow, tmp_id);
+	}
+}
+
+inline void simulation::shell_destination_update_flow(cell& cur_cell) {
+	int tmp_id = cur_cell.get_id();
+	int tmp_pv_cell0 = cur_cell.previous_cell[0];
+
+	cur_cell.in_flow = shell_send_flow(cells[tmp_pv_cell0]);
+	cur_cell.out_flow = shell_send_flow(cur_cell);
+	shell_set_out_flow(cells[tmp_pv_cell0], cur_cell.in_flow, tmp_id);
+}
+
+inline void simulation::shell_normal_update_flow(cell& cur_cell) {
+	int tmp_id = cur_cell.get_id();
+	int tmp_pv_cell0 = cur_cell.previous_cell[0];
+
+	//cur_cell.in_flow = Min(cells[tmp_pv_cell0].send_flow(tmp_id), receive_flow());
+	cur_cell.in_flow = Min(shell_send_flow(cells[tmp_pv_cell0], tmp_id), shell_receive_flow(cur_cell));
+	//cells[tmp_pv_cell0].set_out_flow(cur_cell.in_flow, tmp_id);
+	shell_set_out_flow(cells[tmp_pv_cell0], cur_cell.in_flow, tmp_id);
+}
+
+inline float simulation::shell_move_vehicle(cell& cur_cell) {
+	int tmp_id = cur_cell.get_id();
+
+	float delay = exist_vehicle[present_clock - 1][tmp_id] - cur_cell.out_flow;
+	exist_vehicle[present_clock][tmp_id] = delay + cur_cell.in_flow;
+	return delay;
+}
+
+inline float simulation::shell_send_flow(cell& cur_cell, int cn) {
+	int tmp_id = cur_cell.get_id();
+	float tmp_max_flow = cur_cell.get_max_flow();
+
+	if (cur_cell.get_type() != diverge)
+		return Min(tmp_max_flow, exist_vehicle[present_clock - 1][tmp_id]);
+
+	int i = index_next_cell[tmp_id][cn];
+
+	if (cur_cell.get_on_intersection() < 0)
+		return Min(tmp_max_flow * cur_cell.diverge_coeff[i], diverge_flow[index_diverge_cell[tmp_id]][i]);
+
+	else {
+		if (cur_cell.at_phase[i].empty())
+			return Min(tmp_max_flow * cur_cell.diverge_coeff[i], diverge_flow[index_diverge_cell[tmp_id]][i]);
+		else {
+			for (int j = 0; j < cur_cell.at_phase[i].top; ++j)
+				if (omega[present_clock][cur_cell.get_on_intersection()][cur_cell.at_phase[i][j]])
+					return Min(tmp_max_flow * cur_cell.diverge_coeff[i], diverge_flow[index_diverge_cell[tmp_id]][i]);
+		}
+	}
+	return 0.0;
+}
+
+inline float simulation::shell_receive_flow(cell& cur_cell) {
+	return Min(cur_cell.get_max_flow(),
+		cur_cell.get_delta() * (cur_cell.get_max_vehicle() - exist_vehicle[present_clock - 1][cur_cell.get_id()]));
+}
+
+inline void simulation::shell_set_out_flow(cell& cur_cell, const float& out, int next_cell_id) {
+	int temp_id = cur_cell.get_id();
+
+	if (cur_cell.get_type() == diverge) {
+		int i = index_next_cell[temp_id][next_cell_id];
+		diverge_flow[index_diverge_cell[temp_id]][i] -= out;
+		diverge_flow[index_diverge_cell[temp_id]][i] += cur_cell.in_flow * cur_cell.diverge_coeff[i];
+		cur_cell.out_flow += out;
+	}
+	else {
+		cur_cell.out_flow = out;
+	}
+}
+
 // input part
 void simulation::skip(FILE* in) {
 	//Log->process("Going to skipping line...\n");
@@ -147,15 +344,17 @@ void simulation::input_geometry(FILE* in) {
 	int ai, anf, anl;
 	float as, af, ad, adel;
 	Log->process("Going to input arc...");
-	if (arcs.empty()) arcs.push_back(arc(this));
+	if (arcs.empty()) arcs.push_back(arc());
 	while (strcmpi(str, "end")) {
 		fscanf(in, "%d%d%d%f%f%f%f", &ai, &anf, &anl, &as, &af, &ad, &adel);
 		//int tmp_arc_size = arc::size + 1;
 		//int tmp_arc_size = arcs.size();
 		//arcs[tmp_arc_size] = arc( ai,anf,anl,as,af,ad,adel );
 		//arcs[tmp_arc_size].create_cell();
-		arcs.emplace_back(this, ai, anf, anl, as, af, ad, adel);
-		arcs.back().create_cell();
+		//arcs.emplace_back(ai, anf, anl, as, af, ad, adel);
+		shell_arc_emplace(ai, anf, anl, as, af, ad, adel);
+		//arcs.back().create_cell();
+		shell_create_cell(arcs.back());
 		skip(in);
 		//memset(str,0,1024);
 		fscanf(in, "%s", str);
@@ -652,19 +851,24 @@ void simulation::update_flow() {
 	std::vector<cell>& cl = cells;
 
 	for (int i = 0; i < origin_size; ++i)
-		cl[origin_set[i]].origin_update_flow();
-
+		shell_origin_update_flow(cl[origin_set[i]]);
+		//cl[origin_set[i]].origin_update_flow();
+	
 	for (int i = 0; i < diverge_size; ++i)
-		cl[diverge_set[i]].diverge_update_flow();
-
+		shell_diverge_update_flow(cl[diverge_set[i]]);
+		//cl[diverge_set[i]].diverge_update_flow();
+	
 	for (int i = 0; i < merge_size; ++i)
-		cl[merge_set[i]].merge_update_flow();
+		shell_merge_update_flow(cl[merge_set[i]]);
+		//cl[merge_set[i]].merge_update_flow();
 
 	for (int i = 0; i < normal_size; ++i)
-		cl[normal_set[i]].normal_update_flow();
+		shell_normal_update_flow(cl[normal_set[i]]);
+		//cl[normal_set[i]].normal_update_flow();
 
 	for (int i = 0; i < destination_size; ++i)
-		cl[destination_set[i]].destination_update_flow();
+		shell_destination_update_flow(cl[destination_set[i]]);
+		//cl[destination_set[i]].destination_update_flow();
 
 }
 
@@ -679,7 +883,8 @@ float simulation::update_occupation() {
 	//for (int i = 1; i <= cell::size; ++i) {
 	for (int i = 1; i < cells.size(); ++i)
 		if (cells[i].get_type() != destination && cells[i].get_type() != origin)
-			delay += cells[i].move_vehicle();
+			//delay += cells[i].move_vehicle();
+			delay += shell_move_vehicle(cells[i]);
 	return delay;
 }
 

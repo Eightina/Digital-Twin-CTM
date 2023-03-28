@@ -75,7 +75,30 @@ public:
 	int start;
 
 private:
-	
+	//shell part
+	void shell_arc_emplace(int i, int un, int dn, float ms, float mf, float jd, float del);
+
+	void shell_cell_emplace(int i, int arc, cell_type t, float len);
+
+	void shell_create_cell(arc& cell_owner);
+
+	void shell_diverge_update_flow(cell& cur_cell);
+
+	void shell_origin_update_flow(cell& cur_cell);
+
+	void shell_merge_update_flow(cell& cur_cell);
+
+	void shell_destination_update_flow(cell& cur_cell);
+
+	void shell_normal_update_flow(cell& cur_cell);
+
+	float shell_move_vehicle(cell& cur_cell);
+
+	float shell_send_flow(cell& cur_cell, int cn = 0);
+
+	float shell_receive_flow(cell& cur_cell);
+
+	void shell_set_out_flow(cell& cur_cell, const float& out, int next_cell_id);
 
 	// input part
 	void skip(FILE* in);

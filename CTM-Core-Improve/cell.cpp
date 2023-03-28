@@ -17,7 +17,7 @@
 
 using Cell::merge;
 
-cell::cell(simulation* cellowner) : owner(cellowner), id(0), on_arc(0), in_flow(-1.0), out_flow(-1.0) {
+cell::cell() : id(0), on_arc(0), in_flow(-1.0), out_flow(-1.0) {
 	/*if( !signals.empty() ) signals.clear();*/
 	if (!previous_cell.empty()) previous_cell.clear();
 	if (!next_cell.empty()) next_cell.clear();
@@ -30,16 +30,18 @@ cell::cell(simulation* cellowner) : owner(cellowner), id(0), on_arc(0), in_flow(
 		if (!at_phase[i].empty()) at_phase[i].clear();
 }
 
-cell::cell(simulation* cellowner, int i, int arc, cell_type t, float len) :
-	owner(cellowner), id(i), type(t), on_arc(arc), length(len) {
+cell::cell(int i, int arc, cell_type t, float len,
+	float ms, float mf, float jd, float d) :
+	id(i), type(t), on_arc(arc), length(len),
+	max_speed(ms), max_flow(mf), jam_density(jd), delta(d) {
 		//Assert(cells.size()<MAX_CELL);
 		
 		//size++;
 		
-		max_speed = owner->arcs[arc].get_max_speed();
-		max_flow = owner->arcs[arc].get_max_flow()*(owner->settings.clock_tick);
-		jam_density = owner->arcs[arc].get_jam_density();
-		delta = owner->arcs[arc].get_delta();
+		//max_speed = owner->arcs[arc].get_max_speed();
+		//max_flow = owner->arcs[arc].get_max_flow()*(owner->settings.clock_tick);
+		//jam_density = owner->arcs[arc].get_jam_density();
+		//delta = owner->arcs[arc].get_delta();
 		/*if( !signals.empty() ) signals.clear();*/
 		if( !previous_cell.empty() ) previous_cell.clear();
 		if( !next_cell.empty() ) next_cell.clear();
