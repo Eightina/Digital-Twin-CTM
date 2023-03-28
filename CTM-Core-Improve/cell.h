@@ -1,7 +1,6 @@
 #ifndef _cell_H
 
 #define _cell_H
-#include "simulation.h"
 #include "base.h"
 #include "arc.h"
 #include "demand.h"
@@ -73,7 +72,7 @@ public:
 
 	void set_type(cell_type t){	type = t;	}
 	void set_max_speed( const float& ms ){ max_speed = ms; }
-	void set_max_flow( const float& mf ){ max_flow = mf*((owner->settings).clock_tick); }
+	//void set_max_flow( const float& mf ){ max_flow = mf*((owner->settings).clock_tick); }
 	void set_jam_density( const float& jd ){ jam_density = jd; }
 	void set_delta( const float& del ){ delta = del; }
 	void set_length( const float& len ){ length = len; }
@@ -105,7 +104,8 @@ public:
 	
 	inline void add_at_phase( const int& cell_id,const int& phase_id );
 	float	in_flow,
-			out_flow;
+			out_flow,
+			max_flow;
 	ivector<int>		previous_cell, next_cell,
 		/*signals,*/turning;
 	ivector<float>	diverge_coeff;
@@ -119,7 +119,7 @@ private:
 	int			on_arc;
 	float		length;
 	float		max_speed,
-				max_flow,
+				//max_flow,
 				jam_density,delta;
 
 

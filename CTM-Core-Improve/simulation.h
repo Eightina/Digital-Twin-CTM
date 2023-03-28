@@ -100,6 +100,8 @@ private:
 
 	void shell_set_out_flow(cell& cur_cell, const float& out, int next_cell_id);
 
+	void shell_set_max_flow(cell& cur_cell, const float& mf);
+
 	// input part
 	void skip(FILE* in);
 

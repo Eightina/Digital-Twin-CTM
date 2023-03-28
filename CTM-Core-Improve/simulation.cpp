@@ -246,6 +246,10 @@ inline void simulation::shell_set_out_flow(cell& cur_cell, const float& out, int
 	}
 }
 
+inline void simulation::shell_set_max_flow(cell& cur_cell, const float& mf) {
+	cur_cell.max_flow = mf * ((settings).clock_tick);
+}
+
 // input part
 void simulation::skip(FILE* in) {
 	//Log->process("Going to skipping line...\n");
@@ -383,7 +387,9 @@ void simulation::input_traffic(FILE* in) {
 			origin_node, nodes[origin_node].get_arc(), arcs[nodes[origin_node].get_arc()].get_first_cell());
 		Log->process(Log->get_str());
 		int id = arcs[nodes[origin_node].get_arc()].get_first_cell();
+
 		cells[id].add_demand(sec, traffic_demand);
+
 		skip(in);
 		__count++;
 	}
@@ -568,7 +574,7 @@ void simulation::input_event(FILE* in) {
 		int st = sy * 3600 + sm * 60 + ss;
 		int et = ey * 3600 + em * 60 + es;
 		int tmp_incident_size = incident::size + 1;
-		incidents[tmp_incident_size] = incident(at_arc, dist, st, et, mf);
+		//incidents[tmp_incident_size] = incident(at_arc, dist, st, et, mf);
 		skip(in);
 	}
 	Log->process("Input incident successfully...");

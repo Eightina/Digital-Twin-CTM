@@ -45,29 +45,29 @@ void phase::add_flow(int _from, int _to){
 //	}
 //}
 
-intersection::intersection(simulation* intersectionowner) : 
-	owner(intersectionowner),id(0),type(0),pos(0,0),
+intersection::intersection() : 
+	id(0),type(0),pos(0,0),
 		min_green(0),max_green(0),right_turning(true),num_phases(0){
 			if( !connected_nodes.empty() ) connected_nodes.clear();
 			if( !phases.empty() ) phases.clear();
 }
 
 
-intersection::intersection(simulation* intersectionowner, int i,int t,int px,int py ) : 
-	owner(intersectionowner),id(i),type(t),pos(px,py){
+intersection::intersection(int i,int t,int px,int py ) : 
+	id(i),type(t),pos(px,py){
 			//size++;
 			if( !connected_nodes.empty() ) connected_nodes.clear();
 			if( !phases.empty() ) phases.clear();
 }
 
-intersection::intersection(simulation* intersectionowner, int i,int t,int px,int py,
+intersection::intersection(int i,int t,int px,int py,
 		int min_g,int max_g,int rturn,int num_p ) : 
-	owner(intersectionowner),id(i),type(t),pos(px,py),
+	id(i),type(t),pos(px,py),
 		min_green(min_g),max_green(max_g),right_turning(rturn!=0),num_phases(num_p){
 			//size++;
 
-			min_green_ticks = (int)ceil(min_green * 1.0 / (owner->settings.clock_tick));
-			max_green_ticks = (int)floor(max_green * 1.0 / (owner->settings.clock_tick));
+			min_green_ticks = (int)ceil(min_green * 1.0 / (settings.clock_tick));
+			max_green_ticks = (int)floor(max_green * 1.0 / (settings.clock_tick));
 
 			if( !connected_nodes.empty() ) connected_nodes.clear();
 			if( !phases.empty() ) phases.clear();

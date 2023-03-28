@@ -58,9 +58,9 @@ cell::cell(int i, int arc, cell_type t, float len,
 
 
 void cell::add_demand( const int& clock,const float& traffic ){
-	char str[256];
-	sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
-	owner->Log->process( str );
+	//char str[256];
+	//sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
+	//owner->Log->process( str );
 	if( type != origin ) type = origin;
 	if( temp_origin_demand_id < 0 ) temp_origin_demand_id = owner->temp_origin_demand_size++;
 	owner->temp_origin_demand[temp_origin_demand_id][num_demand++] = demand( clock,traffic );

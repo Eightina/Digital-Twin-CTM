@@ -1,7 +1,6 @@
 #ifndef _incident_H
 
 #define _incident_H
-#include "simulation.h"
 #include "setting.h"
 #include "cell.h"
 #include "arc.h"
@@ -17,10 +16,10 @@ class incident{
 public:
 	static int size;
 	incident();
-	incident(int aa,float dist,int st,int et,float mf );
-	inline void occur();
+	//incident(int aa,float dist,int st,int et,float mf );
+	//inline void occur();
 private:
-	simulation* owner;
+	//simulation* owner;
 	int id;
 	int at_arc;
 	float distance;
@@ -31,12 +30,12 @@ private:
 };
 
 
-inline void incident::occur(){
-	if( owner->present_clock == start_clock )
-		owner->cells[at_cell].set_max_flow(max_flow);
-	if( owner->present_clock == end_clock )
-		owner->cells[at_cell].set_max_flow( owner->arcs[at_arc].get_max_flow() );
-}
+//inline void incident::occur(){
+//	if( present_clock == start_clock )
+//		cells[at_cell].set_max_flow(max_flow);
+//	if( present_clock == end_clock )
+//		cells[at_cell].set_max_flow( owner->arcs[at_arc].get_max_flow() );
+//}
 
 #endif
 

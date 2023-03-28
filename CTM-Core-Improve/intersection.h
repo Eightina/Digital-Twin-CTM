@@ -2,7 +2,6 @@
 
 #define _intersection_H
 
-#include "simulation.h"
 #include "coordinate.h"
 #include <vector>
 #include "cell.h"
@@ -60,9 +59,9 @@ class intersection{
 public:
 
 	//int size;
-	intersection(simulation* intersectionowner);
-	intersection(simulation* intersectionowner, int i,int t,int px,int py );
-	intersection(simulation* intersectionowner, int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
+	intersection();
+	intersection(int i,int t,int px,int py );
+	intersection(int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
 
 	int get_id()const{			return id; }
 	int get_type()const{		return type; }
@@ -83,7 +82,7 @@ public:
 	void print_phases(FILE *out);
 
 private:
-	simulation* owner;
+	//simulation* owner;
 	int id;
 	int type;
 	coordinate pos;
