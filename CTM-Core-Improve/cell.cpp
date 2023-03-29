@@ -71,14 +71,14 @@ int cell::add_next_cell( const int& i ){
 	//	owner->Log->throws("In cell::add_next_cell( int i ) : the i out range." );
 	//	exit(1);
 	//}
-	for( int ii = 0; ii < next_cell.top; ++ii ) 
-		if( next_cell.a[ii] == i ) return;
+	//for( int ii = 0; ii < next_cell.top; ++ii ) 
+	//	if( next_cell.a[ii] == i ) return;
 	next_cell.push_back(i);
 	if( get_type() == normal && next_cell.size() > 1 ){
 		set_type( diverge );
 	}
-	return next_cell.top - 1;
 	//owner->index_next_cell[id][i] = next_cell.top - 1;
+	return next_cell.top - 1;
 
 	/*if( signals.size() < next_cell.size() ) 
 		signals.push_back(1);*/

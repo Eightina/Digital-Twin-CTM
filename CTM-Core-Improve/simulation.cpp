@@ -87,7 +87,7 @@ void simulation::shell_create_cell(arc& cell_owner) {
 	float LL = cell_owner.get_length();
 	int tmp_id = cell_owner.get_id();
 	int tmp_first_cell = cells.size();
-	int tmp_last_cell = cell_owner.get_first_cell() + cell_owner.get_num_cell() - 1;
+	int tmp_last_cell = tmp_first_cell + cell_owner.get_num_cell() - 1;
 	cell_owner.set_first_cell(tmp_first_cell);
 	cell_owner.set_last_cell(tmp_last_cell);
 	sprintf(Log->get_str(), "Arc#%03d: First Cell #%03d, Last Cell #%03d",
@@ -277,9 +277,11 @@ void simulation::shell_add_next_cell(cell& cur_cell, const int& i) {
 		Log->throws("In cell::add_next_cell( int i ) : the i out range.");
 		exit(1);
 	}
+	int tmp = cur_cell.next_cell.top;
+	for (int ii = 0; ii < tmp; ++ii)
+		if (cur_cell.next_cell.a[ii] == i) return;
+
 	index_next_cell[cur_cell.get_id()][i] = cur_cell.add_next_cell(i);
-	/*if( signals.size() < next_cell.size() )
-		signals.push_back(1);*/
 }
 
 void simulation::shell_add_next_cell(cell& cur_cell, const int& i, const float& g) {
