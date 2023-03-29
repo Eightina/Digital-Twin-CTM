@@ -2,11 +2,10 @@
 
 
 
-simulation::simulation(char* inputname) {
-	std::cout << "simulation object" << inputname << std::endl;
+simulation::simulation(char* inputname) : simuname(inputname) {
+	std::cout << "simulation object " << inputname << std::endl;
 	print_start();
 	scanfile(inputname);
-	strcpy(inputname, simuname);
 }
 
 void simulation::initialize() {
@@ -14,7 +13,6 @@ void simulation::initialize() {
 	initial_control();
 	initial_occupation(exist_vehicle[0]);
 	initial_diverge_flow();
-	delay0 = simulate(1, settings.get_max_ticks());
 }
 
 float simulation::excecute() {
@@ -252,16 +250,10 @@ inline void simulation::shell_set_max_flow(cell& cur_cell, const float& mf) {
 }
 
 void simulation::shell_add_demand(cell& cur_cell, const int& clock, const float& traffic) {
-	//char str[256];
-	//sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
-	//owner->Log->process( str );
-	//if (cur_cell.get_type() != origin) type = origin;
-	int tmp_temp_origin_demand_id = cur_cell.get_temp_origin_demand_id();
-	int temp_num_demand = cur_cell.get_num_demand();
 	if (cur_cell.get_type() != origin) cur_cell.set_type(origin);
-	if (tmp_temp_origin_demand_id < 0) cur_cell.set_temp_origin_demand_id(temp_origin_demand_size++);
-	temp_origin_demand[tmp_temp_origin_demand_id][temp_num_demand] = demand(clock, traffic);
-	cur_cell.set_num_demand(temp_num_demand + 1);
+	if (cur_cell.get_temp_origin_demand_id() < 0) cur_cell.set_temp_origin_demand_id(temp_origin_demand_size++);
+	temp_origin_demand[cur_cell.get_temp_origin_demand_id()][cur_cell.get_num_demand()] = demand(clock, traffic);
+	cur_cell.set_num_demand(cur_cell.get_num_demand() + 1);
 }
 
 void simulation::shell_add_previous_cell(cell& cur_cell, const int& i) {
@@ -775,7 +767,7 @@ void simulation::printoccup(char namestr[], float delay) {
 	int i, j, k;
 
 	fprintf(out, "%d nodes, %d arcs, %d intersections, %d ticks\n\n",
-		nodes.size(), arcs.size(), intersections.size(), settings.get_max_ticks());
+		nodes.size()-1, arcs.size()-1, intersections.size(), settings.get_max_ticks());
 
 	//Output arcs and cells.
 	coordinate first, last, interval;
