@@ -133,10 +133,11 @@ void simulation::shell_create_cell(arc& cell_owner) {
 	}
 
 	for (int i = tmp_first_cell + 1; i <= tmp_last_cell; ++i) {
-		cells[i].add_previous_cell(i - 1);
+		//cells[i].add_previous_cell(i - 1);
+		shell_add_previous_cell(cells[i], i - 1);
 	}
 	for (int i = tmp_first_cell; i < tmp_last_cell; ++i) {
-		cells[i].add_next_cell(i + 1);
+		shell_add_next_cell(cells[i], i + 1);
 	}
 }
 
@@ -250,6 +251,67 @@ inline void simulation::shell_set_max_flow(cell& cur_cell, const float& mf) {
 	cur_cell.max_flow = mf * ((settings).clock_tick);
 }
 
+void simulation::shell_add_demand(cell& cur_cell, const int& clock, const float& traffic) {
+	//char str[256];
+	//sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
+	//owner->Log->process( str );
+	//if (cur_cell.get_type() != origin) type = origin;
+	int tmp_temp_origin_demand_id = cur_cell.get_temp_origin_demand_id();
+	int temp_num_demand = cur_cell.get_num_demand();
+	if (cur_cell.get_type() != origin) cur_cell.set_type(origin);
+	if (tmp_temp_origin_demand_id < 0) cur_cell.set_temp_origin_demand_id(temp_origin_demand_size++);
+	temp_origin_demand[tmp_temp_origin_demand_id][temp_num_demand] = demand(clock, traffic);
+	cur_cell.set_num_demand(temp_num_demand + 1);
+}
+
+void simulation::shell_add_previous_cell(cell& cur_cell, const int& i) {
+	if (i < 0) {
+		Log->throws("In cell::add_previous_cell( int i ) : the i out range.");
+		exit(1);
+	}
+	cur_cell.add_previous_cell(i);
+}
+
+void simulation::shell_add_next_cell(cell& cur_cell, const int& i) {
+	if (i < 0) {
+		Log->throws("In cell::add_next_cell( int i ) : the i out range.");
+		exit(1);
+	}
+	index_next_cell[cur_cell.get_id()][i] = cur_cell.add_next_cell(i);
+	/*if( signals.size() < next_cell.size() )
+		signals.push_back(1);*/
+}
+
+void simulation::shell_add_next_cell(cell& cur_cell, const int& i, const float& g) {
+	cur_cell.next_cell.push_back(i);
+	index_next_cell[cur_cell.get_id()][i] = cur_cell.next_cell.top - 1;
+	cur_cell.add_next_cell(i, g);
+	/*if( signals.size() < next_cell.size() )
+		signals.push_back(1);*/
+}
+
+void simulation::shell_add_next_cell(cell& cur_cell, const int& i, const float& g, const int& t) {
+	if (i < 0) {
+		Log->throws("In cell::add_next_cell( int i,float g,int t ) : the i out range.");
+		exit(1);
+	}
+	cur_cell.next_cell.push_back(i);
+	index_next_cell[cur_cell.get_id()][i] = cur_cell.next_cell.top - 1;
+	cur_cell.add_next_cell(i, g, t);
+}
+
+void simulation::shell_print_phases(intersection& cur_intersection, FILE* out) {
+	fprintf(out, "%d phases\n", cur_intersection.get_num_phases());
+	int count_id = 1;
+	for (int i = 0; i < cur_intersection.phases.top; ++i) {
+		fprintf(out, "Phase %d (%d)", count_id++, cur_intersection.phases[i].from_arc.top);
+		for (int ii = 0; ii < cur_intersection.phases[i].from_arc.top; ++ii) {
+			fprintf(out, "\tfrom %d to %d", arcs[cur_intersection.phases[i].from_arc.a[ii]].get_down_node(),
+				arcs[cur_intersection.phases[i].to_arc[ii]].get_up_node());
+		}
+		fprintf(out, "\n");
+	}
+}
 // input part
 void simulation::skip(FILE* in) {
 	//Log->process("Going to skipping line...\n");
@@ -330,12 +392,12 @@ void simulation::input_geometry(FILE* in) {
 	int id, type, x, y;
 	Log->process("Going to input node...");
 	//memset(str,0,1024);
-	if (nodes.empty()) nodes.push_back(node(this));
+	if (nodes.empty()) nodes.push_back(node());
 	while (fscanf(in, "%s", str), strcmpi(str, "arc")) {
 		fscanf(in, "%d%d%d%d", &id, &type, &x, &y);
 		//int tmp_node_size = node::size + 1;
 		//nodes[tmp_node_size] = node( id,type,x,y );
-		nodes.emplace_back(this, id, type, x, y);
+		nodes.emplace_back(id, type, x, y);
 		skip(in);
 	}
 
@@ -388,8 +450,8 @@ void simulation::input_traffic(FILE* in) {
 		Log->process(Log->get_str());
 		int id = arcs[nodes[origin_node].get_arc()].get_first_cell();
 
-		cells[id].add_demand(sec, traffic_demand);
-
+		//add_demand();
+		shell_add_demand(cells[id], sec, traffic_demand);
 		skip(in);
 		__count++;
 	}
@@ -410,9 +472,9 @@ void simulation::input_traffic(FILE* in) {
 		from = arcs[from].get_last_cell();
 		to = arcs[to].get_first_cell();
 		//		cells[from].set_type(diverge);
-		cells[from].add_next_cell(to, ceoff, type);
+		shell_add_next_cell(cells[from], to, ceoff, type);
 		cells[from].set_type(diverge);
-		cells[to].add_previous_cell(from);
+		shell_add_previous_cell(cells[to], from);
 		skip(in);
 		//memset(str,0,1024);
 		fscanf(in, "%s", str);
@@ -431,8 +493,9 @@ void simulation::input_traffic(FILE* in) {
 		from = arcs[from].get_last_cell();
 		to = arcs[to].get_first_cell();
 		//		cells[to].set_type(Cell::merge);
-		cells[to].add_previous_cell(from);
-		cells[from].add_next_cell(to);
+		shell_add_previous_cell(cells[to], from);
+		//cells[from].add_next_cell(to);
+		shell_add_next_cell(cells[from], to);
 		skip(in);
 		//memset(str,0,1024);
 		fscanf(in, "%s", str);
@@ -500,7 +563,7 @@ void simulation::input_intersection(FILE* in) {
 		fscanf(in, "%d%d%d%d", &min_g, &max_g, &right_t, &num_phase);
 		//int tmp_intersection_size = intersections.size() + 1;
 		//intersections[tmp_intersection_size] = intersection( id,type,x,y,min_g,max_g,right_t,num_phase );
-		intersections.emplace_back(this, id, type, x, y, min_g, max_g, right_t, num_phase);
+		intersections.emplace_back(id, type, x, y, min_g, max_g, right_t, num_phase, settings.clock_tick);
 
 		while (true) {
 			memset(str, 0, 256);
@@ -520,7 +583,7 @@ void simulation::input_intersection(FILE* in) {
 	else {
 		//int tmp_intersection_size = intersection::size + 1;
 		//intersections[tmp_intersection_size] = intersection( id,type,x,y );
-		intersections.emplace_back(this, id, type, x, y);
+		intersections.emplace_back(id, type, x, y);
 	}
 	Log->process("Input intersection successfully...");
 }
@@ -802,7 +865,7 @@ void simulation::printplan(char namestr[]) {
 	fprintf(out, "%d intersections, %d ticks\n\n", intersections.size(), settings.get_max_ticks());
 	for (int i = 0; i < intersections.size(); ++i) {
 		fprintf(out, "intersection %d\n", i + 1);
-		intersections[i].print_phases(out);
+		shell_print_phases(intersections[i], out);
 		/*fprintf( out,"%d phases\n",intersections[i].get_num_phases() );
 		int count_id = 1;
 		for( phase* iter = intersections[i].get_phases_begin();
@@ -880,7 +943,7 @@ void simulation::update_flow() {
 
 void simulation::update_event() {
 	for (int i = 1; i <= incident::size; ++i) {
-		incidents[i].occur();
+		//incidents[i].occur();
 	}
 }
 
@@ -904,7 +967,7 @@ float simulation::simulate(int st, int et) {
 
 		present_clock = it;
 		for (int i = 1; i <= incident::size; ++i) {
-			incidents[i].occur();
+			//incidents[i].occur();
 		}
 		update_flow();
 		//for( int i = 1; i <= cell::size; ++i ){

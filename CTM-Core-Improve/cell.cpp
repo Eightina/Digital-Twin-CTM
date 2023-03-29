@@ -57,37 +57,39 @@ cell::cell(int i, int arc, cell_type t, float len,
 
 
 
-void cell::add_demand( const int& clock,const float& traffic ){
+//void cell::add_demand( const int& clock,const float& traffic ){
 	//char str[256];
 	//sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
 	//owner->Log->process( str );
-	if( type != origin ) type = origin;
-	if( temp_origin_demand_id < 0 ) temp_origin_demand_id = owner->temp_origin_demand_size++;
-	owner->temp_origin_demand[temp_origin_demand_id][num_demand++] = demand( clock,traffic );
-}
+	//if( type != origin ) type = origin;
+	//if( temp_origin_demand_id < 0 ) temp_origin_demand_id = owner->temp_origin_demand_size++;
+	//owner->temp_origin_demand[temp_origin_demand_id][num_demand++] = demand( clock,traffic );
+//}
 
-void cell::add_next_cell( const int& i ){
-	if( i < 0 ){
-		owner->Log->throws("In cell::add_next_cell( int i ) : the i out range." );
-		exit(1);
-	}
+int cell::add_next_cell( const int& i ){
+	//if( i < 0 ){
+	//	owner->Log->throws("In cell::add_next_cell( int i ) : the i out range." );
+	//	exit(1);
+	//}
 	for( int ii = 0; ii < next_cell.top; ++ii ) 
 		if( next_cell.a[ii] == i ) return;
 	next_cell.push_back(i);
-	owner->index_next_cell[id][i] = next_cell.top - 1;
 	if( get_type() == normal && next_cell.size() > 1 ){
 		set_type( diverge );
 	}
+	return next_cell.top - 1;
+	//owner->index_next_cell[id][i] = next_cell.top - 1;
+
 	/*if( signals.size() < next_cell.size() ) 
 		signals.push_back(1);*/
 }
 
 
 void cell::add_previous_cell( const int& i ){
-	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range." );
-		exit(1);
-	}
+	//if( i < 0 ){
+	//	owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range." );
+	//	exit(1);
+	//}
 	for( int ii = 0; ii < (int)previous_cell.size(); ++ii ) 
 		if( previous_cell[ii] == i ) return;
 	previous_cell.push_back(i);
@@ -108,8 +110,8 @@ void cell::add_diverge_coeff( const float& g ){
 }
 
 void cell::add_next_cell( const int& i,const float& g ){
-	next_cell.push_back(i);
-	owner->index_next_cell[id][i] = next_cell.top - 1;
+	//next_cell.push_back(i);
+	//owner->index_next_cell[id][i] = next_cell.top - 1;
 	if( get_type() == normal && next_cell.size() > 1 ){
 		set_type( diverge );
 	}
@@ -119,12 +121,12 @@ void cell::add_next_cell( const int& i,const float& g ){
 }
 
 void cell::add_next_cell( const int& i,const float& g,const int& t ){
-	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range." );
-		exit(1);
-	}
-	next_cell.push_back(i);
-	owner->index_next_cell[id][i] = next_cell.top - 1;
+	//if( i < 0 ){
+	//	owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range." );
+	//	exit(1);
+	//}
+	//next_cell.push_back(i);
+	//owner->index_next_cell[id][i] = next_cell.top - 1;
 	diverge_coeff.push_back(g);
 	if( get_type() == normal && next_cell.size() > 1 ){
 		set_type( diverge );

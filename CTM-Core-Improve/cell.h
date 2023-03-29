@@ -78,16 +78,17 @@ public:
 	void set_length( const float& len ){ length = len; }
 	void set_in_flow( const float& in ){ in_flow = in; }
 	void set_on_intersection( const int& id ){ on_intersection = id; }
-
+	void set_temp_origin_demand_id(const int& i)  { temp_origin_demand_id = i; }
+	void set_num_demand(const int& i) { num_demand = i; }
 	//inline void set_out_flow( const float& out, int next_cell_id = -1);
 	void add_previous_cell( const int& i );
-	void add_next_cell( const int& i );
+	int add_next_cell( const int& i );
 	void add_diverge_coeff( const float& g );
 
 	void add_next_cell( const int& i, const float& g );
 	void add_next_cell( const int& i, const float& g, const int& t );
 
-	void add_demand( const int& clock, const float& traffic );
+	//void add_demand( const int& clock, const float& traffic );
 
 	//inline void diverge_update_flow();
 	//inline void merge_update_flow();

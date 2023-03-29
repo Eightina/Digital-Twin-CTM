@@ -16,6 +16,9 @@
     <Filter Include="input">
       <UniqueIdentifier>{2e940265-6bf5-4573-acc2-2b281561d79d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\decreapted">
+      <UniqueIdentifier>{17db0ea5-7ccc-40c8-9750-c60ec516505f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ctm-core-improve\arc.cpp">
@@ -77,9 +80,6 @@
     <ClInclude Include="ctm-core-improve\incident.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ctm-core-improve\initialize.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ctm-core-improve\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -95,17 +95,20 @@
     <ClInclude Include="ctm-core-improve\node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ctm-core-improve\output.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ctm-core-improve\setting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ctm-core-improve\update.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CTM-Core-Improve\simulation.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ctm-core-improve\initialize.h">
+      <Filter>Header Files\decreapted</Filter>
+    </ClInclude>
+    <ClInclude Include="ctm-core-improve\output.h">
+      <Filter>Header Files\decreapted</Filter>
+    </ClInclude>
+    <ClInclude Include="ctm-core-improve\update.h">
+      <Filter>Header Files\decreapted</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

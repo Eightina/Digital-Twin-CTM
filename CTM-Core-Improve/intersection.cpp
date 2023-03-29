@@ -61,20 +61,20 @@ intersection::intersection(int i,int t,int px,int py ) :
 }
 
 intersection::intersection(int i,int t,int px,int py,
-		int min_g,int max_g,int rturn,int num_p ) : 
+		int min_g,int max_g,int rturn,int num_p, int clock_tick ) : 
 	id(i),type(t),pos(px,py),
 		min_green(min_g),max_green(max_g),right_turning(rturn!=0),num_phases(num_p){
 			//size++;
 
-			min_green_ticks = (int)ceil(min_green * 1.0 / (settings.clock_tick));
-			max_green_ticks = (int)floor(max_green * 1.0 / (settings.clock_tick));
+			min_green_ticks = (int)ceil(min_green * 1.0 / (clock_tick));
+			max_green_ticks = (int)floor(max_green * 1.0 / (clock_tick));
 
 			if( !connected_nodes.empty() ) connected_nodes.clear();
 			if( !phases.empty() ) phases.clear();
 			while( num_phases > phases.size() ) phases.push_back( phase() );
 			char str[256];
 			sprintf(str,"phases::size %03d",phases.size() );
-			owner->Log->process( str );
+			//owner->Log->process( str );
 }
 
 void intersection::add_node( const int& i ){
@@ -98,18 +98,18 @@ void intersection::add_phase( int i,const int& from_arc,const int& to_arc ){
 //}
 
 
-void intersection::print_phases( FILE *out ){
-	fprintf( out,"%d phases\n",num_phases );
-	int count_id = 1;
-	for( int i = 0; i < phases.top; ++i ){
-		fprintf( out,"Phase %d (%d)",count_id++,phases[i].from_arc.top );
-		for( int ii = 0; ii < phases[i].from_arc.top; ++ii ){
-			fprintf( out,"\tfrom %d to %d",owner->arcs[phases[i].from_arc.a[ii]].get_down_node(),
-				owner->arcs[phases[i].to_arc[ii]].get_up_node() );
-		}
-		fprintf( out,"\n" );
-	}
-}
+//void intersection::print_phases( FILE *out ){
+//	fprintf( out,"%d phases\n",num_phases );
+//	int count_id = 1;
+//	for( int i = 0; i < phases.top; ++i ){
+//		fprintf( out,"Phase %d (%d)",count_id++,phases[i].from_arc.top );
+//		for( int ii = 0; ii < phases[i].from_arc.top; ++ii ){
+//			fprintf( out,"\tfrom %d to %d",owner->arcs[phases[i].from_arc.a[ii]].get_down_node(),
+//				owner->arcs[phases[i].to_arc[ii]].get_up_node() );
+//		}
+//		fprintf( out,"\n" );
+//	}
+//}
 
 
 //int intersection::size = 0;

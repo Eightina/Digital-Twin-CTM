@@ -57,11 +57,13 @@ public:
 
 class intersection{
 public:
+	ivector<int> connected_nodes;
+	ivector<phase> phases;
 
 	//int size;
 	intersection();
 	intersection(int i,int t,int px,int py );
-	intersection(int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
+	intersection(int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p, int clock_tick);
 
 	int get_id()const{			return id; }
 	int get_type()const{		return type; }
@@ -79,18 +81,15 @@ public:
 	void add_phase( int i,const int& from_arc,const int& to_arc );
 	/*inline void update_signal();*/
 
-	void print_phases(FILE *out);
+	//void print_phases(FILE *out);
 
 private:
-	//simulation* owner;
 	int id;
 	int type;
 	coordinate pos;
 	int min_green,max_green;
 	bool right_turning;
 	int num_phases;
-	ivector<int> connected_nodes;
-	ivector<phase> phases;
 	int min_green_ticks,max_green_ticks;
 };
 

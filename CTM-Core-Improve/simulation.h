@@ -102,6 +102,20 @@ private:
 
 	void shell_set_max_flow(cell& cur_cell, const float& mf);
 
+	void shell_add_demand(cell& cur_cell, const int& clock, const float& traffic);
+
+	void shell_add_previous_cell(cell& cur_cell, const int& i);
+
+	void shell_add_next_cell(cell& cur_cell, const int& i);
+
+	void shell_add_next_cell(cell& cur_cell, const int& i, const float& g);
+
+	//void shell_add_diverge_coeff(cell& cur_cell, const float& g);
+
+	void shell_add_next_cell(cell& cur_cell, const int& i, const float& g, const int& t);
+
+	void shell_print_phases(intersection& cur_intersection, FILE* out);
+
 	// input part
 	void skip(FILE* in);
 
