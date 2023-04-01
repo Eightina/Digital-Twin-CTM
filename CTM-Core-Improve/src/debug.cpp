@@ -50,13 +50,13 @@ void debug::process(char *str){
 
 void debug::warning( char *str){
 	fputs("[Warning]",err);
-	//fprintf( err," @%04d> %s\n\n",present_clock,str );
+	fprintf( err," @%04d> %s\n\n",str );
 	warn_times++;
 }
 
 void debug::throws( char *str ){
 	fputs("[Error]",err);
-	//fprintf( err," @%04d> %s\n\n",present_clock,str );
+	fprintf( err," @%04d> %s\n\n",str );
 	printf("\nFatal ERROR, see log file.\n\n");
 	system("pause");
 	exit(1);

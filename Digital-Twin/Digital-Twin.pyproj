@@ -24,11 +24,15 @@
     <Compile Include="Digital_Twin.py" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Digital-Twin-CTM.vcxproj">
+    <ProjectReference Include="..\Digital-Twin-CTM.vcxproj">
       <Name>CTM-Core-Improve</Name>
       <Project>{c417b92c-2b82-4bad-82dd-b5ea73878ce9}</Project>
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="i_Test.txt" />
+    <Content Include="i_Test2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

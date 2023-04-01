@@ -78,11 +78,11 @@ int main(){
 
 
 
-	char* inputname = "i_Test";
-	simulation* simulator0 = new simulation(inputname);
-	simulator0->initialize();
-	simulator0->excecute();
-	simulator0->output_result();
+	//char* inputname = "i_Test";
+	//simulation* simulator0 = new simulation(inputname);
+	//simulator0->initialize();
+	//simulator0->excecute();
+	//simulator0->output_result();
 
 	//float delay1, delay2, delay0;
 	//int start;
