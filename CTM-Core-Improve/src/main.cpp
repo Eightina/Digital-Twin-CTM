@@ -78,7 +78,7 @@ int main(){
 
 
 
-	char inputname[256] = "i_Test";
+	char* inputname = "i_Test";
 	simulation* simulator0 = new simulation(inputname);
 	simulator0->initialize();
 	simulator0->excecute();
