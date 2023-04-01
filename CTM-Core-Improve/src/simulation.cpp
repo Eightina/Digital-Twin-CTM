@@ -505,7 +505,7 @@ void simulation::printoccup(char namestr[], float delay) {
 	int i, j, k;
 
 	fprintf(out, "%d nodes, %d arcs, %d intersections, %d ticks\n\n",
-		nodes.size(), arcs.size(), intersections.size(), settings.get_max_ticks());
+		nodes.size() - 1, arcs.size() - 1, intersections.size(), settings.get_max_ticks());
 
 	//Output arcs and cells.
 	coordinate first, last, interval;
