@@ -4,6 +4,7 @@
 #include "node.h"
 #include "debug.h"
 #include <math.h>
+#include "simulation.h"
 //#include <iostream>
 
 //extern std::vector<node> owner->nodes;
@@ -41,7 +42,7 @@ arc::arc(simulation* arcowner, int i, int un, int dn, float ms,
 }
 
 void arc::create_cell() {
-	if (owner->cells.empty()) owner->cells.push_back(cell());
+	if (owner->cells.empty()) owner->cells.push_back(cell(owner));
 	Assert(owner->cells.size() <= MAX_CELL + 1);
 	float LL = length;
 	first_cell = owner->cells.size();
@@ -54,7 +55,7 @@ void arc::create_cell() {
 		tmp_cell_size = owner->cells.size();
 		//owner->cells[tmp_cell_size] = cell( tmp_cell_size,id,normal,cell_length );
 		//
-		owner->cells.emplace_back(tmp_cell_size, id, normal, cell_length);
+		owner->cells.emplace_back(owner, tmp_cell_size, id, normal, cell_length);
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
 		owner->Log->process(str);
@@ -62,13 +63,13 @@ void arc::create_cell() {
 
 	if ( owner->nodes[down_node].get_type() == 2 ){
 		tmp_cell_size = owner->cells.size();
-		owner->cells.emplace_back(tmp_cell_size, id, destination, LL);
+		owner->cells.emplace_back(owner, tmp_cell_size, id, destination, LL);
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
 		owner->Log->process(str);
 	} else {
 		tmp_cell_size = owner->cells.size();
-		owner->cells.emplace_back(tmp_cell_size, id, normal, LL );
+		owner->cells.emplace_back(owner, tmp_cell_size, id, normal, LL );
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
 		owner->Log->process(str);

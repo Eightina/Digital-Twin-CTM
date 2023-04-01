@@ -4,9 +4,10 @@
 
 #include "node.h"
 #include "setting.h"
-#include "simulation.h"
+//#include "simulation.h"
 #include <vector>
 
+class simulation;
 
 class arc {
 public:

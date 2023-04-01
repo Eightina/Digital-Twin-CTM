@@ -1,5 +1,6 @@
 #include "node.h"
 #include "debug.h"
+#include "simulation.h"
 
 //extern debug *Log;
 

@@ -10,7 +10,7 @@
 #include "debug.h"
 #include "setting.h"
 #include "ivector.h"
-#include "simulation.h"
+//#include "simulation.h"
 //#include <assert.h>
 
 //extern std::vector<cell> cells;
@@ -22,6 +22,7 @@
 //extern debug *Log;
 
 //using std::vector;
+class simulation;
 
 class phase{
 public:
@@ -61,7 +62,7 @@ public:
 	//int size;
 	intersection(simulation* intersectionowner);
 	intersection(simulation* intersectionowner, int i,int t,int px,int py );
-	intersection( int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
+	intersection(simulation* intersectionowner, int i,int t,int px,int py,int min_g,int max_g,int rturn,int num_p );
 
 	int get_id()const{			return id; }
 	int get_type()const{		return type; }

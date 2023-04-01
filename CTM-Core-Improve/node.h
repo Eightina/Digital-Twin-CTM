@@ -4,7 +4,8 @@
 
 #include "coordinate.h"
 #include <vector>
-#include "simulation.h"
+//#include "simulation.h"
+class simulation;
 
 class node{
 public:
