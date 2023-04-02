@@ -186,7 +186,7 @@ float cell::move_vehicle() {
 void cell::add_demand( const int& clock,const float& traffic ){
 	char str[256];
 	sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
-	owner->Log->process( str );
+	owner->Log->process( str, owner->present_clock);
 	if( type != origin ) type = origin;
 	if( temp_origin_demand_id < 0 ) temp_origin_demand_id = owner->temp_origin_demand_size++;
 	owner->temp_origin_demand[temp_origin_demand_id][num_demand++] = demand( clock,traffic );
@@ -194,7 +194,7 @@ void cell::add_demand( const int& clock,const float& traffic ){
 
 void cell::add_next_cell( const int& i ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_next_cell( int i ) : the i out range." );
+		owner->Log->throws("In cell::add_next_cell( int i ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	for( int ii = 0; ii < next_cell.top; ++ii ) 
@@ -211,7 +211,7 @@ void cell::add_next_cell( const int& i ){
 
 void cell::add_previous_cell( const int& i ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range." );
+		owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	for( int ii = 0; ii < (int)previous_cell.size(); ++ii ) 
@@ -246,7 +246,7 @@ void cell::add_next_cell( const int& i,const float& g ){
 
 void cell::add_next_cell( const int& i,const float& g,const int& t ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range." );
+		owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	next_cell.push_back(i);

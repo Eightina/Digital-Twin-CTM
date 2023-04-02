@@ -36,7 +36,7 @@ arc::arc(simulation* arcowner, int i, int un, int dn, float ms,
 	if ( num_cell < 2 ) {
 		char str[256];
 		sprintf( str,"In Arc#%03d  num_cell < 2 ",id );
-		owner->Log->throws(str);
+		owner->Log->throws(str, owner->present_clock);
 	}
 	//create_cell();
 }
@@ -48,7 +48,7 @@ void arc::create_cell() {
 	first_cell = owner->cells.size();
 	last_cell = first_cell + num_cell - 1;
 	sprintf(owner->Log->get_str(),"Arc#%03d: First Cell #%03d, Last Cell #%03d",id,first_cell,last_cell );
-	owner->Log->process(owner->Log->get_str());
+	owner->Log->process(owner->Log->get_str(), owner->present_clock);
 	int tmp_cell_size;
 	while ( LL >= 2*cell_length ){
 		LL -= cell_length;
@@ -58,7 +58,7 @@ void arc::create_cell() {
 		owner->cells.emplace_back(owner, tmp_cell_size, id, normal, cell_length);
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
-		owner->Log->process(str);
+		owner->Log->process(str, owner->present_clock);
 	}
 
 	if ( owner->nodes[down_node].get_type() == 2 ){
@@ -66,13 +66,13 @@ void arc::create_cell() {
 		owner->cells.emplace_back(owner, tmp_cell_size, id, destination, LL);
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
-		owner->Log->process(str);
+		owner->Log->process(str, owner->present_clock);
 	} else {
 		tmp_cell_size = owner->cells.size();
 		owner->cells.emplace_back(owner, tmp_cell_size, id, normal, LL );
 		char str[256];
 		sprintf(str, "Create Cell#%03d successfully", tmp_cell_size);
-		owner->Log->process(str);
+		owner->Log->process(str, owner->present_clock);
 	}
 
 	if ( owner->nodes[up_node].get_type() == 1 ){
