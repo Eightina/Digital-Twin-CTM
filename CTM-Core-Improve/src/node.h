@@ -4,12 +4,11 @@
 
 #include "coordinate.h"
 #include <vector>
-//#include "simulation.h"
+
 class simulation;
 
 class node{
 public:
-	//static int size;
 
 	node(simulation* nodeowner);
 	node(simulation* nodeowner, int i,int t,int _x,int _y,int ia = -1);

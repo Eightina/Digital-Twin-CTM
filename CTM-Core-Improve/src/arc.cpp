@@ -5,14 +5,6 @@
 #include "debug.h"
 #include <math.h>
 #include "simulation.h"
-//#include <iostream>
-
-//extern std::vector<node> owner->nodes;
-//extern setting owner->settings;
-//extern std::vector<cell> owner->cells;
-////extern int gg[];
-//extern debug* owner->Log;
-////#include "arc.h"
 
 arc::arc(simulation* arcowner): owner(arcowner), id(0), up_node(0), down_node(0), max_speed(0.0),
 			max_flow(0.0), jam_density(0.0), delta(0.0) {
@@ -27,7 +19,7 @@ arc::arc(simulation* arcowner, int i, int un, int dn, float ms,
 		delta = max_flow * owner->settings.clock_tick /
 			(jam_density * max_speed - owner->settings.clock_tick * max_flow);
 	}
-	//size++;
+
 	owner->nodes[un].set_arc(i);
 	owner->nodes[dn].set_arc(i);
 	length = owner->nodes[up_node].get_pos().dist(	owner->nodes[down_node].get_pos() );
@@ -38,7 +30,7 @@ arc::arc(simulation* arcowner, int i, int un, int dn, float ms,
 		sprintf( str,"In Arc#%03d  num_cell < 2 ",id );
 		owner->Log->throws(str, owner->present_clock);
 	}
-	//create_cell();
+
 }
 
 void arc::create_cell() {
@@ -87,4 +79,4 @@ void arc::create_cell() {
 	}
 }
 
-//int arc::size = 0;
+

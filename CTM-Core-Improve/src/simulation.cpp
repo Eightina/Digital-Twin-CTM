@@ -262,6 +262,7 @@ void simulation::initial_diverge_cell_index() {
 	}
 }
 
+// important
 void simulation::initial_origin_demand() {
 	for (int i = 0; i < origin_size; ++i) {
 		int n = cells[origin_set[i]].get_num_demand();
@@ -275,7 +276,8 @@ void simulation::initial_origin_demand() {
 			end_clock = (iter->clock - settings.start_time) / settings.clock_tick
 				+ ((((iter->clock - settings.start_time) % settings.clock_tick) == 0) ? 0 : 1);
 
-			while (pre_clock <= end_clock)
+			// every tick between start_time and the input demand clock is set to be pre_flow
+			while (pre_clock <= end_clock) 
 				origin_demand[pre_clock++][idemand] = pre_flow;
 
 			pre_flow = iter->traffic * settings.clock_tick;
@@ -679,7 +681,8 @@ void simulation::update_flow() {
 	std::vector<cell>& cl = cells;
 
 	for (int i = 0; i < origin_size; ++i)
-		cl[origin_set[i]].origin_update_flow();
+		cl[origin_set[i]].origin_update_flow(); 
+	// demand is turned into inflow, which is constant
 
 	for (int i = 0; i < diverge_size; ++i)
 		cl[diverge_set[i]].diverge_update_flow();

@@ -32,6 +32,8 @@ public:
 
 	int present_clock;
 	setting settings;
+
+	// structure part
 	std::vector<node> nodes = {}; // len is number of nodes + 1
 	std::vector<arc> arcs = {}; // len is number of arcs + 1
 	std::vector<cell> cells = {}; // len is number of cells + 1
@@ -42,8 +44,8 @@ public:
 
 	int origin_set[MAX_ORIGIN_CELL] = {}, normal_set[MAX_NORMAL_CELL] = {},
 		diverge_set[MAX_DIVERGE_CELL] = {}, merge_set[MAX_MERGE_CELL] = {}, destination_set[MAX_DESTINATION_CELL] = {};
-
 	int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
+
 
 	float exist_vehicle[MAX_CLOCK][MAX_CELL] = {};
 	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {};
@@ -52,9 +54,13 @@ public:
 	int index_diverge_cell[MAX_CELL] = {};
 	int number_diverge_cell = {};
 
-
+	// demand part
 	float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL] = {};
-	demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK] = {}; // if demand not changed then remain the same
+	demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK] = {};
+	// if demand not changed then remain the same
+	// 2d array temp_origin_demand[i][j] contains every source cell in order [i] and its demands [j]
+	// i is just a numeric index
+	// temp_origin_demand will be transferred to origin_demand in function simulation::initial_origin_demand() eventually 
 	int temp_origin_demand_size = 0;
 	float delay_record[MAX_CLOCK] = {};
 
@@ -82,7 +88,7 @@ private:
 
 	void initial_diverge_cell_index();
 
-	void initial_origin_demand();
+	void initial_origin_demand(); // customized demands can be set here
 
 	void input_intersection(FILE* in);
 

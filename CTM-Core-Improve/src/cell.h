@@ -123,6 +123,14 @@ private:
 	float	max_vehicle;
 
 	int temp_origin_demand_id, num_demand;
+	/*
+	// for ordinary cell, temp_origin_demand_id = -1
+	// for source cell, this variable is its demand array index
+	// demand array is a member of a simulation object -> demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]
+	// here temp_origin_demand_id corresponds to i in temp_origin_demand[i][j]
+	// while num_demand corresponds to j in temp_origin_demand[i][j]
+	// this means multiple demands can be add to one cell
+	*/
 
 	int on_intersection;
 
