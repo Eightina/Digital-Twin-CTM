@@ -141,7 +141,7 @@ void simulation::input_geometry(FILE* in) {
 	char sstr[256];
 	Log->process(("Input node successfully..."), present_clock);
 	//memset(sstr,0,256);
-	sprintf(sstr, "The size of node is: %d...", nodes.size());
+	sprintf(sstr, "The size of node is: %d...", nodes.size() - 1);
 	Log->process((sstr), present_clock);
 
 	int ai, anf, anl;
@@ -161,7 +161,7 @@ void simulation::input_geometry(FILE* in) {
 		fscanf(in, "%s", str);
 	}
 	Log->process(("Input arc successfully..."), present_clock);
-	sprintf(str, "The size of arc is: %d...", arcs.size());
+	sprintf(str, "The size of arc is: %d...", arcs.size() - 1);
 	Log->process((str), present_clock);
 	Log->process(("Input geometry successfully..."), present_clock);
 }
@@ -380,8 +380,16 @@ void simulation::input_event(FILE* in) {
 
 void simulation::scanfile(char namestr[]) {
 	char full_name[256];
+	char path[256] = ".\\Input\\";
 	strcpy(full_name, namestr);
+
 	strcat(full_name, ".txt");
+	strcat(path, full_name);
+	//printf(path);
+
+	strcpy(full_name, path);
+
+	std::cout << full_name << std::endl;
 	FILE* in = fopen(full_name, "r");
 	if (in == NULL) {
 		Log = new debug(namestr);
@@ -488,9 +496,14 @@ void simulation::initial_control() {
 void simulation::printoccup(char namestr[], float delay) {
 	FILE* out;
 	char outputname[256];
-	//strcat(outputname,&namestr[2]);
-	//strcat(outputname,".txt");
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname,".txt");
 	sprintf(outputname, "o_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Cell Occupation Output File.\n", out);
@@ -556,7 +569,14 @@ void simulation::printoccup(char namestr[], float delay) {
 void simulation::printdelay(char namestr[]) {
 	FILE* out;
 	char outputname[256];
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname, ".txt");
 	sprintf(outputname, "d_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Cell Occupation Output File.\n", out);
@@ -582,7 +602,14 @@ void simulation::printdelay(char namestr[]) {
 void simulation::printplan(char namestr[]) {
 	FILE* out;
 	char outputname[256];
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname, ".txt");
 	sprintf(outputname, "t_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Time Planning File.\n", out);

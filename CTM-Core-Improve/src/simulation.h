@@ -32,15 +32,11 @@ public:
 
 	int present_clock;
 	setting settings;
-	//node nodes[MAX_NODE];
-	std::vector<node> nodes = {};
-	//arc arcs[MAX_ARC];
-	std::vector<arc> arcs = {};
-	//cell cells[MAX_CELL]; 
+	std::vector<node> nodes = {}; // len is number of nodes + 1
+	std::vector<arc> arcs = {}; // len is number of arcs + 1
 	std::vector<cell> cells = {}; // len is number of cells + 1
-	//intersection intersections[MAX_INTERSECTION];
 	std::vector<intersection> intersections = {}; // len is number of intersections
-	incident incidents[MAX_INCIDENT] = {};
+	incident incidents[MAX_INCIDENT] = {}; // not implemented yet
 
 	short index_next_cell[MAX_CELL][MAX_CELL] = {};
 

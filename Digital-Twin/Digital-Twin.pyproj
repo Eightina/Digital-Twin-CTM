@@ -31,8 +31,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="i_Test.txt" />
-    <Content Include="i_Test2.txt" />
+    <Content Include="Input\i_Test.txt" />
+    <Content Include="Input\i_Test2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Input\" />
+    <Folder Include="Output\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

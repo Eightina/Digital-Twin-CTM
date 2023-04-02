@@ -19,8 +19,10 @@ debug::debug():err(NULL){
 }
 
 debug::debug(char *name){
-	char *str = filename;
-	sprintf( str,"%s.log",name );
+	char *tmpstr = filename;
+	char str[256];
+	sprintf(tmpstr, "%s.log", name);
+	sprintf( str,".\\Output\\%s",tmpstr );
 	err = fopen( str,"w" );
 	fputs("Green Signal Log File.\n",err);
 	fputs("----------------------------------------\n",err);
