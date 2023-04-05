@@ -87,8 +87,7 @@ float cell::receive_flow() {
 void cell::set_out_flow(const float& out, int next_cell_id) {
 	if (type == diverge) {
 		int i = owner->index_next_cell[id][next_cell_id];
-		
-		// calculate the flow between this diverge cell and one of its successors, which has id next_cell_id
+
 		owner->diverge_flow[owner->index_diverge_cell[id]][i] -= out;
 		owner->diverge_flow[owner->index_diverge_cell[id]][i] += in_flow * diverge_coeff[i];
 		out_flow += out;

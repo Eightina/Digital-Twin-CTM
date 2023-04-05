@@ -46,10 +46,18 @@ public:
 		diverge_set[MAX_DIVERGE_CELL] = {}, merge_set[MAX_MERGE_CELL] = {}, destination_set[MAX_DESTINATION_CELL] = {};
 	int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
 
-
+	// update part
 	float exist_vehicle[MAX_CLOCK][MAX_CELL] = {};
 	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {};
-	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		//w -- timing plan
+	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
+	/*w -- timing plan; this defines the control signals in each tick, in each intersection,
+	* whether the phases are on or off. working with cell.at_phase array
+	* omega[i][j][m]
+	* i takes current clock
+	* j takes intersection id
+	* m takes phase id
+	*/
+	
 
 	int index_diverge_cell[MAX_CELL] = {};
 	int number_diverge_cell = {};
@@ -66,7 +74,7 @@ public:
 
 	debug* Log;
 
-	float vehicle[MAX_CELL] = {};
+	//float vehicle[MAX_CELL] = {};
 
 	char* simuname;
 
@@ -131,39 +139,6 @@ private:
 	}
 
 
-
-
-
-	//int present_clock;
-	//setting settings;
-	//std::vector<node> nodes;
-	//std::vector<arc> arc;
-	//std::vector<cell> cells;
-	//std::vector<intersection> intersections;
-	//std::vector<incident> incidents;
-
-	//std::vector<std::vector<short>> index_next_cell;
-
-	//std::vector<int> origin_set, normal_set,
-	//	diverge_set, merge_set, destination_set;
-	//int origin_size, normal_size, diverge_size, merge_size, destination_size;
-
-	//std::vector<std::vector<float>> exist_vehicle;
-	//std::vector<std::vector<float>> diverge_flow;
-	//std::vector<std::vector<std::vector<float>>> omega;		//w -- timing plan
-
-	//std::vector<int> index_diverge_cell;
-	//int number_diverge_cell;
-
-
-	//std::vector<std::vector<float>> origin_demand;
-	//std::vector<std::vector<demand>> temp_origin_demand; // if demand not changed then remain the same
-	//int temp_origin_demand_size;
-
-
-	//debug* Log;
-
-	//std::vector<float> vehicle;
 
 };
 

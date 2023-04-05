@@ -450,12 +450,12 @@ void simulation::initial_diverge_flow() {
 }
 
 void simulation::initial_occupation(float* vehicle) {
-	//for( int i = 1; i <= cell::size; ++i ){
-	for (int i = 1; i < cells.size(); ++i) {
-		vehicle[i] = settings.initial_occupation / 100.0 * cells[i].get_max_vehicle();
-	}
+	//for (int i = 1; i < cells.size(); ++i) {
+	//	vehicle[i] = settings.initial_occupation / 100.0 * cells[i].get_max_vehicle();
+	//}
 }
 
+//bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
 void simulation::initial_control() {
 	memset(omega, false, sizeof(omega));
 	char str[256], _str[256];
@@ -657,6 +657,7 @@ void simulation::printplan(char namestr[]) {
 }
 
 // update part
+// not used
 void simulation::modify_control(const int& I, const int& t0, const int& t1, const int& P) {
 	for (int i = t0; i <= t1; i++) {
 		omega[i][I][P] = true;
@@ -667,6 +668,7 @@ void simulation::modify_control(const int& I, const int& t0, const int& t1, cons
 	}
 }
 
+// not used
 void simulation::set_control_off(const int& I, const int& st, const int& et)
 {
 	for (int it = st; it <= et; ++it)

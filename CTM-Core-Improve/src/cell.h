@@ -135,7 +135,13 @@ private:
 	int on_intersection;
 
 	ivector<int> at_phase[MAX_ADJ_CELL];
-
+	/*
+	* This 2d array defines the connection relationship
+	* between this cell and its successors during different phases.
+	* at_phase[i][j]
+	* i is the id of its successor, and at_phase[i] saves the id of phases
+	* during which traffic flow can go through the connection between this cell and its successor
+	*/
 };
 
 
