@@ -106,7 +106,9 @@ private:
 
 	void input_event(FILE* in);
 
-	void scanfile(char namestr[]);
+	void scanfile_construct(char namestr[]);
+
+	void scanfile_initialize(char namestr[]);
 
 	// initialize part
 	void initial_diverge_flow();

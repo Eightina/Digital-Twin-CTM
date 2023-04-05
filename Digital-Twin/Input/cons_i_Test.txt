@@ -1,0 +1,50 @@
+% Test input file of Green Signal
+
+setting
+% Section I - Setting parameters.
+time 08:00:00 08:37:20
+% The beginning and end time of the simulation run
+clock 1
+% The discrete time interval between clock ticks. The unit of time is second.
+epsilon 0.01
+% Any quantities smaller than epsilon will be ignored.
+initoccp 0
+% The initial cell occupation percentage.
+initctrl 0
+% The initial control strategy: 
+% 0 - every phase length is assigned the minimum green time and the cycle length is minimum green time multiplied by number of phase.
+% 1 - both phase length and cycle length are fixed according to Webster's formula.
+cellscale 1
+% Cell lenth factor.
+losttime 4
+% Lost time.
+end
+
+geometry
+% Section II - Geometry structure
+% 
+% Node information as follows: 
+%          (1)      (2)       (3)        (4)
+%           No.    type        x          y
+node        1        1         0          35
+node        2        0        42          35
+node        3        0        45          35
+node        4        2        62          35
+node        5        1        43          0
+node        6        0        43          34
+node        7        0        43          37
+node        8        2        43          54
+
+
+% Arc information as follows: 
+%         (1)      (2)      (3)      (4)       (5)       (6)        (7)
+%                  up      down      free      max       jam        
+%         No.     node     node     speed      flow    density     delta
+arc        1        1        2       8.3      1.5       0.375        0.25
+arc        2        3        4       8.3      1.5       0.375        0.25
+arc        3        5        6       8.3      1.5       0.375        0.25
+arc        4        7        8       8.3      1.5       0.375        0.25
+
+end
+
+

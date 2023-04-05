@@ -1,7 +1,7 @@
 Green Signal Time Planning File.
 ----------------------------------------
 Output File: 	.\Output\t_Test.txt
-The Date: 	Tue Apr  4 10:12:20 2023
+The Date: 	Wed Apr  5 14:58:45 2023
 ~
 
 1 intersections, 2240 ticks

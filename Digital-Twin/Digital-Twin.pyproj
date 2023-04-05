@@ -36,6 +36,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Input\cons_i_Test.txt" />
+    <Content Include="Input\init_i_Test.txt" />
     <Content Include="Input\i_Test.txt" />
     <Content Include="Input\i_Test2.txt" />
   </ItemGroup>

@@ -1,20 +1,25 @@
 #include "simulation.h"
 
-
+// constrcutor -> build intersection structure
+// initialize -> define a simulation's occupation, demand, and signal control
 
 simulation::simulation(char* inputname) {
 	std::cout << "simulation object" << inputname << std::endl;
 	print_start();
-	scanfile(inputname);
+	scanfile_construct(inputname);
+	scanfile_initialize(inputname);
 	simuname = inputname;
 
 }
 
 void simulation::initialize() {
 	start = clock();
-	initial_control();
+	// modify ¡ý¡ý¡ý
+	initial_control(); 
 	initial_occupation(exist_vehicle[0]);
+	//
 	initial_diverge_flow();
+
 }
 
 float simulation::excecute() {
@@ -380,9 +385,9 @@ void simulation::input_event(FILE* in) {
 	Log->process(("Input event successfully..."), present_clock);
 }
 
-void simulation::scanfile(char namestr[]) {
+void simulation::scanfile_construct(char namestr[]) {
 	char full_name[256];
-	char path[256] = ".\\Input\\";
+	char path[256] = ".\\Input\\cons_";
 	strcpy(full_name, namestr);
 
 	strcat(full_name, ".txt");
@@ -420,7 +425,44 @@ void simulation::scanfile(char namestr[]) {
 			Log->process(("input geometry..."), present_clock);
 			input_geometry(in);
 		}
-		else if (strnicmp("traffic", pstr, 7) == 0) {
+	}
+	fclose(in);
+}
+
+void simulation::scanfile_initialize(char namestr[]) {
+	char full_name[256];
+	char path[256] = ".\\Input\\init_";
+	strcpy(full_name, namestr);
+
+	strcat(full_name, ".txt");
+	strcat(path, full_name);
+	//printf(path);
+
+	strcpy(full_name, path);
+
+	std::cout << full_name << std::endl;
+	FILE* in = fopen(full_name, "r");
+	if (in == NULL) {
+		Log = new debug(namestr);
+		char str[256];
+		sprintf(str, "Cannot open input file: \t%s\n", namestr);
+		Log->throws(str, present_clock);
+		exit(0);
+	}
+	else {
+		Log = new debug(namestr);
+	}
+	temp_origin_demand_size = 0;
+	char line[1024], * pstr;
+	memset(index_diverge_cell, 0, sizeof(index_diverge_cell));
+	while (!feof(in)) {
+		fgets(line, 1023, in);
+		pstr = line;
+		while (*pstr == ' ') pstr++;
+		if (*pstr == '\0') continue;
+		if (*pstr == '%') continue;
+
+		if (strnicmp("traffic", pstr, 7) == 0) {
 			Log->process(("input traffic..."), present_clock);
 			input_traffic(in);
 			classify_cell();
@@ -436,10 +478,7 @@ void simulation::scanfile(char namestr[]) {
 			input_event(in);
 		}
 	}
-
 	fclose(in);
-
-
 }
 
 // initialize part
@@ -450,9 +489,9 @@ void simulation::initial_diverge_flow() {
 }
 
 void simulation::initial_occupation(float* vehicle) {
-	//for (int i = 1; i < cells.size(); ++i) {
-	//	vehicle[i] = settings.initial_occupation / 100.0 * cells[i].get_max_vehicle();
-	//}
+	for (int i = 1; i < cells.size(); ++i) {
+		vehicle[i] = settings.initial_occupation / 100.0 * cells[i].get_max_vehicle();
+	}
 }
 
 //bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
@@ -461,6 +500,7 @@ void simulation::initial_control() {
 	char str[256], _str[256];
 	int istr = 0;
 
+	// define control signals
 	for (int i = 0; i < intersections.size(); ++i) {
 		int min_green = (int)ceil(intersections[i].get_min_green() * 1.0 / settings.clock_tick);
 		int g = 0, p = 0;
@@ -475,22 +515,22 @@ void simulation::initial_control() {
 	}
 
 	//Output initial timing plan.
-	Log->process(("Initial Timing Plan..."), present_clock);
-	for (int i = 0; i < intersections.size(); ++i) {
-		sprintf(_str, "Intersection %03d", i);
-		Log->process((_str), present_clock);
-		for (int j = 1; j <= settings.get_max_ticks(); ++j) {
-			memset(str, 0, sizeof(str));
-			istr = 0;
-			sprintf(str, "#%05d ", j);
-			istr = strlen(str);
-			for (int k = 0; k < intersections[i].get_num_phases(); ++k) {
-				sprintf(str + istr, "%d ", omega[j][i][k] ? 1 : 0);
-				istr += 2;
-			}
-			Log->process((str), present_clock);
-		}
-	}
+	//Log->process(("Initial Timing Plan..."), present_clock);
+	//for (int i = 0; i < intersections.size(); ++i) {
+	//	sprintf(_str, "Intersection %03d", i);
+	//	Log->process((_str), present_clock);
+	//	for (int j = 1; j <= settings.get_max_ticks(); ++j) {
+	//		memset(str, 0, sizeof(str));
+	//		istr = 0;
+	//		sprintf(str, "#%05d ", j);
+	//		istr = strlen(str);
+	//		for (int k = 0; k < intersections[i].get_num_phases(); ++k) {
+	//			sprintf(str + istr, "%d ", omega[j][i][k] ? 1 : 0);
+	//			istr += 2;
+	//		}
+	//		Log->process((str), present_clock);
+	//	}
+	//}
 
 }
 
