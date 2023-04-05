@@ -7,12 +7,16 @@ simulation::simulation(char* inputname) {
 	std::cout << "simulation object" << inputname << std::endl;
 	print_start();
 	scanfile_construct(inputname);
-	scanfile_initialize(inputname);
-	simuname = inputname;
+	//scanfile_initialize(inputname);
+	strcpy(simuname, inputname);
 
 }
 
-void simulation::initialize() {
+void simulation::initialize(char* inputname) {
+	present_clock = 0;
+
+	scanfile_initialize(inputname);
+
 	start = clock();
 	// modify ¡ý¡ý¡ý
 	initial_control(); 
@@ -50,7 +54,7 @@ void simulation::output_result() {
 	printf("Timing plan output files\n >>t_%s.txt\n", &simuname[2]);
 	printf("Cell occupation output files\n >>o_%s.txt\n", &simuname[2]);
 	printf("Detail delay output files\n >>d_%s.txt\n", &simuname[2]);
-	printf("\nSimulation %s Done.\n\n", &simuname);
+	printf("\nSimulation %s Done.\n\n", simuname);
 	system("pause");
 }
 
@@ -768,7 +772,6 @@ float simulation::simulate(int st, int et) {
 			incidents[i].occur();
 		}
 		update_flow();
-		//for( int i = 1; i <= cell::size; ++i ){
 		for (int i = 1; i < cells.size(); ++i) {
 			temp = exist_vehicle[it - 1][i] - cells[i].out_flow;
 			exist_vehicle[it][i] = temp + cells[i].in_flow;

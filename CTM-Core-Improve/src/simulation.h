@@ -20,7 +20,7 @@ class simulation {
 public:
 	simulation(char* inputname);
 
-	void initialize();
+	void initialize(char* inputname);
 
 	float excecute();
 
@@ -30,7 +30,7 @@ public:
 
 	float delay0;
 
-	int present_clock;
+	int present_clock = 0;
 	setting settings;
 
 	// structure part
@@ -76,7 +76,7 @@ public:
 
 	//float vehicle[MAX_CELL] = {};
 
-	char* simuname;
+	char simuname[128];
 
 	int start;
 
