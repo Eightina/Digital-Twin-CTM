@@ -35,7 +35,8 @@ PYBIND11_MODULE(CTMCoreImprove, m) {
         .def(py::init<char*>())
         .def("initialize", &simulation::initialize)
         .def("execute", &simulation::excecute)
-        .def("output_result", &simulation::output_result);
+        .def("output_result", &simulation::output_result)
+        .def("stepend", &simulation::stepend);
 
 
 #ifdef VERSION_INFO

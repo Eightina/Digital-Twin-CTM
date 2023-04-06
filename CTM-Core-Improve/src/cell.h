@@ -96,6 +96,15 @@ public:
 	inline float send_flow(int cn = 0);
 	inline float receive_flow();
 
+	void clear_vecs() {
+		previous_cell.clear();
+		next_cell.clear();
+		turning.clear();
+		for (ivector<int>& vec : at_phase) {
+			vec.clear();
+		}
+	}
+
 	/*inline void set_signals_on( int next_cell_id );
 	inline void set_signals_off( int next_cell_id );*/
 	//float move_vehicle();

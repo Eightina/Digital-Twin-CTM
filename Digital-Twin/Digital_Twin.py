@@ -9,6 +9,7 @@ print('simulation specs defined')
 delay0 = nsim.execute()
 print('test counting: 0 '+ str(delay0))
 nsim.output_result()
+nsim.stepend()
 print('test counting: 0 done')
 
 
@@ -18,6 +19,7 @@ print('simulation specs defined')
 delay1 = nsim.execute()
 print('test counting: 1 '+ str(delay1))
 nsim.output_result()
+nsim.stepend()
 print('test counting: 1 done')
 
 

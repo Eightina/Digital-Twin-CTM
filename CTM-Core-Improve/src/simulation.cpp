@@ -20,7 +20,7 @@ void simulation::initialize(char* inputname) {
 	start = clock();
 	// modify ¡ý¡ý¡ý
 	initial_control(); 
-	initial_occupation(exist_vehicle[0]);
+	//initial_occupation(exist_vehicle[0]);
 	//
 	initial_diverge_flow();
 
@@ -29,6 +29,13 @@ void simulation::initialize(char* inputname) {
 float simulation::excecute() {
 	delay0 = simulate(1, settings.get_max_ticks());
 	return delay0;
+}
+
+void simulation::stepend() {
+	//memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
+	//memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
+	//memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
+	//memset(eventual_state, 0.0f, sizeof(eventual_state));
 }
 
 // print part
@@ -434,16 +441,28 @@ void simulation::scanfile_construct(char namestr[]) {
 }
 
 void simulation::scanfile_initialize(char namestr[]) {
+	memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
+	memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
+	memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
+	memset(eventual_state, 0.0f, sizeof(eventual_state));
+
+	memset(delay_record, 0, sizeof(delay_record));
+	memset(temp_origin_demand, 0, sizeof(temp_origin_demand));
+	int temp_origin_demand_size = 0;
+	present_clock = 0;
+	intersections = {};
+	for (cell& cur_cell : cells) {
+		cur_cell.clear_vecs();
+	}
+
+
 	char full_name[256];
 	char path[256] = ".\\Input\\init_";
 	strcpy(full_name, namestr);
-
 	strcat(full_name, ".txt");
 	strcat(path, full_name);
 	//printf(path);
-
 	strcpy(full_name, path);
-
 	std::cout << full_name << std::endl;
 	FILE* in = fopen(full_name, "r");
 	if (in == NULL) {
@@ -452,10 +471,11 @@ void simulation::scanfile_initialize(char namestr[]) {
 		sprintf(str, "Cannot open input file: \t%s\n", namestr);
 		Log->throws(str, present_clock);
 		exit(0);
-	}
-	else {
+	} else {
 		Log = new debug(namestr);
 	}
+
+
 	temp_origin_demand_size = 0;
 	char line[1024], * pstr;
 	memset(index_diverge_cell, 0, sizeof(index_diverge_cell));
@@ -632,15 +652,12 @@ void simulation::printdelay(char namestr[]) {
 	time(&run);
 	localtime(&run);
 	fprintf(out, "The Date: \t%s", ctime(&run));
-	//fprintf( out,"Total delay: \t %7.2lf vehi*sec.\n", delay );
 	fprintf(out, "~\n\n");
 	double temp = 0.0;
 	fprintf(out, "%d ticks\n\n", settings.max_ticks);
-	fprintf(out, "#%04d\t%f\n", 0, 0.0);
-	//initial_diverge_flow();
-	for (int it = 1; it <= settings.max_ticks; ++it) {
-		//fprintf( out,"#%04d\t%f\n",it,simulate(it-1,it) );
-		fprintf(out, "#%04d\t%f\n", it, delay_record[it - 1]);
+	//fprintf(out, "#%04d\t%f\n", 0, 0.0);
+	for (int it = 0; it < settings.max_ticks; ++it) {
+		fprintf(out, "#%04d\t%f\n", it, delay_record[it]);
 	}
 	fclose(out);
 }
@@ -768,9 +785,9 @@ float simulation::simulate(int st, int et) {
 	for (int it = st; it <= et; ++it) {
 
 		present_clock = it;
-		for (int i = 1; i <= incident::size; ++i) {
-			incidents[i].occur();
-		}
+		//for (int i = 1; i <= incident::size; ++i) {
+		//	incidents[i].occur();
+		//}
 		update_flow();
 		for (int i = 1; i < cells.size(); ++i) {
 			temp = exist_vehicle[it - 1][i] - cells[i].out_flow;
@@ -781,6 +798,9 @@ float simulation::simulate(int st, int et) {
 		delay_record[it] = delay - pre_delay;
 		pre_delay = delay;
 	}
+
+
+	//eventual_state = exist_vehicle[et];
 
 	return delay * settings.clock_tick;
 }

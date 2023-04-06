@@ -24,6 +24,8 @@ public:
 
 	float excecute();
 
+	void stepend();
+
 	void print_start();
 
 	void output_result();
@@ -41,12 +43,13 @@ public:
 	incident incidents[MAX_INCIDENT] = {}; // not implemented yet
 
 	short index_next_cell[MAX_CELL][MAX_CELL] = {};
-
+ 
 	int origin_set[MAX_ORIGIN_CELL] = {}, normal_set[MAX_NORMAL_CELL] = {},
 		diverge_set[MAX_DIVERGE_CELL] = {}, merge_set[MAX_MERGE_CELL] = {}, destination_set[MAX_DESTINATION_CELL] = {};
 	int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
 
 	// update part
+	float eventual_state[MAX_CELL] = {};
 	float exist_vehicle[MAX_CLOCK][MAX_CELL] = {};
 	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {};
 	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
