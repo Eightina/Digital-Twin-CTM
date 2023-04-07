@@ -7,7 +7,6 @@ simulation::simulation(char* inputname) {
 	std::cout << "simulation object" << inputname << std::endl;
 	print_start();
 	scanfile_construct(inputname);
-	//scanfile_initialize(inputname);
 	strcpy(simuname, inputname);
 
 }
@@ -22,7 +21,7 @@ void simulation::initialize(char* inputname) {
 	initial_control(); 
 	//initial_occupation(exist_vehicle[0]);
 	//
-	initial_diverge_flow();
+	//initial_diverge_flow();
 
 }
 
@@ -441,6 +440,7 @@ void simulation::scanfile_construct(char namestr[]) {
 }
 
 void simulation::scanfile_initialize(char namestr[]) {
+
 	memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
 	memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
 	memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
@@ -451,6 +451,7 @@ void simulation::scanfile_initialize(char namestr[]) {
 	int temp_origin_demand_size = 0;
 	present_clock = 0;
 	intersections = {};
+
 	for (cell& cur_cell : cells) {
 		cur_cell.clear_vecs();
 	}
@@ -776,7 +777,7 @@ float simulation::update_occupation() {
 	return delay;
 }
 
-float simulation::simulate(int st, int et) {
+ float simulation::simulate(int st, int et) {
 	float delay = 0.0f;
 	float temp = 0.0f;
 	float pre_delay = 0.0f;

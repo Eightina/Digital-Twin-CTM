@@ -1,0 +1,70 @@
+
+setting
+% Section I - Setting parameters.
+time 08:00:00 08:03:00
+% The beginning and end time of the simulation run
+clock 1
+% The discrete time interval between clock ticks. The unit of time is second.
+epsilon 0.001
+% Any quantities smaller than epsilon will be ignored.
+initoccp 5
+% The initial cell occupation percentage.
+initctrl 0
+% The initial control strategy: 
+% 0 - every phase length is assigned the minimum green time and the cycle length is minimum green time multiplied by number of phase.
+% 1 - both phase length and cycle length are fixed according to Webster's formula.
+cellscale 10
+% Cell lenth factor.
+losttime 4
+% Lost time.
+end
+
+geometry
+% Section II - Geometry structure
+% 
+% Node information as follows: 
+%          (1)      (2)       (3)        (4)
+%           No.    type        x          y
+node        1        1        1100        2300
+node        2        0        1100        1300
+node        3        2        1200        2300
+node        4        0        1200        1300
+node        5        0        1100        1000
+node        6        2        1100        0
+node        7        0        1200        1000
+node        8        1        1200        0
+node        9        1        0           1100
+node       10        0        1000        1100
+node       11        2        0           1200
+node       12        0        1000        1200
+node       13        0        1300        1100
+node       14        2        2300        1100
+node       15        0        1300        1200
+node       16        1        2300        1200
+
+% There are 4 columns above: 
+% 1. Column (1) numbers every node.
+% 2. Column (2) specifies types of nodes: 
+%    a) Type 0 indicates an ordinary node.
+%    b) Type 1 indicates an origin node.
+%    c) Type 2 indicates a destination node.
+% 3. The last two columns (3)(4) are the coordinates of nodes.
+% 
+% Arc information as follows: 
+%         (1)      (2)      (3)      (4)       (5)       (6)        (7)
+%                  up      down      free      max       jam        
+%         No.     node     node     speed      flow    density     delta
+arc        1         1        2       10.0     10.0       0.11      0.6
+arc        2         4        3       10.0     10.0       0.11      0.6
+arc        3         5        6       10.0     10.0       0.11      0.6
+arc        4         8        7       10.0     10.0       0.11      0.6
+arc        5         9       10       10.0     10.0       0.11      0.6
+arc        6        12       11       10.0     10.0       0.11      0.6
+arc        7        13       14       10.0     10.0       0.11      0.6
+arc        8        16       15       10.0     10.0       0.11      0.6
+% There are 7 columns above: 
+% 1. Column (1) numbers every arc.
+% 2. Columns (2)(3) are upstream node and downstream node of arc respectively.
+% 3. Columns (4)(5)(6) are the free flow speed, maximum flow and jam density of arc.
+% 4. Column (7) is the ratio of the backward wave speed to the free flow speed.
+end

@@ -27,6 +27,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Digital_Twin.py" />
+    <Compile Include="sumotest.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digital-Twin-CTM.vcxproj">
@@ -37,9 +38,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Input\cons_i_Test.txt" />
+    <Content Include="Input\cons_i_Test4.txt" />
     <Content Include="Input\init_i_Test.txt" />
+    <Content Include="Input\init_i_Test4.txt" />
     <Content Include="Input\i_Test.txt" />
     <Content Include="Input\i_Test2.txt" />
+    <Content Include="Input\i_Test4.txt" />
+    <Content Include="Output\d_Test.txt" />
+    <Content Include="Output\d_Test4.txt" />
+    <Content Include="Output\i_Test.log" />
+    <Content Include="Output\i_Test4.log" />
+    <Content Include="Output\o_Test.txt" />
+    <Content Include="Output\o_Test4.txt" />
+    <Content Include="Output\t_Test.txt" />
+    <Content Include="Output\t_Test4.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\" />

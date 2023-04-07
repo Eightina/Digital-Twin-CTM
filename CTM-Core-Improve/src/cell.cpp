@@ -60,7 +60,7 @@ void cell::add_at_phase(const int& cell_id, const int& phase_id) {
 float cell::send_flow(int cn) {
 	if (type != diverge)
 		return Min(max_flow, owner->exist_vehicle[owner->present_clock - 1][id]);
-
+	
 	int i = owner->index_next_cell[id][cn];
 
 	if (on_intersection < 0)

@@ -51,7 +51,13 @@ public:
 	// update part
 	float eventual_state[MAX_CELL] = {};
 	float exist_vehicle[MAX_CLOCK][MAX_CELL] = {};
-	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {};
+	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {}; 
+	/*when reinitializing simulation, do not reinitialize diverge_flow and just just use the memory needed.
+	* because diverge_flow passes the flow to be updated next tick for a diverge cell.
+	* if diverge_flow is reset to zero when reinitializing a simulation,
+	* while a diverge cell is unluckily filled to its max_flow,
+	* then this cell will be completely jammed: its inflow and outflow will remain 0 all the time
+	*/
 	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
 	/*w -- timing plan; this defines the control signals in each tick, in each intersection,
 	* whether the phases are on or off. working with cell.at_phase array
