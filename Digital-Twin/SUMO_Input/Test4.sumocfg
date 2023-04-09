@@ -1,0 +1,11 @@
+<configuration>
+    <input>
+        <net-file value=".\net\Test4.net.xml"/>
+        <route-files value=".\route\Test4.rou.xml"/>
+        <gui-settings-file value="Test4.settings.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="10000"/>
+    </time>
+</configuration>
