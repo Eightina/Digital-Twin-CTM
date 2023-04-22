@@ -5,20 +5,7 @@
 #include "debug.h"
 #include "simulation.h"
 
-//extern std::vector<arc> owner->arcs;
-//extern float exist_vehicle[MAX_CLOCK][MAX_CELL];
-//extern int present_clock;
-//extern setting settings;
-//extern std::vector<cell> cells;
-//extern float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL];
-//extern int index_diverge_cell[MAX_CELL];
-//extern debug *owner->Log;
-//extern short index_next_cell[MAX_CELL][MAX_CELL];
-
-
 using Cell::merge;
-
-
 
 cell::cell(simulation* cellowner) : owner(cellowner), id(0), on_arc(0), in_flow(-1.0), out_flow(-1.0) {
 	/*if( !signals.empty() ) signals.clear();*/
@@ -36,8 +23,6 @@ cell::cell(simulation* cellowner) : owner(cellowner), id(0), on_arc(0), in_flow(
 cell::cell(simulation* cellowner, int i, int arc, cell_type t, float len) :
 	owner(cellowner), id(i), type(t), on_arc(arc), length(len) {
 		//Assert(cells.size()<MAX_CELL);
-		
-		//size++;
 		
 		max_speed = owner->arcs[arc].get_max_speed();
 		max_flow = owner->arcs[arc].get_max_flow()*(owner->settings.clock_tick);
@@ -60,6 +45,11 @@ void cell::origin_update_flow() { in_flow = owner->origin_demand[owner->present_
 
 void cell::set_max_flow(const float& mf) { max_flow = mf * owner->settings.clock_tick; }
 
+/* 
+* This function defines the connection relationship
+* between this cell and one of its successor during different phases.
+* This relationship is saved by array cell.at_phase 
+*/
 void cell::add_at_phase(const int& cell_id, const int& phase_id) {
 	int i = 0;
 	while (next_cell[i] != cell_id) ++i;
@@ -70,10 +60,8 @@ void cell::add_at_phase(const int& cell_id, const int& phase_id) {
 float cell::send_flow(int cn) {
 	if (type != diverge)
 		return Min(max_flow, owner->exist_vehicle[owner->present_clock - 1][id]);
-
+	
 	int i = owner->index_next_cell[id][cn];
-	//for( i = 0; i < next_cell.size(); i++ )
-	//	if( next_cell[i] == cn )	break;
 
 	if (on_intersection < 0)
 		return Min(max_flow * diverge_coeff[i], owner->diverge_flow[owner->index_diverge_cell[id]][i]);
@@ -99,8 +87,8 @@ float cell::receive_flow() {
 void cell::set_out_flow(const float& out, int next_cell_id) {
 	if (type == diverge) {
 		int i = owner->index_next_cell[id][next_cell_id];
-		/*for( i = 0; i < next_cell.size(); i++ )
-			if(next_cell_id == next_cell[i])	break;*/
+		
+		// calculate the flow between this diverge cell and one of its successors, which has id next_cell_id
 		owner->diverge_flow[owner->index_diverge_cell[id]][i] -= out;
 		owner->diverge_flow[owner->index_diverge_cell[id]][i] += in_flow * diverge_coeff[i];
 		out_flow += out;
@@ -170,23 +158,25 @@ float cell::move_vehicle() {
 	float delay = owner->exist_vehicle[owner->present_clock - 1][id] - out_flow;
 	owner->exist_vehicle[owner->present_clock][id] = delay + in_flow;
 	//Log flows and states.
-	/*sprintf(Log->get_str(),"Cell#%04d: In Flow(%7.2lf ), Out Flow(%7.2lf ), Exist vehicles (%7.2lf ), Delay (%7.2lf )",
-		id,get_in_flow(),get_out_flow(), exist_vehicle[owner->present_clock][id], delay );
-	Log->process(Log->get_str());
-	if(get_in_flow() - max_flow > settings.epsilon )
-		Log->warning("Exceed maximum flow! ^^^^^^");
-	if(get_out_flow() - max_flow > settings.epsilon )
-		Log->warning("Exceed maximum flow!\t\t   ^^^^^^");
-	if(exist_vehicle[owner->present_clock][id] - max_vehicle > settings.epsilon)
-		Log->warning("Exceed maximum vehicle!\t\t\t\t\t    ^^^^^^");*/
+	//sprintf(Log->get_str(),"Cell#%04d: In Flow(%7.2lf ), Out Flow(%7.2lf ), Exist vehicles (%7.2lf ), Delay (%7.2lf )",
+	//	id,get_in_flow(),get_out_flow(), exist_vehicle[owner->present_clock][id], delay );
+	//Log->process(Log->get_str());
+	//if(get_in_flow() - max_flow > settings.epsilon )
+	//	Log->warning("Exceed maximum flow! ^^^^^^");
+	//if(get_out_flow() - max_flow > settings.epsilon )
+	//	Log->warning("Exceed maximum flow!\t\t   ^^^^^^");
+	//if(exist_vehicle[owner->present_clock][id] - max_vehicle > settings.epsilon)
+	//	Log->warning("Exceed maximum vehicle!\t\t\t\t\t    ^^^^^^");
 
 	return delay;
 }
 
-void cell::add_demand( const int& clock,const float& traffic ){
+// add demand to simulation->temp_origin_demand
+// demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]	
+void cell::add_demand( const int& clock,const float& traffic ){ 
 	char str[256];
 	sprintf( str,"Origin Cell#%03d Added Demand(Start Time:%03d, Traffic:%5.2lf)",id,clock,traffic );
-	owner->Log->process( str );
+	owner->Log->process( str, owner->present_clock);
 	if( type != origin ) type = origin;
 	if( temp_origin_demand_id < 0 ) temp_origin_demand_id = owner->temp_origin_demand_size++;
 	owner->temp_origin_demand[temp_origin_demand_id][num_demand++] = demand( clock,traffic );
@@ -194,7 +184,7 @@ void cell::add_demand( const int& clock,const float& traffic ){
 
 void cell::add_next_cell( const int& i ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_next_cell( int i ) : the i out range." );
+		owner->Log->throws("In cell::add_next_cell( int i ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	for( int ii = 0; ii < next_cell.top; ++ii ) 
@@ -211,7 +201,7 @@ void cell::add_next_cell( const int& i ){
 
 void cell::add_previous_cell( const int& i ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range." );
+		owner->Log->throws("In cell::add_previous_cell( int i ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	for( int ii = 0; ii < (int)previous_cell.size(); ++ii ) 
@@ -246,7 +236,7 @@ void cell::add_next_cell( const int& i,const float& g ){
 
 void cell::add_next_cell( const int& i,const float& g,const int& t ){
 	if( i < 0 ){
-		owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range." );
+		owner->Log->throws("In cell::add_previous_cell( int i,float g,int t ) : the i out range.", owner->present_clock);
 		exit(1);
 	}
 	next_cell.push_back(i);

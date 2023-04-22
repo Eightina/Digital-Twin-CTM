@@ -7,11 +7,6 @@
 #include "arc.h"
 #include "base.h"
 
-//extern std::vector<cell> owner->cells;
-//extern std::vector<arc> owner->arcs;
-//extern int owner->present_clock;
-//extern setting settings;
-
 class simulation;
 
 class incident{

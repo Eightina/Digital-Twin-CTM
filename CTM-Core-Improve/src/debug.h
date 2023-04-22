@@ -22,9 +22,9 @@ public:
 	debug();
 	debug( char *name );
 	~debug();
-	void process( char *str );
-	void warning( char *str);
-	void throws( char *str );
+	void process( char *str, int present_clock);
+	void warning( char *str, int present_clock);
+	void throws( char *str, int present_clock);
 	char *get_str();
 };
 

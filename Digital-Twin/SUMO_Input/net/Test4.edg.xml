@@ -1,0 +1,11 @@
+<edges>
+  <edge id="1" from="1" to="0" type="a"/>
+  <edge id="2" from="0" to="1" type="a"/>
+  <edge id="3" from="0" to="2" type="a"/>
+  <edge id="4" from="2" to="0" type="a"/>
+  <edge id="5" from="3" to="0" type="a"/>
+  <edge id="6" from="0" to="3" type="a"/>
+  <edge id="7" from="0" to="4" type="a"/>
+  <edge id="8" from="4" to="0" type="a"/>
+</edges>
+<!-- corresponding to arcs in ctm core input -->

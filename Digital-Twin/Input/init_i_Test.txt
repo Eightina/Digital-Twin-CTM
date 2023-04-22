@@ -1,0 +1,62 @@
+% Test input file of Green Signal
+
+traffic
+% Section IV - Traffic flow
+%
+% Traffic demands as follow:
+%                (1)         (2)       (3)
+%               start      origin    traffic
+%               time        node     demand
+demand        08:00:00        1        0.2778
+demand        08:00:00        5        0.1389
+
+% Traffic demand at origin node (2) equals (3) from time (1) on.
+%
+% Traffic diverges as follow:
+%             (1)      (2)       (3)       (4)
+%             from     to       diverge
+%             arc      arc      coeff      type
+diverge        1        2        1.0        0
+diverge        3        4        1.0        0
+
+% Percentage (3) of traffic flow enters arc (2) from arc (1).
+% There are three types of diverge:
+% 1. Type 0 indicates traffic flow goes through straight.
+% 2. Type 1 indicates traffic flow turns right.
+% 3. Type 2 indicates traffic flow turns left.
+% 
+% Traffic merges as follow:
+%           (1)      (2)
+%           from     to
+%           arc      arc
+merge        1        2
+merge        3        4
+
+
+end
+
+control
+% Section III - Control scheme
+%                 (1)      (2)       (3)        (4)       (5)       (6)       (7)      (8)            (9)
+%                                                      min green max green   right    number       connected
+%                 No.      type       x          y        time      time    turning  of phase        nodes
+intersection       1        1        43        35        15      60       1        2          2 7 3 6
+% The followings are the phases of the intersection:
+%           (1)      (2)      (3)      (4)
+%      intersection phase     from     to
+%           No.      No.      arc      arc
+phase        1        1        1        2
+phase        1        2        3        4
+
+
+end
+
+event
+% Section V - Event information
+%              (1)       (2)          (3)             (4)           (5)
+%              arc                   start            end           max
+%              No.     distance      time             time          flow
+%incident        7        200        08:01:00        08:03:00        0.5
+%incident        6        300        08:02:00        08:04:00        1.0
+% From time (3) to time (4), an incident occurs at the place with distance (2) from the beginning of arc (1). The maximum flow is reduced to (5).
+end

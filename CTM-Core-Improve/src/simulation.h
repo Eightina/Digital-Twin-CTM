@@ -20,9 +20,11 @@ class simulation {
 public:
 	simulation(char* inputname);
 
-	void initialize();
+	void initialize(char* inputname);
 
 	float excecute();
+
+	void stepend();
 
 	void print_start();
 
@@ -30,43 +32,60 @@ public:
 
 	float delay0;
 
-	int present_clock;
+	int present_clock = 0;
 	setting settings;
-	//node nodes[MAX_NODE];
-	std::vector<node> nodes = {};
-	//arc arcs[MAX_ARC];
-	std::vector<arc> arcs = {};
-	//cell cells[MAX_CELL]; 
+
+	// structure part
+	std::vector<node> nodes = {}; // len is number of nodes + 1
+	std::vector<arc> arcs = {}; // len is number of arcs + 1
 	std::vector<cell> cells = {}; // len is number of cells + 1
-	//intersection intersections[MAX_INTERSECTION];
 	std::vector<intersection> intersections = {}; // len is number of intersections
-	incident incidents[MAX_INCIDENT] = {};
+	incident incidents[MAX_INCIDENT] = {}; // not implemented yet
 
 	short index_next_cell[MAX_CELL][MAX_CELL] = {};
-
+ 
 	int origin_set[MAX_ORIGIN_CELL] = {}, normal_set[MAX_NORMAL_CELL] = {},
 		diverge_set[MAX_DIVERGE_CELL] = {}, merge_set[MAX_MERGE_CELL] = {}, destination_set[MAX_DESTINATION_CELL] = {};
-
 	int origin_size = 0, normal_size = 0, diverge_size = 0, merge_size = 0, destination_size = 0;
 
+	// update part
+	float eventual_state[MAX_CELL] = {};
 	float exist_vehicle[MAX_CLOCK][MAX_CELL] = {};
-	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {};
-	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		//w -- timing plan
+	float diverge_flow[MAX_DIVERGE_CELL][MAX_ADJ_CELL] = {}; 
+	/*when reinitializing simulation, do not reinitialize diverge_flow and just just use the memory needed.
+	* because diverge_flow passes the flow to be updated next tick for a diverge cell.
+	* if diverge_flow is reset to zero when reinitializing a simulation,
+	* while a diverge cell is unluckily filled to its max_flow,
+	* then this cell will be completely jammed: its inflow and outflow will remain 0 all the time
+	*/
+	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
+	/*w -- timing plan; this defines the control signals in each tick, in each intersection,
+	* whether the phases are on or off. working with cell.at_phase array
+	* omega[i][j][m]
+	* i takes current clock
+	* j takes intersection id
+	* m takes phase id
+	*/
+	
 
 	int index_diverge_cell[MAX_CELL] = {};
 	int number_diverge_cell = {};
 
-
+	// demand part
 	float origin_demand[MAX_CLOCK][MAX_ORIGIN_CELL] = {};
-	demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK] = {}; // if demand not changed then remain the same
+	demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK] = {};
+	// if demand not changed then remain the same
+	// 2d array temp_origin_demand[i][j] contains every source cell in order [i] and its demands [j]
+	// i is just a numeric index
+	// temp_origin_demand will be transferred to origin_demand in function simulation::initial_origin_demand() eventually 
 	int temp_origin_demand_size = 0;
 	float delay_record[MAX_CLOCK] = {};
 
 	debug* Log;
 
-	float vehicle[MAX_CELL] = {};
+	//float vehicle[MAX_CELL] = {};
 
-	char* simuname;
+	char simuname[128];
 
 	int start;
 
@@ -86,7 +105,7 @@ private:
 
 	void initial_diverge_cell_index();
 
-	void initial_origin_demand();
+	void initial_origin_demand(); // customized demands can be set here
 
 	void input_intersection(FILE* in);
 
@@ -96,7 +115,9 @@ private:
 
 	void input_event(FILE* in);
 
-	void scanfile(char namestr[]);
+	void scanfile_construct(char namestr[]);
+
+	void scanfile_initialize(char namestr[]);
 
 	// initialize part
 	void initial_diverge_flow();
@@ -129,39 +150,6 @@ private:
 	}
 
 
-
-
-
-	//int present_clock;
-	//setting settings;
-	//std::vector<node> nodes;
-	//std::vector<arc> arc;
-	//std::vector<cell> cells;
-	//std::vector<intersection> intersections;
-	//std::vector<incident> incidents;
-
-	//std::vector<std::vector<short>> index_next_cell;
-
-	//std::vector<int> origin_set, normal_set,
-	//	diverge_set, merge_set, destination_set;
-	//int origin_size, normal_size, diverge_size, merge_size, destination_size;
-
-	//std::vector<std::vector<float>> exist_vehicle;
-	//std::vector<std::vector<float>> diverge_flow;
-	//std::vector<std::vector<std::vector<float>>> omega;		//w -- timing plan
-
-	//std::vector<int> index_diverge_cell;
-	//int number_diverge_cell;
-
-
-	//std::vector<std::vector<float>> origin_demand;
-	//std::vector<std::vector<demand>> temp_origin_demand; // if demand not changed then remain the same
-	//int temp_origin_demand_size;
-
-
-	//debug* Log;
-
-	//std::vector<float> vehicle;
 
 };
 

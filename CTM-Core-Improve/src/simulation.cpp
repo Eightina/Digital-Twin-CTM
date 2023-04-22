@@ -1,25 +1,40 @@
 #include "simulation.h"
 
-
+// constrcutor -> build intersection structure
+// initialize -> define a simulation's occupation, demand, and signal control
 
 simulation::simulation(char* inputname) {
 	std::cout << "simulation object" << inputname << std::endl;
 	print_start();
-	scanfile(inputname);
-	simuname = inputname;
+	scanfile_construct(inputname);
+	strcpy(simuname, inputname);
 
 }
 
-void simulation::initialize() {
+void simulation::initialize(char* inputname) {
+	present_clock = 0;
+
+	scanfile_initialize(inputname);
+
 	start = clock();
-	initial_control();
-	initial_occupation(exist_vehicle[0]);
-	initial_diverge_flow();
+	// modify ¡ý¡ý¡ý
+	initial_control(); 
+	//initial_occupation(exist_vehicle[0]);
+	//
+	//initial_diverge_flow();
+
 }
 
 float simulation::excecute() {
 	delay0 = simulate(1, settings.get_max_ticks());
 	return delay0;
+}
+
+void simulation::stepend() {
+	//memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
+	//memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
+	//memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
+	//memset(eventual_state, 0.0f, sizeof(eventual_state));
 }
 
 // print part
@@ -45,13 +60,13 @@ void simulation::output_result() {
 	printf("Timing plan output files\n >>t_%s.txt\n", &simuname[2]);
 	printf("Cell occupation output files\n >>o_%s.txt\n", &simuname[2]);
 	printf("Detail delay output files\n >>d_%s.txt\n", &simuname[2]);
-	printf("\nSimulation %s Done.\n\n", &simuname);
+	printf("\nSimulation %s Done.\n\n", simuname);
 	system("pause");
 }
 
 // input part
 void simulation::skip(FILE* in) {
-	//Log->process("Going to skipping line...\n");
+	//Log->process(("Going to skipping line...\n"), present_clock);
 	int key = fgetc(in);
 	while (true) {
 		if (key == '%') {
@@ -74,60 +89,60 @@ void simulation::input_setting(FILE* in) {
 	fscanf(in, "%s", keyword);
 	while (strcmpi("end", keyword)) {
 		if (strcmpi("time", keyword) == 0) {
-			Log->process("Going to input time...");
+			Log->process(("Going to input time..."), present_clock);
 			fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
 			sec = hh * 3600 + mm * 60 + ss;
 			settings.start_time = sec;
 			fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
 			sec = hh * 3600 + mm * 60 + ss;
 			settings.end_time = sec;
-			Log->process("Input times successfully...");
+			Log->process(("Input times successfully..."), present_clock);
 		}
 		else if (strcmpi("clock", keyword) == 0) {
-			Log->process("Going to input clock...");
+			Log->process(("Going to input clock..."), present_clock);
 			fscanf(in, "%d", &sec);
 			settings.clock_tick = sec;
-			Log->process("Input clock successfully...");
+			Log->process(("Input clock successfully..."), present_clock);
 		}
 		else if (strcmpi("epsilon", keyword) == 0) {
-			Log->process("Going to input epsilon...");
+			Log->process(("Going to input epsilon..."), present_clock);
 			fscanf(in, "%f", &settings.epsilon);
-			Log->process("Input epsilon successfully...");
+			Log->process(("Input epsilon successfully..."), present_clock);
 		}
 		else if (strcmpi("initoccp", keyword) == 0) {
-			Log->process("Going to input initoccp...");
+			Log->process(("Going to input initoccp..."), present_clock);
 			fscanf(in, "%d", &settings.initial_occupation);
-			Log->process("Input initoccp successfully...");
+			Log->process(("Input initoccp successfully..."), present_clock);
 		}
 		else if (strcmpi("initctrl", keyword) == 0) {
-			Log->process("Going to input initctrl...");
+			Log->process(("Going to input initctrl..."), present_clock);
 			fscanf(in, "%d", &settings.initial_control);
-			Log->process("Input initctrl successfully...");
+			Log->process(("Input initctrl successfully..."), present_clock);
 		}
 		else if (strcmpi("cellscale", keyword) == 0) {
-			Log->process("Going to input cellscal...");
+			Log->process(("Going to input cellscal..."), present_clock);
 			fscanf(in, "%f", &settings.cell_length_factor);
-			Log->process("Input cellscale successfully...");
+			Log->process(("Input cellscale successfully..."), present_clock);
 		}
 		else if (strcmpi("losttime", keyword) == 0) {
-			Log->process("Going to input losttime...");
+			Log->process(("Going to input losttime..."), present_clock);
 			fscanf(in, "%d", &settings.yellow_time);
 			settings.yellow_ticks = ((settings.yellow_time / settings.clock_tick == 0) ?
 				1 : (settings.yellow_time / settings.clock_tick));
-			Log->process("Input losttime successfully...");
+			Log->process(("Input losttime successfully..."), present_clock);
 		}
 		skip(in);
 		fscanf(in, "%s", keyword);
 	}
 	settings.max_ticks = (int)ceil((settings.end_time - settings.start_time) * 1.0 / settings.clock_tick);
-	Log->process("Input setting successfully...");
+	Log->process(("Input setting successfully..."), present_clock);
 }
 
 void simulation::input_geometry(FILE* in) {
 	skip(in);
 	char str[1024];
 	int id, type, x, y;
-	Log->process("Going to input node...");
+	Log->process(("Going to input node..."), present_clock);
 	//memset(str,0,1024);
 	if (nodes.empty()) nodes.push_back(node(this));
 	while (fscanf(in, "%s", str), strcmpi(str, "arc")) {
@@ -139,14 +154,14 @@ void simulation::input_geometry(FILE* in) {
 	}
 
 	char sstr[256];
-	Log->process("Input node successfully...");
+	Log->process(("Input node successfully..."), present_clock);
 	//memset(sstr,0,256);
-	sprintf(sstr, "The size of node is: %d...", nodes.size());
-	Log->process(sstr);
+	sprintf(sstr, "The size of node is: %d...", nodes.size() - 1);
+	Log->process((sstr), present_clock);
 
 	int ai, anf, anl;
 	float as, af, ad, adel;
-	Log->process("Going to input arc...");
+	Log->process(("Going to input arc..."), present_clock);
 	if (arcs.empty()) arcs.push_back(arc(this));
 	while (strcmpi(str, "end")) {
 		fscanf(in, "%d%d%d%f%f%f%f", &ai, &anf, &anl, &as, &af, &ad, &adel);
@@ -160,10 +175,10 @@ void simulation::input_geometry(FILE* in) {
 		//memset(str,0,1024);
 		fscanf(in, "%s", str);
 	}
-	Log->process("Input arc successfully...");
-	sprintf(str, "The size of arc is: %d...", arcs.size());
-	Log->process(str);
-	Log->process("Input geometry successfully...");
+	Log->process(("Input arc successfully..."), present_clock);
+	sprintf(str, "The size of arc is: %d...", arcs.size() - 1);
+	Log->process((str), present_clock);
+	Log->process(("Input geometry successfully..."), present_clock);
 }
 
 void simulation::input_traffic(FILE* in) {
@@ -174,7 +189,7 @@ void simulation::input_traffic(FILE* in) {
 	float traffic_demand;
 
 	int __count = 0;
-	Log->process("Going to input demand ...");
+	Log->process(("Going to input demand ..."), present_clock);
 	while (fscanf(in, "%s", str), strcmpi(str, "demand") == 0) {
 		fscanf(in, "%d:%d:%d %d %f", &hh, &mm, &ss, &origin_node, &traffic_demand);
 		//demands
@@ -182,7 +197,7 @@ void simulation::input_traffic(FILE* in) {
 		sec = hh * 3600 + mm * 60 + ss;
 		sprintf(Log->get_str(), "Origin Node#%03d at Arc#%03d",
 			origin_node, nodes[origin_node].get_arc(), arcs[nodes[origin_node].get_arc()].get_first_cell());
-		Log->process(Log->get_str());
+		Log->process((Log->get_str()), present_clock);
 		int id = arcs[nodes[origin_node].get_arc()].get_first_cell();
 		cells[id].add_demand(sec, traffic_demand);
 		skip(in);
@@ -190,14 +205,14 @@ void simulation::input_traffic(FILE* in) {
 	}
 	char sstr[256];
 	//memset(sstr,0,256);
-	Log->process("Input arc successfully...");
+	Log->process(("Input arc successfully..."), present_clock);
 	sprintf(sstr, "The size of demand is: %d ...", __count);
-	Log->process(sstr);
+	Log->process((sstr), present_clock);
 
 	//We need some dummy cells here.
 
 	__count = 0;
-	Log->process("Going to input diverge ...");
+	Log->process(("Going to input diverge ..."), present_clock);
 	while (strcmpi("diverge", str) == 0) {
 		int from, to, type;
 		float ceoff;
@@ -214,12 +229,12 @@ void simulation::input_traffic(FILE* in) {
 		__count++;
 	}
 	//memset(str,0,1024);
-	Log->process("Input diverge successfully...");
+	Log->process(("Input diverge successfully..."), present_clock);
 	sprintf(sstr, "The size of diverge is: %d ...", __count);
-	Log->process(sstr);
+	Log->process((sstr), present_clock);
 
 	__count = 0;
-	Log->process("Going to input merge...");
+	Log->process(("Going to input merge..."), present_clock);
 	while (strcmpi("end", str)) {
 		int from, to;
 		fscanf(in, "%d %d", &from, &to);
@@ -234,10 +249,10 @@ void simulation::input_traffic(FILE* in) {
 		__count++;
 	}
 	//memset(str,0,1024);
-	Log->process("Input merge successfully...");
+	Log->process(("Input merge successfully..."), present_clock);
 	sprintf(sstr, "The size of merge is: %d ...", __count);
-	Log->process(sstr);
-	Log->process("Input traffic successfully...");
+	Log->process((sstr), present_clock);
+	Log->process(("Input traffic successfully..."), present_clock);
 }
 
 void simulation::classify_cell() {
@@ -262,6 +277,7 @@ void simulation::initial_diverge_cell_index() {
 	}
 }
 
+// important
 void simulation::initial_origin_demand() {
 	for (int i = 0; i < origin_size; ++i) {
 		int n = cells[origin_set[i]].get_num_demand();
@@ -275,7 +291,8 @@ void simulation::initial_origin_demand() {
 			end_clock = (iter->clock - settings.start_time) / settings.clock_tick
 				+ ((((iter->clock - settings.start_time) % settings.clock_tick) == 0) ? 0 : 1);
 
-			while (pre_clock <= end_clock)
+			// every tick between start_time and the input demand clock is set to be pre_flow
+			while (pre_clock <= end_clock) 
 				origin_demand[pre_clock++][idemand] = pre_flow;
 
 			pre_flow = iter->traffic * settings.clock_tick;
@@ -288,7 +305,7 @@ void simulation::initial_origin_demand() {
 void simulation::input_intersection(FILE* in) {
 	int id, type, x, y, min_g = 0, max_g = 0, right_t = 0, num_phase = 0;
 
-	Log->process("Going to input intersection.....*");
+	Log->process(("Going to input intersection.....*"), present_clock);
 	fscanf(in, "%d%d%d%d", &id, &type, &x, &y);
 	char str[256];
 	if (type) {
@@ -317,11 +334,11 @@ void simulation::input_intersection(FILE* in) {
 		//intersections[tmp_intersection_size] = intersection( id,type,x,y );
 		intersections.emplace_back(this, id, type, x, y);
 	}
-	Log->process("Input intersection successfully...");
+	Log->process(("Input intersection successfully..."), present_clock);
 }
 
 void simulation::input_phase(FILE* in) {
-	Log->process("Going to input phase...");
+	Log->process(("Going to input phase..."), present_clock);
 	int id_inter, id_phase, from_arc, to_arc;
 	fscanf(in, "%d%d%d%d", &id_inter, &id_phase, &from_arc, &to_arc);
 	id_inter--;
@@ -336,7 +353,7 @@ void simulation::input_phase(FILE* in) {
 void simulation::input_control(FILE* in) {
 	skip(in);
 	char str[1024];
-	Log->process("Going to input control...");
+	Log->process(("Going to input control..."), present_clock);
 	while (true) {
 		fscanf(in, "%s", str);
 		if (strcmpi("intersection", str) == 0) {
@@ -348,16 +365,16 @@ void simulation::input_control(FILE* in) {
 		else break;
 		skip(in);
 	}
-	//Log->process("Input control successfully...");
+	//Log->process(("Input control successfully..."), present_clock);
 	sprintf(str, "The size of intersection is: %d ...", intersections.size());
-	Log->process(str);
-	Log->process("Input control successfully...");
+	Log->process((str), present_clock);
+	Log->process(("Input control successfully..."), present_clock);
 }
 
 void simulation::input_event(FILE* in) {
 	skip(in);
 	char str[1024];
-	Log->process("Going to input incident...");
+	Log->process(("Going to input incident..."), present_clock);
 	while (true) {
 		int at_arc;
 		float dist;
@@ -372,22 +389,30 @@ void simulation::input_event(FILE* in) {
 		incidents[tmp_incident_size] = incident(at_arc, dist, st, et, mf);
 		skip(in);
 	}
-	Log->process("Input incident successfully...");
+	Log->process(("Input incident successfully..."), present_clock);
 	sprintf(str, "The size of incident is: %d", incident::size);
-	Log->process(str);
-	Log->process("Input event successfully...");
+	Log->process((str), present_clock);
+	Log->process(("Input event successfully..."), present_clock);
 }
 
-void simulation::scanfile(char namestr[]) {
+void simulation::scanfile_construct(char namestr[]) {
 	char full_name[256];
+	char path[256] = ".\\Input\\cons_";
 	strcpy(full_name, namestr);
+
 	strcat(full_name, ".txt");
+	strcat(path, full_name);
+	//printf(path);
+
+	strcpy(full_name, path);
+
+	std::cout << full_name << std::endl;
 	FILE* in = fopen(full_name, "r");
 	if (in == NULL) {
 		Log = new debug(namestr);
 		char str[256];
 		sprintf(str, "Cannot open input file: \t%s\n", namestr);
-		Log->throws(str);
+		Log->throws(str, present_clock);
 		exit(0);
 	}
 	else {
@@ -403,33 +428,82 @@ void simulation::scanfile(char namestr[]) {
 		if (*pstr == '\0') continue;
 		if (*pstr == '%') continue;
 		if (strnicmp("setting", pstr, 7) == 0) {
-			Log->process("input setting...");
+			Log->process(("input setting..."), present_clock);
 			input_setting(in);
 		}
 		else if (strnicmp("geometry", pstr, 8) == 0) {
-			Log->process("input geometry...");
+			Log->process(("input geometry..."), present_clock);
 			input_geometry(in);
 		}
-		else if (strnicmp("traffic", pstr, 7) == 0) {
-			Log->process("input traffic...");
+	}
+	fclose(in);
+}
+
+void simulation::scanfile_initialize(char namestr[]) {
+
+	memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
+	memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
+	memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
+	memset(eventual_state, 0.0f, sizeof(eventual_state));
+
+	memset(delay_record, 0, sizeof(delay_record));
+	memset(temp_origin_demand, 0, sizeof(temp_origin_demand));
+	int temp_origin_demand_size = 0;
+	present_clock = 0;
+	intersections = {};
+
+	for (cell& cur_cell : cells) {
+		cur_cell.clear_vecs();
+	}
+
+
+	char full_name[256];
+	char path[256] = ".\\Input\\init_";
+	strcpy(full_name, namestr);
+	strcat(full_name, ".txt");
+	strcat(path, full_name);
+	//printf(path);
+	strcpy(full_name, path);
+	std::cout << full_name << std::endl;
+	FILE* in = fopen(full_name, "r");
+	if (in == NULL) {
+		Log = new debug(namestr);
+		char str[256];
+		sprintf(str, "Cannot open input file: \t%s\n", namestr);
+		Log->throws(str, present_clock);
+		exit(0);
+	} else {
+		Log = new debug(namestr);
+	}
+
+
+	temp_origin_demand_size = 0;
+	char line[1024], * pstr;
+	memset(index_diverge_cell, 0, sizeof(index_diverge_cell));
+	while (!feof(in)) {
+		fgets(line, 1023, in);
+		pstr = line;
+		while (*pstr == ' ') pstr++;
+		if (*pstr == '\0') continue;
+		if (*pstr == '%') continue;
+
+		if (strnicmp("traffic", pstr, 7) == 0) {
+			Log->process(("input traffic..."), present_clock);
 			input_traffic(in);
 			classify_cell();
 			initial_origin_demand();
 			initial_diverge_cell_index();
 		}
 		else if (strnicmp("control", pstr, 7) == 0) {
-			Log->process("input control...");
+			Log->process(("input control..."), present_clock);
 			input_control(in);
 		}
 		else if (strnicmp("event", pstr, 5) == 0) {
-			Log->process("input event...");
+			Log->process(("input event..."), present_clock);
 			input_event(in);
 		}
 	}
-
 	fclose(in);
-
-
 }
 
 // initialize part
@@ -440,17 +514,18 @@ void simulation::initial_diverge_flow() {
 }
 
 void simulation::initial_occupation(float* vehicle) {
-	//for( int i = 1; i <= cell::size; ++i ){
 	for (int i = 1; i < cells.size(); ++i) {
 		vehicle[i] = settings.initial_occupation / 100.0 * cells[i].get_max_vehicle();
 	}
 }
 
+//bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
 void simulation::initial_control() {
 	memset(omega, false, sizeof(omega));
 	char str[256], _str[256];
 	int istr = 0;
 
+	// define control signals
 	for (int i = 0; i < intersections.size(); ++i) {
 		int min_green = (int)ceil(intersections[i].get_min_green() * 1.0 / settings.clock_tick);
 		int g = 0, p = 0;
@@ -465,22 +540,22 @@ void simulation::initial_control() {
 	}
 
 	//Output initial timing plan.
-	Log->process("Initial Timing Plan...");
-	for (int i = 0; i < intersections.size(); ++i) {
-		sprintf(_str, "Intersection %03d", i);
-		Log->process(_str);
-		for (int j = 1; j <= settings.get_max_ticks(); ++j) {
-			memset(str, 0, sizeof(str));
-			istr = 0;
-			sprintf(str, "#%05d ", j);
-			istr = strlen(str);
-			for (int k = 0; k < intersections[i].get_num_phases(); ++k) {
-				sprintf(str + istr, "%d ", omega[j][i][k] ? 1 : 0);
-				istr += 2;
-			}
-			Log->process(str);
-		}
-	}
+	//Log->process(("Initial Timing Plan..."), present_clock);
+	//for (int i = 0; i < intersections.size(); ++i) {
+	//	sprintf(_str, "Intersection %03d", i);
+	//	Log->process((_str), present_clock);
+	//	for (int j = 1; j <= settings.get_max_ticks(); ++j) {
+	//		memset(str, 0, sizeof(str));
+	//		istr = 0;
+	//		sprintf(str, "#%05d ", j);
+	//		istr = strlen(str);
+	//		for (int k = 0; k < intersections[i].get_num_phases(); ++k) {
+	//			sprintf(str + istr, "%d ", omega[j][i][k] ? 1 : 0);
+	//			istr += 2;
+	//		}
+	//		Log->process((str), present_clock);
+	//	}
+	//}
 
 }
 
@@ -488,9 +563,14 @@ void simulation::initial_control() {
 void simulation::printoccup(char namestr[], float delay) {
 	FILE* out;
 	char outputname[256];
-	//strcat(outputname,&namestr[2]);
-	//strcat(outputname,".txt");
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname,".txt");
 	sprintf(outputname, "o_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Cell Occupation Output File.\n", out);
@@ -505,7 +585,7 @@ void simulation::printoccup(char namestr[], float delay) {
 	int i, j, k;
 
 	fprintf(out, "%d nodes, %d arcs, %d intersections, %d ticks\n\n",
-		nodes.size(), arcs.size(), intersections.size(), settings.get_max_ticks());
+		nodes.size() - 1, arcs.size() - 1, intersections.size(), settings.get_max_ticks());
 
 	//Output arcs and cells.
 	coordinate first, last, interval;
@@ -556,7 +636,14 @@ void simulation::printoccup(char namestr[], float delay) {
 void simulation::printdelay(char namestr[]) {
 	FILE* out;
 	char outputname[256];
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname, ".txt");
 	sprintf(outputname, "d_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Cell Occupation Output File.\n", out);
@@ -566,15 +653,12 @@ void simulation::printdelay(char namestr[]) {
 	time(&run);
 	localtime(&run);
 	fprintf(out, "The Date: \t%s", ctime(&run));
-	//fprintf( out,"Total delay: \t %7.2lf vehi*sec.\n", delay );
 	fprintf(out, "~\n\n");
 	double temp = 0.0;
 	fprintf(out, "%d ticks\n\n", settings.max_ticks);
-	fprintf(out, "#%04d\t%f\n", 0, 0.0);
-	//initial_diverge_flow();
-	for (int it = 1; it <= settings.max_ticks; ++it) {
-		//fprintf( out,"#%04d\t%f\n",it,simulate(it-1,it) );
-		fprintf(out, "#%04d\t%f\n", it, delay_record[it - 1]);
+	//fprintf(out, "#%04d\t%f\n", 0, 0.0);
+	for (int it = 0; it < settings.max_ticks; ++it) {
+		fprintf(out, "#%04d\t%f\n", it, delay_record[it]);
 	}
 	fclose(out);
 }
@@ -582,7 +666,14 @@ void simulation::printdelay(char namestr[]) {
 void simulation::printplan(char namestr[]) {
 	FILE* out;
 	char outputname[256];
+	char path[256] = ".\\Output\\";
+	strcpy(outputname, &namestr[2]);
+	strcat(outputname, ".txt");
 	sprintf(outputname, "t_%s.txt", &namestr[2]);
+	strcat(path, outputname);
+	strcpy(outputname, path);
+	//sprintf(outputname, ".\\Output\\%s", &outputname);
+	std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Time Planning File.\n", out);
@@ -628,6 +719,7 @@ void simulation::printplan(char namestr[]) {
 }
 
 // update part
+// not used
 void simulation::modify_control(const int& I, const int& t0, const int& t1, const int& P) {
 	for (int i = t0; i <= t1; i++) {
 		omega[i][I][P] = true;
@@ -638,6 +730,7 @@ void simulation::modify_control(const int& I, const int& t0, const int& t1, cons
 	}
 }
 
+// not used
 void simulation::set_control_off(const int& I, const int& st, const int& et)
 {
 	for (int it = st; it <= et; ++it)
@@ -652,7 +745,8 @@ void simulation::update_flow() {
 	std::vector<cell>& cl = cells;
 
 	for (int i = 0; i < origin_size; ++i)
-		cl[origin_set[i]].origin_update_flow();
+		cl[origin_set[i]].origin_update_flow(); 
+	// demand is turned into inflow, which is constant
 
 	for (int i = 0; i < diverge_size; ++i)
 		cl[diverge_set[i]].diverge_update_flow();
@@ -683,7 +777,7 @@ float simulation::update_occupation() {
 	return delay;
 }
 
-float simulation::simulate(int st, int et) {
+ float simulation::simulate(int st, int et) {
 	float delay = 0.0f;
 	float temp = 0.0f;
 	float pre_delay = 0.0f;
@@ -692,11 +786,10 @@ float simulation::simulate(int st, int et) {
 	for (int it = st; it <= et; ++it) {
 
 		present_clock = it;
-		for (int i = 1; i <= incident::size; ++i) {
-			incidents[i].occur();
-		}
+		//for (int i = 1; i <= incident::size; ++i) {
+		//	incidents[i].occur();
+		//}
 		update_flow();
-		//for( int i = 1; i <= cell::size; ++i ){
 		for (int i = 1; i < cells.size(); ++i) {
 			temp = exist_vehicle[it - 1][i] - cells[i].out_flow;
 			exist_vehicle[it][i] = temp + cells[i].in_flow;
@@ -706,6 +799,9 @@ float simulation::simulate(int st, int et) {
 		delay_record[it] = delay - pre_delay;
 		pre_delay = delay;
 	}
+
+
+	//eventual_state = exist_vehicle[et];
 
 	return delay * settings.clock_tick;
 }

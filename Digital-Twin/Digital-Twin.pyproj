@@ -11,6 +11,11 @@
     <OutputPath>.</OutputPath>
     <Name>Digital-Twin</Name>
     <RootNamespace>Digital-Twin</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <InterpreterId>Global|VisualStudio|python38</InterpreterId>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>True</EnableNativeCodeDebugging>
+    <InterpreterArguments>-i</InterpreterArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +36,48 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="i_Test.txt" />
-    <Content Include="i_Test2.txt" />
+    <Content Include="duarouter_script.bat" />
+    <Content Include="experiment design.drawio" />
+    <Content Include="generateTurnDefs_script.bat" />
+    <Content Include="Input\cons_i_Test.txt" />
+    <Content Include="Input\cons_i_Test4.txt" />
+    <Content Include="Input\init_i_Test.txt" />
+    <Content Include="Input\init_i_Test4.txt" />
+    <Content Include="Input\i_Test.txt" />
+    <Content Include="Input\i_Test2.txt" />
+    <Content Include="Input\i_Test4.txt" />
+    <Content Include="jtrrouter_script.bat" />
+    <Content Include="netconvert_script.bat" />
+    <Content Include="Output\d_Test.txt" />
+    <Content Include="Output\d_Test4.txt" />
+    <Content Include="Output\i_Test.log" />
+    <Content Include="Output\i_Test4.log" />
+    <Content Include="Output\o_Test.txt" />
+    <Content Include="Output\o_Test4.txt" />
+    <Content Include="Output\t_Test.txt" />
+    <Content Include="Output\t_Test4.txt" />
+    <Content Include="randomTrips_script.bat" />
+    <Content Include="runsim.bat" />
+    <Content Include="SUMO_Input\net\Test4.edg.xml" />
+    <Content Include="SUMO_Input\net\Test4.net.xml" />
+    <Content Include="SUMO_Input\net\Test4.nod.xml" />
+    <Content Include="SUMO_Input\net\Test4.typ.xml" />
+    <Content Include="SUMO_Input\route\Test4.rou.xml" />
+    <Content Include="SUMO_Input\route\Test4.trip.xml" />
+    <Content Include="SUMO_Input\route\Test4.turndefs.xml" />
+    <Content Include="SUMO_Input\Test4.additional.xml" />
+    <Content Include="SUMO_Input\Test4.settings.xml" />
+    <Content Include="SUMO_Input\Test4.sumocfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Input\" />
+    <Folder Include="Output\" />
+    <Folder Include="SUMO_Input\" />
+    <Folder Include="SUMO_Input\net\" />
+    <Folder Include="SUMO_Input\route\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|VisualStudio|python38" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

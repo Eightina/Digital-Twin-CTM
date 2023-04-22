@@ -127,13 +127,11 @@
     <ClCompile Include="ctm-core-improve\src\demand.cpp" />
     <ClCompile Include="ctm-core-improve\src\incident.cpp" />
     <ClCompile Include="ctm-core-improve\src\intersection.cpp" />
-    <ClCompile Include="ctm-core-improve\src\ivector.cpp" />
     <ClCompile Include="ctm-core-improve\src\main.cpp" />
     <ClCompile Include="CTM-Core-Improve\src\module.cpp" />
     <ClCompile Include="ctm-core-improve\src\node.cpp" />
     <ClCompile Include="ctm-core-improve\src\setting.cpp" />
     <ClCompile Include="ctm-core-improve\src\simulation.cpp" />
-    <ClCompile Include="ctm-core-improve\src\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ctm-core-improve\src\arc.h" />
@@ -143,19 +141,12 @@
     <ClInclude Include="ctm-core-improve\src\debug.h" />
     <ClInclude Include="ctm-core-improve\src\demand.h" />
     <ClInclude Include="ctm-core-improve\src\incident.h" />
-    <ClInclude Include="ctm-core-improve\src\initialize.h" />
-    <ClInclude Include="ctm-core-improve\src\input.h" />
     <ClInclude Include="ctm-core-improve\src\intersection.h" />
     <ClInclude Include="ctm-core-improve\src\iqueue.h" />
     <ClInclude Include="ctm-core-improve\src\ivector.h" />
-    <ClInclude Include="ctm-core-improve\src\localopt.h" />
-    <ClInclude Include="ctm-core-improve\src\netopt.h" />
     <ClInclude Include="ctm-core-improve\src\node.h" />
-    <ClInclude Include="ctm-core-improve\src\nodeopt.h" />
-    <ClInclude Include="ctm-core-improve\src\output.h" />
     <ClInclude Include="ctm-core-improve\src\setting.h" />
     <ClInclude Include="ctm-core-improve\src\simulation.h" />
-    <ClInclude Include="ctm-core-improve\src\update.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="i_Test.txt" />

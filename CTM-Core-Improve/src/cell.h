@@ -96,6 +96,15 @@ public:
 	inline float send_flow(int cn = 0);
 	inline float receive_flow();
 
+	void clear_vecs() {
+		previous_cell.clear();
+		next_cell.clear();
+		turning.clear();
+		for (ivector<int>& vec : at_phase) {
+			vec.clear();
+		}
+	}
+
 	/*inline void set_signals_on( int next_cell_id );
 	inline void set_signals_off( int next_cell_id );*/
 	//float move_vehicle();
@@ -123,11 +132,25 @@ private:
 	float	max_vehicle;
 
 	int temp_origin_demand_id, num_demand;
+	/*
+	// for ordinary cell, temp_origin_demand_id = -1
+	// for source cell, this variable is its demand array index
+	// demand array is a member of a simulation object -> demand temp_origin_demand[MAX_ORIGIN_CELL][MAX_CLOCK]
+	// here temp_origin_demand_id corresponds to i in temp_origin_demand[i][j]
+	// while num_demand corresponds to j in temp_origin_demand[i][j]
+	// this means multiple demands can be add to one cell
+	*/
 
 	int on_intersection;
 
 	ivector<int> at_phase[MAX_ADJ_CELL];
-
+	/*
+	* This 2d array defines the connection relationship
+	* between this cell and its successors during different phases.
+	* at_phase[i][j]
+	* i is the id of its successor, and at_phase[i] saves the id of phases
+	* during which traffic flow can go through the connection between this cell and its successor
+	*/
 };
 
 

@@ -19,8 +19,10 @@ debug::debug():err(NULL){
 }
 
 debug::debug(char *name){
-	char *str = filename;
-	sprintf( str,"%s.log",name );
+	char *tmpstr = filename;
+	char str[256];
+	sprintf(tmpstr, "%s.log", name);
+	sprintf( str,".\\Output\\%s",tmpstr );
 	err = fopen( str,"w" );
 	fputs("Green Signal Log File.\n",err);
 	fputs("----------------------------------------\n",err);
@@ -43,20 +45,20 @@ debug::~debug(){
 
 char *debug::get_str(){ return tmpstr; }
 
-void debug::process(char *str){
-	//fputs("[Process]",err);
-	//fprintf( err," @%04d> %s\n\n",present_clock,str );
+void debug::process(char *str, int present_clock){
+	fputs("[Process]",err);
+	fprintf( err," @%04d> %s\n\n", present_clock, str );
 }
 
-void debug::warning( char *str){
+void debug::warning( char *str, int present_clock){
 	fputs("[Warning]",err);
-	fprintf( err," @%04d> %s\n\n",str );
+	fprintf( err," @%04d> %s\n\n", present_clock, str );
 	warn_times++;
 }
 
-void debug::throws( char *str ){
+void debug::throws( char *str, int present_clock){
 	fputs("[Error]",err);
-	fprintf( err," @%04d> %s\n\n",str );
+	fprintf( err," @%04d> %s\n\n", present_clock, str );
 	printf("\nFatal ERROR, see log file.\n\n");
 	system("pause");
 	exit(1);
