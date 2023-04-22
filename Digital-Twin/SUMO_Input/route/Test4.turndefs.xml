@@ -5,12 +5,12 @@
         <edgeRelation from="1" to="7" probability="10"/>
         <edgeRelation from="2" to="1" probability="0"/>
         <edgeRelation from="3" to="4" probability="0"/>
-        <edgeRelation from="4" to="2" probability="60"/>
-        <edgeRelation from="4" to="6" probability="20"/>
+        <edgeRelation from="4" to="2" probability="70"/>
+        <edgeRelation from="4" to="6" probability="10"/>
         <edgeRelation from="4" to="7" probability="20"/>
         <edgeRelation from="5" to="2" probability="10"/>
-        <edgeRelation from="5" to="3" probability="30"/>
-        <edgeRelation from="5" to="7" probability="60"/>
+        <edgeRelation from="5" to="3" probability="20"/>
+        <edgeRelation from="5" to="7" probability="70"/>
         <edgeRelation from="6" to="5" probability="0"/>
         <edgeRelation from="7" to="8" probability="0"/>
         <edgeRelation from="8" to="2" probability="20"/>
