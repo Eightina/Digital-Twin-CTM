@@ -1,7 +1,7 @@
 
 setting
 % Section I - Setting parameters.
-time 08:00:00 08:03:00
+time 08:00:00 08:30:00
 % The beginning and end time of the simulation run
 clock 3
 % The discrete time interval between clock ticks. The unit of time is second.
@@ -25,53 +25,53 @@ geometry
 % Node information as follows: 
 %          (1)      (2)       (3)        (4)
 %           No.    type        x          y
-node       17        1        1080        2300
 node        1        1        1100        2300
-node       19        1        1120        2300
-node       18        0        1080        1300
 node        2        0        1100        1300
+node        3        2        1200        2300
+node        4        0        1200        1300
+node        5        0        1100        1000
+node        6        2        1100        0
+node        7        0        1200        1000
+node        8        1        1200        0
+node        9        1        0           1100
+node       10        0        1000        1100
+node       11        2        0           1200
+node       12        0        1000        1200
+node       13        0        1300        1100
+node       14        2        2300        1100
+node       15        0        1300        1200
+node       16        1        2300        1200
+node       17        1        1080        2300
+node       18        0        1080        1300
+node       19        1        1120        2300
 node       20        0        1120        1300
 node       21        2        1180        2300
-node        3        2        1200        2300
-node       23        2        1220        2300
 node       22        0        1180        1300
-node        4        0        1200        1300
+node       23        2        1220        2300
 node       24        0        1220        1300
 node       25        0        1080        1000
-node        5        0        1100        1000
-node       27        0        1120        1000
 node       26        2        1080        0
-node        6        2        1100        0
+node       27        0        1120        1000
 node       28        2        1120        0
 node       29        0        1180        1000
-node        7        0        1200        1000
-node       31        0        1220        1000
 node       30        1        1180        0
-node        8        1        1200        0
+node       31        0        1220        1000
 node       32        1        1220        0
 node       33        1        0           1120
-node        9        1        0           1100
-node       35        1        0           1080
 node       34        0        1000        1120
-node       10        0        1000        1100
+node       35        1        0           1080
 node       36        0        1000        1080
 node       37        2        0           1220
-node       11        2        0           1200
-node       39        2        0           1180
 node       38        0        1000        1220
-node       12        0        1000        1200
+node       39        2        0           1180
 node       40        0        1000        1180
 node       41        0        1300        1120
-node       13        0        1300        1100
-node       43        0        1300        1080
 node       42        2        2300        1120
-node       14        2        2300        1100
+node       43        0        1300        1080
 node       44        2        2300        1080
 node       45        0        1300        1220
-node       15        0        1300        1200
-node       47        0        1300        1180
 node       46        1        2300        1220
-node       16        1        2300        1200
+node       47        0        1300        1180
 node       48        1        2300        1180
 
 % There are 4 columns above: 
