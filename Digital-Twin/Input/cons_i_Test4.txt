@@ -3,7 +3,7 @@ setting
 % Section I - Setting parameters.
 time 08:00:00 08:03:00
 % The beginning and end time of the simulation run
-clock 1
+clock 3
 % The discrete time interval between clock ticks. The unit of time is second.
 epsilon 0.001
 % Any quantities smaller than epsilon will be ignored.
@@ -13,7 +13,7 @@ initctrl 0
 % The initial control strategy: 
 % 0 - every phase length is assigned the minimum green time and the cycle length is minimum green time multiplied by number of phase.
 % 1 - both phase length and cycle length are fixed according to Webster's formula.
-cellscale 10
+cellscale 1
 % Cell lenth factor.
 losttime 4
 % Lost time.

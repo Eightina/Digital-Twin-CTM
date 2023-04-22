@@ -1,9 +1,11 @@
 python "D:\programs\envs\python38\Lib\site-packages\sumo\tools\randomTrips.py" --net-file=.\SUMO_Input\net\Test4.net.xml ^
 --jtrrouter ^
 --output-trip-file .\SUMO_Input\route\Test4.trip.xml ^
---binomial 1 ^
---period 1.33 ^
+@REM --binomial 1 ^
+@REM --period 1.33 ^
 --flows 4
+
+
 @REM --insertion-rate 2700
 @REM flows: generates INT flows that together output vehicles with the specified period
 @REM group.add_argument("-p", "--period", type=str, nargs="+", metavar="FLOAT",

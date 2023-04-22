@@ -1,49 +1,38 @@
 <turns>
     <interval begin="0" end="3600">
-        <edgeRelation from="1" to="2" probability="0"/>
         <edgeRelation from="1" to="3" probability="70"/>
         <edgeRelation from="1" to="6" probability="20"/>
         <edgeRelation from="1" to="7" probability="10"/>
-        <edgeRelation from="2" to="1" probability="100"/>
-        <edgeRelation from="3" to="4" probability="100"/>
+        <edgeRelation from="2" to="1" probability="0"/>
+        <edgeRelation from="3" to="4" probability="0"/>
         <edgeRelation from="4" to="2" probability="60"/>
-        <edgeRelation from="4" to="3" probability="0"/>
         <edgeRelation from="4" to="6" probability="20"/>
         <edgeRelation from="4" to="7" probability="20"/>
         <edgeRelation from="5" to="2" probability="10"/>
         <edgeRelation from="5" to="3" probability="30"/>
-        <edgeRelation from="5" to="6" probability="0"/>
         <edgeRelation from="5" to="7" probability="60"/>
-        <edgeRelation from="6" to="5" probability="100"/>
-        <edgeRelation from="7" to="8" probability="100"/>
+        <edgeRelation from="6" to="5" probability="0"/>
+        <edgeRelation from="7" to="8" probability="0"/>
         <edgeRelation from="8" to="2" probability="20"/>
         <edgeRelation from="8" to="3" probability="10"/>
         <edgeRelation from="8" to="6" probability="70"/>
-        <edgeRelation from="8" to="7" probability="0"/>
+        <sink edges="2 6 7 3"/>
         <edgeRelation from=":0_0" to="6" probability="100"/>
         <edgeRelation from=":0_1" to="3" probability="100"/>
-        <edgeRelation from=":0_10" to="6" probability="100"/>
-        <edgeRelation from=":0_11" to="3" probability="100"/>
-        <edgeRelation from=":0_12" to="3" probability="100"/>
-        <edgeRelation from=":0_13" to="7" probability="100"/>
-        <edgeRelation from=":0_14" to="2" probability="100"/>
-        <edgeRelation from=":0_15" to="6" probability="100"/>
-        <edgeRelation from=":0_16" to="7" probability="100"/>
-        <edgeRelation from=":0_17" to="2" probability="100"/>
-        <edgeRelation from=":0_18" to="3" probability="100"/>
-        <edgeRelation from=":0_19" to="7" probability="100"/>
+        <edgeRelation from=":0_10" to="7" probability="100"/>
+        <edgeRelation from=":0_11" to="2" probability="100"/>
+        <edgeRelation from=":0_12" to="7" probability="100"/>
+        <edgeRelation from=":0_13" to="3" probability="100"/>
+        <edgeRelation from=":0_14" to="6" probability="100"/>
+        <edgeRelation from=":0_15" to="2" probability="100"/>
         <edgeRelation from=":0_2" to="7" probability="100"/>
-        <edgeRelation from=":0_20" to="6" probability="100"/>
-        <edgeRelation from=":0_21" to="3" probability="100"/>
-        <edgeRelation from=":0_22" to="2" probability="100"/>
-        <edgeRelation from=":0_23" to="6" probability="100"/>
         <edgeRelation from=":0_3" to="2" probability="100"/>
-        <edgeRelation from=":0_4" to="2" probability="100"/>
-        <edgeRelation from=":0_5" to="6" probability="100"/>
-        <edgeRelation from=":0_6" to="3" probability="100"/>
-        <edgeRelation from=":0_7" to="7" probability="100"/>
-        <edgeRelation from=":0_8" to="7" probability="100"/>
-        <edgeRelation from=":0_9" to="2" probability="100"/>
+        <edgeRelation from=":0_4" to="6" probability="100"/>
+        <edgeRelation from=":0_5" to="3" probability="100"/>
+        <edgeRelation from=":0_6" to="7" probability="100"/>
+        <edgeRelation from=":0_7" to="2" probability="100"/>
+        <edgeRelation from=":0_8" to="6" probability="100"/>
+        <edgeRelation from=":0_9" to="3" probability="100"/>
         <edgeRelation from=":1_0" to="1" probability="100"/>
         <edgeRelation from=":2_0" to="4" probability="100"/>
         <edgeRelation from=":3_0" to="5" probability="100"/>
