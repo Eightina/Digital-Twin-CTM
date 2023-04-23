@@ -27,6 +27,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Digital_Twin.py" />
+    <Compile Include="generate_detectors.py" />
+    <Compile Include="traci_test.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digital-Twin-CTM.vcxproj">
@@ -38,6 +40,7 @@
   <ItemGroup>
     <Content Include="duarouter_script.bat" />
     <Content Include="experiment design.drawio" />
+    <Content Include="generateTLSE2Detectors_script.bat" />
     <Content Include="generateTurnDefs_script.bat" />
     <Content Include="Input\cons_i_Test.txt" />
     <Content Include="Input\cons_i_Test4.txt" />
@@ -57,6 +60,7 @@
     <Content Include="Output\t_Test.txt" />
     <Content Include="Output\t_Test4.txt" />
     <Content Include="randomTrips_script.bat" />
+    <Content Include="Recording 2023-04-16 135956.gif" />
     <Content Include="runsim.bat" />
     <Content Include="SUMO_Input\net\Test4.edg.xml" />
     <Content Include="SUMO_Input\net\Test4.net.xml" />
@@ -68,6 +72,7 @@
     <Content Include="SUMO_Input\Test4.additional.xml" />
     <Content Include="SUMO_Input\Test4.settings.xml" />
     <Content Include="SUMO_Input\Test4.sumocfg" />
+    <Content Include="traci_log.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\" />
