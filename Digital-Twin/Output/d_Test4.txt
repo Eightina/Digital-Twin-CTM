@@ -1,7 +1,7 @@
 Green Signal Cell Occupation Output File.
 ----------------------------------------
 Output File: 	.\Output\d_Test4.txt
-The Date: 	Sun Apr 23 00:57:40 2023
+The Date: 	Sun Apr 23 10:22:13 2023
 ~
 
 600 ticks
