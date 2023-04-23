@@ -7,7 +7,7 @@ clock 3
 % The discrete time interval between clock ticks. The unit of time is second.
 epsilon 0.001
 % Any quantities smaller than epsilon will be ignored.
-initoccp 5
+initoccp 0
 % The initial cell occupation percentage.
 initctrl 0
 % The initial control strategy: 
