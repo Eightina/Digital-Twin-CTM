@@ -3,7 +3,7 @@ setting
 % Section I - Setting parameters.
 time 08:00:00 08:30:00
 % The beginning and end time of the simulation run
-clock 3
+clock 2
 % The discrete time interval between clock ticks. The unit of time is second.
 epsilon 0.001
 % Any quantities smaller than epsilon will be ignored.

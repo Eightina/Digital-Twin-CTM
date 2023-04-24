@@ -25,6 +25,20 @@ void simulation::initialize(char* inputname) {
 
 }
 
+void simulation::initialize_with_occu(char* inputname, std::vector<float> input_vehicle) {
+	// this function is only used for first init, not for reinit
+	present_clock = 0;
+
+	scanfile_initialize(inputname);
+	int input_len = input_vehicle.size();
+	for (int i = 0; i < input_len; i++) {
+		exist_vehicle[0][i+1] = input_vehicle[i];
+	}
+	start = clock();
+	initial_control();
+
+}
+
 float simulation::excecute() {
 	delay0 = simulate(1, settings.get_max_ticks());
 	return delay0;

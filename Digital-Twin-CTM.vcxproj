@@ -117,6 +117,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>D:\programs\envs\python38\include;D:\programs\envs\python38\Include;D:\programs\envs\python38\lib\site-packages\pybind11\include</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

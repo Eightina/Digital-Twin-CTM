@@ -22,6 +22,8 @@ public:
 
 	void initialize(char* inputname);
 
+	void initialize_with_occu(char* inputname, std::vector<float> input_vehicle);
+
 	float excecute();
 
 	void stepend();

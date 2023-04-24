@@ -3,17 +3,16 @@ from xml.etree.ElementTree import Element, ElementTree
 # 创建元素,传入tag
 root = Element('additional')
 # 根据实验设计，车道按照从右到左
-# arc_ids = [[],
-#             [9, 1, 10],
-#             [12, 2, 11],
-#             [13, 3, 14],
-#             [16, 4, 15],
-#             [18, 5, 17],
-#             [19, 6, 20],
-#             [22, 7, 21],
-#             [23, 8, 24],
-#             ]
-arc_ids = [i for i in range(1, 25)]
+arc_ids = [[],
+            [9, 1, 10],
+            [12, 2, 11],
+            [13, 3, 14],
+            [16, 4, 15],
+            [18, 5, 17],
+            [19, 6, 20],
+            [22, 7, 21],
+            [23, 8, 24],
+            ]
 def pretty(e, level=0):
     # 用于格式化xml数据
     if len(e) > 0:
@@ -25,8 +24,7 @@ def pretty(e, level=0):
 
 for edge in range(1, 9):
     for lane in range(3):
-        arc_id = arc_ids[(edge - 1) * 3 + lane]
-        # arc_id = arc_ids[edge][lane]    
+        arc_id = arc_ids[edge][lane]    
         for det in range(100):
             e = Element('laneAreaDetector')
             # 设置元素的属性和text，get方法能获取属性，set方法能设置属性

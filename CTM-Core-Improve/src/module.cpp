@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <Windows.h>
 #include <cmath>
 
@@ -8,6 +9,11 @@
 
 
 namespace py = pybind11;
+
+/*Did you forget to `#include <pybind11 / stl.h>`? Or <pybind11 / complex.h>,
+<pybind11 / functional.h>, <pybind11 / chrono.h>, etc.Some automatic
+conversions are optionaland require extra headers to be included
+when compiling your pybind11 module.*/
 
 
 //float conduct_simulation(char* inputname) {
@@ -34,9 +40,11 @@ PYBIND11_MODULE(CTMCoreImprove, m) {
     py::class_<simulation>(m, "simulation")
         .def(py::init<char*>())
         .def("initialize", &simulation::initialize)
+        .def("initialize_with_occu", &simulation::initialize_with_occu)
         .def("execute", &simulation::excecute)
         .def("output_result", &simulation::output_result)
-        .def("stepend", &simulation::stepend);
+        .def("stepend", &simulation::stepend)
+        ;
 
 
 #ifdef VERSION_INFO
