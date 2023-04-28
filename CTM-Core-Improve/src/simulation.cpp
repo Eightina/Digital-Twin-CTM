@@ -546,18 +546,20 @@ void simulation::initial_occupation(float* vehicle) {
 
 //bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE];		//w -- timing plan
 void simulation::initial_control() {
+	// modify this when involving multiple intersections
+	int phase_num = intersections[0].get_num_phases();
 	memset(omega, false, sizeof(omega));
 	char str[256], _str[256];
 	int istr = 0;
 	int cum_duration[16];
 	int sum = 0;
-	for (int i = 1; i < 16; i++) {
+	for (int i = 1; i <= phase_num; i++) {
 		sum += duration[i];
 		cum_duration[i] = sum;
 	}
 	int start_phase_id = 1;
-	for (int i = 15; i >= 1; i--) {
-		if (cum_duration[i] >= signal_offset) {
+	for (int i = phase_num; i >= 1; i--) {
+		if (cum_duration[i] <= signal_offset) {
 			signal_offset -= cum_duration[i];
 			start_phase_id = i + 1;
 			break;
@@ -570,12 +572,12 @@ void simulation::initial_control() {
 		int g = signal_offset, p = 0;
 		for (int j = 1; j <= settings.get_max_ticks(); j++) {
 			omega[j][i][p] = true;
-			if (++g == (int)ceil(duration[start_phase_id] / settings.clock_tick)) {
+			if (++g >= (int)ceil(duration[start_phase_id] / settings.clock_tick)) {
 				j += settings.yellow_ticks;
 				g = 0;
 				start_phase_id++;
-				if (start_phase_id > intersections[i].get_num_phases()) start_phase_id = 1;
-				p = ++p % intersections[i].get_num_phases();
+				if (start_phase_id > phase_num) start_phase_id = 1;
+				p = ++p % phase_num;
 			}
 		}
 	}
