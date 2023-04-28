@@ -61,6 +61,9 @@ public:
 	* then this cell will be completely jammed: its inflow and outflow will remain 0 all the time
 	*/
 	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
+	int duration[16] = {};
+	int signal_offset = 0;
+
 	/*w -- timing plan; this defines the control signals in each tick, in each intersection,
 	* whether the phases are on or off. working with cell.at_phase array
 	* omega[i][j][m]
@@ -112,6 +115,8 @@ private:
 	void input_intersection(FILE* in);
 
 	void input_phase(FILE* in);
+
+	void input_duration(FILE* in);
 
 	void input_control(FILE* in);
 

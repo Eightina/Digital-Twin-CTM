@@ -364,6 +364,13 @@ void simulation::input_phase(FILE* in) {
 	cells[from_cell_id].set_on_intersection(id_inter);
 }
 
+void simulation::input_duration(FILE* in) {
+	Log->process(("Going to input duration..."), present_clock);
+	int id_duration, duration_time;
+	fscanf(in, "%d%d", &id_duration, &duration_time);
+	duration[id_duration] = duration_time;
+}
+
 void simulation::input_control(FILE* in) {
 	skip(in);
 	char str[1024];
@@ -372,11 +379,15 @@ void simulation::input_control(FILE* in) {
 		fscanf(in, "%s", str);
 		if (strcmpi("intersection", str) == 0) {
 			input_intersection(in);
-		}
-		else if (strcmpi("phase", str) == 0) {
+		} else if (strcmpi("phase", str) == 0) {
 			input_phase(in);
-		}
-		else break;
+		} else if (strcmpi("duration", str) == 0) {
+			input_duration(in);
+		} else if (strcmpi("offset", str) == 0) {
+			int offset;
+			fscanf(in, "%d", &offset);
+			signal_offset = offset;
+		} else break;
 		skip(in);
 	}
 	//Log->process(("Input control successfully..."), present_clock);
@@ -538,16 +549,32 @@ void simulation::initial_control() {
 	memset(omega, false, sizeof(omega));
 	char str[256], _str[256];
 	int istr = 0;
-
+	int cum_duration[16];
+	int sum = 0;
+	for (int i = 1; i < 16; i++) {
+		sum += duration[i];
+		cum_duration[i] = sum;
+	}
+	int start_phase_id = 1;
+	for (int i = 15; i >= 1; i--) {
+		if (cum_duration[i] >= signal_offset) {
+			signal_offset -= cum_duration[i];
+			start_phase_id = i + 1;
+			break;
+		}
+	}
+	
 	// define control signals
 	for (int i = 0; i < intersections.size(); ++i) {
-		int min_green = (int)ceil(intersections[i].get_min_green() * 1.0 / settings.clock_tick);
-		int g = 0, p = 0;
+		//int min_green = (int)ceil(intersections[i].get_min_green() * 1.0 / settings.clock_tick);
+		int g = signal_offset, p = 0;
 		for (int j = 1; j <= settings.get_max_ticks(); j++) {
 			omega[j][i][p] = true;
-			if (++g == min_green) {
+			if (++g == (int)ceil(duration[start_phase_id] / settings.clock_tick)) {
 				j += settings.yellow_ticks;
 				g = 0;
+				start_phase_id++;
+				if (start_phase_id > intersections[i].get_num_phases()) start_phase_id = 1;
 				p = ++p % intersections[i].get_num_phases();
 			}
 		}
