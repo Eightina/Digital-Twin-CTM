@@ -61,7 +61,7 @@ public:
 	* then this cell will be completely jammed: its inflow and outflow will remain 0 all the time
 	*/
 	bool omega[MAX_CLOCK][MAX_INTERSECTION][MAX_PHASE] = {};		
-	int duration[16] = {};
+	int duration[MAX_PHASE + 1] = {};
 	int signal_offset = 0;
 
 	/*w -- timing plan; this defines the control signals in each tick, in each intersection,
@@ -156,6 +156,15 @@ private:
 		memset(omega, true, sizeof(omega));
 	}
 
+	//// modify part
+	//void reset_signals(
+	//	
+	//	int new_duration[MAX_PHASE + 1],
+	//	// new_diverge,	
+	//) {
+	//	//memset(duration, 0, sizeof(duration));
+	//	memcpy(duration, new_duration, sizeof(duration));
+	//}
 
 
 };

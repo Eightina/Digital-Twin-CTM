@@ -45,6 +45,7 @@ float simulation::excecute() {
 }
 
 void simulation::stepend() {
+	memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
 	//memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
 	//memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
 	//memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
@@ -102,17 +103,7 @@ void simulation::input_setting(FILE* in) {
 	int hh, mm, ss, sec = 0;
 	fscanf(in, "%s", keyword);
 	while (strcmpi("end", keyword)) {
-		if (strcmpi("time", keyword) == 0) {
-			Log->process(("Going to input time..."), present_clock);
-			fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
-			sec = hh * 3600 + mm * 60 + ss;
-			settings.start_time = sec;
-			fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
-			sec = hh * 3600 + mm * 60 + ss;
-			settings.end_time = sec;
-			Log->process(("Input times successfully..."), present_clock);
-		}
-		else if (strcmpi("clock", keyword) == 0) {
+		if (strcmpi("clock", keyword) == 0) {
 			Log->process(("Going to input clock..."), present_clock);
 			fscanf(in, "%d", &sec);
 			settings.clock_tick = sec;
@@ -148,7 +139,6 @@ void simulation::input_setting(FILE* in) {
 		skip(in);
 		fscanf(in, "%s", keyword);
 	}
-	settings.max_ticks = (int)ceil((settings.end_time - settings.start_time) * 1.0 / settings.clock_tick);
 	Log->process(("Input setting successfully..."), present_clock);
 }
 
@@ -203,6 +193,19 @@ void simulation::input_traffic(FILE* in) {
 	float traffic_demand;
 
 	int __count = 0;
+	fscanf(in, "%s", str);
+	if (strcmpi("time", str) == 0) {
+		Log->process(("Going to input time..."), present_clock);
+		fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
+		sec = hh * 3600 + mm * 60 + ss;
+		settings.start_time = sec;
+		fscanf(in, "%d:%d:%d", &hh, &mm, &ss);
+		sec = hh * 3600 + mm * 60 + ss;
+		settings.end_time = sec;
+		settings.max_ticks = (int)ceil((settings.end_time - settings.start_time) * 1.0 / settings.clock_tick);
+		Log->process(("Input times successfully..."), present_clock);
+	}
+	skip(in);
 	Log->process(("Going to input demand ..."), present_clock);
 	while (fscanf(in, "%s", str), strcmpi(str, "demand") == 0) {
 		fscanf(in, "%d:%d:%d %d %f", &hh, &mm, &ss, &origin_node, &traffic_demand);
@@ -466,7 +469,6 @@ void simulation::scanfile_construct(char namestr[]) {
 
 void simulation::scanfile_initialize(char namestr[]) {
 
-	memcpy(eventual_state, exist_vehicle[settings.get_max_ticks()], sizeof(eventual_state));
 	memset(exist_vehicle, 0.0f, sizeof(exist_vehicle));
 	memcpy(exist_vehicle[0], eventual_state, sizeof(eventual_state));
 	memset(eventual_state, 0.0f, sizeof(eventual_state));
@@ -551,7 +553,7 @@ void simulation::initial_control() {
 	memset(omega, false, sizeof(omega));
 	char str[256], _str[256];
 	int istr = 0;
-	int cum_duration[16];
+	int cum_duration[MAX_PHASE];
 	int sum = 0;
 	for (int i = 1; i <= phase_num; i++) {
 		sum += duration[i];
