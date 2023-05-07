@@ -26,13 +26,17 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="accuracy_test.py" />
-    <Compile Include="accuracy_test_new.py" />
+    <Compile Include="accuracy_test0.py" />
+    <Compile Include="accuracy_test1.py" />
+    <Compile Include="accuracy_test2.py" />
+    <Compile Include="delay_simulate.py" />
     <Compile Include="Digital_Twin.py" />
     <Compile Include="generate_detectors.py" />
     <Compile Include="generate_init_file.py" />
     <Compile Include="get_vehicles.py" />
+    <Compile Include="set_sumo_logic.py" />
     <Compile Include="traci_test.py" />
+    <Compile Include="webster.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digital-Twin-CTM.vcxproj">
@@ -65,6 +69,7 @@
     <Content Include="Output\o_Test4.txt" />
     <Content Include="Output\t_Test.txt" />
     <Content Include="Output\t_Test4.txt" />
+    <Content Include="plot.png" />
     <Content Include="randomTrips_script.bat" />
     <Content Include="Recording 2023-04-16 135956.gif" />
     <Content Include="runsim.bat" />

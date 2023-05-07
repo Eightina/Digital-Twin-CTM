@@ -1,7 +1,15 @@
 from typing import List
 import traci
 
-def get_vehicles(log=None, real_cell_length:int = 20):
+
+def get_vehicles(
+    log=None,
+    cell_scale: int = 1,
+    veh_coeff: float = 2.0
+    # real_cell_length: int = 20
+    ):
+    merge_scale = cell_scale * 2
+    cell_length = merge_scale * 10
     status_veh = []
     ctm_arc_ids = [i for i in range(1, 25)]
     for edge in range(1, 9):
@@ -19,8 +27,10 @@ def get_vehicles(log=None, real_cell_length:int = 20):
                 for det in range(100)
             ]
             vehicles = [
-                (vehicles[a] + vehicles[a + 1]) / 2 / 100 / 0.44 / real_cell_length
-                for a in range(0, 100, 2)
+                
+                # sum(vehicles[a : a + merge_scale]) / merge_scale / 100 / 0.44 / real_cell_length
+                sum(vehicles[a : a + merge_scale]) / 100 / 0.44 / cell_length * veh_coeff
+                for a in range(0, 100, merge_scale)
             ]
             if log != None:
                 log.write("arc_{} ".format(str(ctm_arc_id)) + str(vehicles) + "\n")

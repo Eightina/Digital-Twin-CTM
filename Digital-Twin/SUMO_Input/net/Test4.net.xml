@@ -140,7 +140,7 @@
         <lane id="8_2" index="2" speed="11.36" length="1136.40" shape="2300.00,1151.60 1163.60,1151.60"/>
     </edge>
 
-    <tlLogic id="0" type="static" programID="0" offset="0">
+    <!-- <tlLogic id="0" type="static" programID="0" offset="0">
         <phase duration="20" state="gGrrrrgGrrrr"/> 
         <phase duration="3"  state="yyyyyyyyyyyy"/>
         <phase duration="7" state="grGrrrgrGrrr"/>
@@ -148,6 +148,16 @@
         <phase duration="11" state="rrrgGrrrrgGr"/>
         <phase duration="3"  state="yyyyyyyyyyyy"/>
         <phase duration="5" state="rrrgrGrrrgrG"/>
+        <phase duration="3"  state="yyyyyyyyyyyy"/>
+    </tlLogic>     -->
+    <tlLogic id="0" type="static" programID="0" offset="0">
+        <phase duration="1" state="gGrrrrgGrrrr"/> 
+        <phase duration="3"  state="yyyyyyyyyyyy"/>
+        <phase duration="1" state="grGrrrgrGrrr"/>
+        <phase duration="3"  state="yyyyyyyyyyyy"/>
+        <phase duration="1" state="rrrgGrrrrgGr"/>
+        <phase duration="3"  state="yyyyyyyyyyyy"/>
+        <phase duration="1" state="rrrgrGrrrgrG"/>
         <phase duration="3"  state="yyyyyyyyyyyy"/>
     </tlLogic>
     <!-- <tlLogic id="0" type="static" programID="1" offset="0">
