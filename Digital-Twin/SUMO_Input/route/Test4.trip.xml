@@ -16,8 +16,36 @@
     <flow id="1#0" begin="0" end="3600" probability="0.25" from="4"/>
     <flow id="2#0" begin="0" end="3600" probability="0.25" from="5"/>
     <flow id="3#0" begin="0" end="3600" probability="0.25" from="8"/> -->
-    <flow id="0#0" begin="0" end="3600" vehsPerHour="600" from="1"/>
-    <flow id="1#0" begin="0" end="3600" vehsPerHour="600" from="4"/>
-    <flow id="2#0" begin="0" end="3600" vehsPerHour="600" from="5"/>
-    <flow id="3#0" begin="0" end="3600" vehsPerHour="600" from="8"/>
+
+
+    <!-- <flow id="0#0" begin="0" end="200" vehsPerHour="300" from="1"/>
+    <flow id="1#0" begin="0" end="200" vehsPerHour="300" from="4"/>
+    <flow id="2#0" begin="0" end="200" vehsPerHour="300" from="5"/>
+    <flow id="3#0" begin="0" end="200" vehsPerHour="300" from="8"/>
+
+    <flow id="0#1" begin="200" end="500" vehsPerHour="400" from="1"/>
+    <flow id="1#1" begin="200" end="500" vehsPerHour="400" from="4"/>
+    <flow id="2#1" begin="200" end="500" vehsPerHour="200" from="5"/>
+    <flow id="3#1" begin="200" end="500" vehsPerHour="200" from="8"/>
+
+    <flow id="0#2" begin="500" end="800" vehsPerHour="200" from="1"/>
+    <flow id="1#2" begin="500" end="800" vehsPerHour="200" from="4"/>
+    <flow id="2#2" begin="500" end="800" vehsPerHour="400" from="5"/>
+    <flow id="3#2" begin="500" end="800" vehsPerHour="400" from="8"/>
+
+    <flow id="0#3" begin="800" end="1100" vehsPerHour="400" from="1"/>
+    <flow id="1#3" begin="800" end="1100" vehsPerHour="400" from="4"/>
+    <flow id="2#3" begin="800" end="1100" vehsPerHour="200" from="5"/>
+    <flow id="3#3" begin="800" end="1100" vehsPerHour="200" from="8"/>
+
+    <flow id="0#4" begin="1100" end="1400" vehsPerHour="200" from="1"/>
+    <flow id="1#4" begin="1100" end="1400" vehsPerHour="200" from="4"/>
+    <flow id="2#4" begin="1100" end="1400" vehsPerHour="400" from="5"/>
+    <flow id="3#4" begin="1100" end="1400" vehsPerHour="400" from="8"/> -->
+
+    <flow id="0#1" begin="0" end="3600" vehsPerHour="400" from="1"/>
+    <flow id="1#1" begin="0" end="3600" vehsPerHour="400" from="4"/>
+    <flow id="2#1" begin="0" end="3600" vehsPerHour="200" from="5"/>
+    <flow id="3#1" begin="0" end="3600" vehsPerHour="200" from="8"/>
+
 </routes>

@@ -26,8 +26,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="accuracy_test.py" />
+    <Compile Include="accuracy_test_new.py" />
     <Compile Include="Digital_Twin.py" />
     <Compile Include="generate_detectors.py" />
+    <Compile Include="generate_init_file.py" />
+    <Compile Include="get_vehicles.py" />
     <Compile Include="traci_test.py" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +42,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="analyze.ipynb" />
     <Content Include="duarouter_script.bat" />
     <Content Include="experiment design.drawio" />
     <Content Include="generateTLSE2Detectors_script.bat" />
@@ -46,6 +51,7 @@
     <Content Include="Input\cons_i_Test4.txt" />
     <Content Include="Input\init_i_Test.txt" />
     <Content Include="Input\init_i_Test4.txt" />
+    <Content Include="Input\init_i_Test4_backup.txt" />
     <Content Include="Input\i_Test.txt" />
     <Content Include="Input\i_Test2.txt" />
     <Content Include="Input\i_Test4.txt" />
@@ -62,6 +68,8 @@
     <Content Include="randomTrips_script.bat" />
     <Content Include="Recording 2023-04-16 135956.gif" />
     <Content Include="runsim.bat" />
+    <Content Include="SUMO_Input\dets.add.xml" />
+    <Content Include="SUMO_Input\e2output.xml" />
     <Content Include="SUMO_Input\net\Test4.edg.xml" />
     <Content Include="SUMO_Input\net\Test4.net.xml" />
     <Content Include="SUMO_Input\net\Test4.nod.xml" />
@@ -72,6 +80,7 @@
     <Content Include="SUMO_Input\Test4.additional.xml" />
     <Content Include="SUMO_Input\Test4.settings.xml" />
     <Content Include="SUMO_Input\Test4.sumocfg" />
+    <Content Include="SUMO_Output\statistic.xml" />
     <Content Include="traci_log.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +89,7 @@
     <Folder Include="SUMO_Input\" />
     <Folder Include="SUMO_Input\net\" />
     <Folder Include="SUMO_Input\route\" />
+    <Folder Include="SUMO_Output\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|VisualStudio|python38" />

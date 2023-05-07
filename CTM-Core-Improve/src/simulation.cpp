@@ -76,7 +76,7 @@ void simulation::output_result() {
 	printf("Cell occupation output files\n >>o_%s.txt\n", &simuname[2]);
 	printf("Detail delay output files\n >>d_%s.txt\n", &simuname[2]);
 	printf("\nSimulation %s Done.\n\n", simuname);
-	system("pause");
+	//system("pause");
 }
 
 // input part

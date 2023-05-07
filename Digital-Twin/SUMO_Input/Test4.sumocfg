@@ -1,9 +1,11 @@
 <configuration>
     <input>
-        <net-file value=".\net\Test4.net.xml"/>
-        <route-files value=".\route\Test4.rou.xml"/>
+        <net-file value="./net/Test4.net.xml"/>
+        <route-files value="./route/Test4.rou.xml"/>
         <additional-files value="dets.add.xml"/>
         <gui-settings-file value="Test4.settings.xml"/>
+        <tripinfo-output value="../SUMO_Output/tripinfos.xml"/>
+        <fcd-output value="../SUMO_Output/fcd.xml"/>
     </input>
     <time>
         <begin value="0"/>

@@ -3,8 +3,7 @@ traffic
 time 08:00:00 08:30:00
 % The beginning and end time of the simulation run
 % Traffic demands as follow:
-% demand and density unit is vehicle_num/meter, so vehicle number in a cell  is density*cell_length
-% cell length == free speed is 10, then 0.1 demand equals 0.1 * 10 = 1 vehicel per second
+% demand and density unit is vehicle_num/meter, so vehicle number in a cell is density*cell_length
 % if 600vehicles/hour, then demand should be 600/3600/10
 %                (1)         (2)       (3)
 %               start      origin    traffic
