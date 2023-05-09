@@ -36,3 +36,5 @@ def get_vehicles(
                 log.write("arc_{} ".format(str(ctm_arc_id)) + str(vehicles) + "\n")
             status_veh.extend(vehicles)
     return status_veh
+
+
