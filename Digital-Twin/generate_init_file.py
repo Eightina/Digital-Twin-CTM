@@ -2,7 +2,7 @@ from typing import List
 
 
 def generate_init_file(
-    cellscale: int = 1,  # in ctm, in update_origin_flow, tick scale is multiplied, so dont add that in
+    cell_scale: int = 1,  # in ctm, in update_origin_flow, tick scale is multiplied, so dont add that in
     seconds: int = 1800,
     arc_demand: List[int] = [800, 800, 800, 800],  # up1 down4 left5 right8
     turn_rate: dict = {"r": 0.2, "s": 0.7, "l": 0.1},
@@ -62,7 +62,7 @@ def generate_init_file(
         for j in range(3):
             real_demand.append(
                 "{:.4f}".format(
-                    total_demand * turn_rate[group_type[j]] / 3600 / cellscale / 10
+                    total_demand * turn_rate[group_type[j]] / 3600 / cell_scale / 10
                 )
             )
 

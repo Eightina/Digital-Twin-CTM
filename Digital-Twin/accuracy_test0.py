@@ -80,7 +80,7 @@ for time in time0:
     sumo_delay.append(total_delay)
     
     generate_init_file(
-        cellscale=1,
+        cell_scale=1,
         seconds=time,
         offset=0,
         filename="Test4",

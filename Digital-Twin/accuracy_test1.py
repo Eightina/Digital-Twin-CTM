@@ -38,7 +38,7 @@ while step <= time0:
 
     if step == 300:
         generate_init_file(
-            cellscale=1,
+            cell_scale=1,
             seconds=100,
             offset=step,
             filename="Test4",
@@ -52,7 +52,7 @@ while step <= time0:
 
     if (300 < step < 700) & (step % 100 == 0):
         generate_init_file(
-            cellscale=1,
+            cell_scale=1,
             seconds=100,
             offset=step,
             filename="Test4",
@@ -68,7 +68,7 @@ while step <= time0:
 
     if (step >= 700) & (step % 100 == 0):
         generate_init_file(
-            cellscale=1,
+            cell_scale=1,
             seconds=100,
             offset=step-700,
             filename="Test5",

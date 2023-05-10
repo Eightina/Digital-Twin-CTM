@@ -23,7 +23,7 @@ with open("traci_log.txt", "w") as log:
         if step == 1000:
             step_veh = get_vehicles(log, 20)
             generate_init_file(
-                cellscale = 1,
+                cell_scale = 1,
                 seconds = 50,
                 offset = step,
                 filename = "Test4"

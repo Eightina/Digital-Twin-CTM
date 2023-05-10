@@ -52,7 +52,7 @@ for cycle in range(total_cycles):
         step_veh = get_vehicles(cell_scale=1, veh_coeff=1.25)
         sim0 = ctm.simulation("i_Test4")
         generate_init_file(
-            cellscale=1,
+            cell_scale=1,
             seconds=cycle_len,
             offset=cur_steps,
             filename="Test4",
@@ -67,7 +67,7 @@ for cycle in range(total_cycles):
 
     elif cycle > start_offset_cycles:
         generate_init_file(
-            cellscale=1,
+            cell_scale=1,
             seconds=cycle_len,
             offset=cur_steps,
             filename="Test4",
