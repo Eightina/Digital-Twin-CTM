@@ -10,10 +10,11 @@ def phase4webster(
         ["s", "r"],
         ["l", "r"],
     ],
+    fix = None,
 ):
     phase_num = len(arc_demand)
     A = 3  # 黄灯时间
-    l = 5  # 每相位损失时间
+    l = 4  # 每相位损失时间
     allred = 0  # 全红
     L = phase_num * l + allred
     Sb = 1500
@@ -58,10 +59,12 @@ def phase4webster(
         / Sb,
     ]
     Y = sum(y)
-    print(Y)
+    # print(Y)
     C0 = int((1.5 * L + 5) / (1 - Y))
     Ge = C0 - L
-    print(C0)
+    if fix:
+        Ge = fix
+    # print(C0)
     gei = [(Ge * y[i] / Y) for i in range(len(y))]
     # duration[i] =
     Gi = [gei[i] - A + l for i in range(len(gei))]

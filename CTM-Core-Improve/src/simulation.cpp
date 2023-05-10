@@ -822,10 +822,11 @@ float simulation::update_occupation() {
 	return delay;
 }
 
- float simulation::simulate(int st, int et) {
+float simulation::simulate(int st, int et) {
 	float delay = 0.0f;
 	float temp = 0.0f;
 	float pre_delay = 0.0f;
+	float total_occu = 0.0f;
 
 	//Start simulation.
 	for (int it = st; it <= et; ++it) {
@@ -838,13 +839,16 @@ float simulation::update_occupation() {
 		for (int i = 1; i < cells.size(); ++i) {
 			temp = exist_vehicle[it - 1][i] - cells[i].out_flow;
 			exist_vehicle[it][i] = temp + cells[i].in_flow;
-			if (cells[i].get_type() != destination && cells[i].get_type() != origin)
+			if (cells[i].get_type() != destination && cells[i].get_type() != origin) {
 				delay += temp;
+				total_occu += exist_vehicle[it - 1][i];
+			}
 		}
 		delay_record[it] = delay - pre_delay;
 		pre_delay = delay;
 	}
 
+	avg_delay = delay / total_occu;
 
 	//eventual_state = exist_vehicle[et];
 

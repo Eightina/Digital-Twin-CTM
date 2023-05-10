@@ -32,6 +32,8 @@ public:
 
 	void output_result();
 
+	float get_avg_delay() { return avg_delay; }
+
 	float delay0;
 
 	int present_clock = 0;
@@ -85,6 +87,7 @@ public:
 	// temp_origin_demand will be transferred to origin_demand in function simulation::initial_origin_demand() eventually 
 	int temp_origin_demand_size = 0;
 	float delay_record[MAX_CLOCK] = {};
+	float avg_delay =0.0;
 
 	debug* Log;
 
@@ -155,6 +158,7 @@ private:
 	void set_on_all() {
 		memset(omega, true, sizeof(omega));
 	}
+
 
 	//// modify part
 	//void reset_signals(

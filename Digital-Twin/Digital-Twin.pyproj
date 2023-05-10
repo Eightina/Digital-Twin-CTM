@@ -31,6 +31,7 @@
     <Compile Include="accuracy_test2.py" />
     <Compile Include="accuracy_test3.py" />
     <Compile Include="ac_p60.py" />
+    <Compile Include="ac_p60xx.py" />
     <Compile Include="delay_simulate.py" />
     <Compile Include="Digital_Twin.py" />
     <Compile Include="generate_detectors.py" />

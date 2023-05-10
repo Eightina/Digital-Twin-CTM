@@ -13,7 +13,7 @@ initctrl 0
 % 1 - both phase length and cycle length are fixed according to Webster's formula.
 cellscale 1
 % Cell lenth factor.
-losttime 3
+losttime 4
 % Lost time.
 end
 

@@ -36,7 +36,7 @@ def generate_init_file(
     phases_duration: List[int] = [30, 14, 30, 14],
     offset=0,
     filename="Test4",
-    demand_coeff = 0.9,
+    # demand_coeff = 0.9,
 ):
     hours = int(seconds / 3600)
     minutes = int((seconds % 3600) / 60)
@@ -62,7 +62,7 @@ def generate_init_file(
         for j in range(3):
             real_demand.append(
                 "{:.4f}".format(
-                    demand_coeff * total_demand * turn_rate[group_type[j]] / 3600 / cellscale / 10
+                    total_demand * turn_rate[group_type[j]] / 3600 / cellscale / 10
                 )
             )
 

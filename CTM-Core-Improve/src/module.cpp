@@ -44,6 +44,8 @@ PYBIND11_MODULE(CTMCoreImprove, m) {
         .def("execute", &simulation::excecute)
         .def("output_result", &simulation::output_result)
         .def("stepend", &simulation::stepend)
+        .def("get_avg_delay", &simulation::get_avg_delay)
+
         ;
 
 

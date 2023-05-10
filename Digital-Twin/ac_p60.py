@@ -1,5 +1,5 @@
 import CTMCoreImprove as ctm
-from get_vehicles import get_vehicles
+from get_vehicles import get_vehicles, get_demand
 from generate_init_file import generate_init_file
 from webster import phase4webster
 from set_sumo_logic import set_sumo_logic
@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 import xml.etree.ElementTree as et
 import traci
 import math
-
+# 注意！修改需求后要运行runsim.bat重新初始化sumo
 cur_demand = [400, 400, 200, 200]
 # demand1 = [200, 200, 400, 400]
 cur_duration = phase4webster(cur_demand)
@@ -21,15 +21,17 @@ cur_duration = phase4webster(cur_demand)
 phase_num = 4
 cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
 start_offset_cycles = 10
-output_cycles = 30
+output_cycles = 24
 total_cycles = start_offset_cycles + output_cycles
 # change_step = start_offset_cycles + output_cycles // 2
-change_step = 1650
+change_step = 1050
 
 # print("total time:{}".format(total_cycles * cycle_len))
-
-readjust_coeff = 1.0
-
+cell_scale = 1
+# veh_coeff = 1.0
+readjust_coeff = 1
+demand_coeff = 1
+# ctm_delay_coeff = 1.0
 flow_record = []
 
 # 1400  # 200开始，200-300，200-400...200-1400共12次
@@ -37,6 +39,10 @@ flow_record = []
 sumo_delay = []
 ctm_delay = []
 time0 = [0]
+sum_cur_demand = []
+sum_step_veh = []
+og_ctm_delay = []
+ctm_avg_delay = []
 
 traci.start(
     [
@@ -50,63 +56,100 @@ traci.start(
     ]
 )
 set_sumo_logic("0", cur_duration)
+traci.simulationStep()
 print(traci.trafficlight.getAllProgramLogics("0")[0].phases)
 step_cnt = 0
 # traci.trafficlight.setProgram(tlsID="0", programID="0")
-
+# with open("traci_log.txt", "w") as log:
 for cycle in range(total_cycles):
     cycle_loss = 0.0
-    cur_steps = cycle * cur_cycle_len
+    # cur_steps += cur_cycle_len
 
     if cycle >= start_offset_cycles:  # 2 ~ 11
-        cell_scale = 1
-        veh_coeff = 1.25
-        step_veh = get_vehicles(cell_scale=cell_scale, veh_coeff=veh_coeff)
-        merge_scale = cell_scale * 2
-        edge_cells = 100 // merge_scale * 3
-        cur_demand = [
-            sum(step_veh[edge_cells * (i - 1) : edge_cells * (i)])
-            * merge_scale
-            * 10
-            * (3600 / 100)
-            / veh_coeff
-            * math.sqrt(readjust_coeff)
-            for i in [1, 4, 5, 8]
-        ]
-        cur_duration = phase4webster(cur_demand)
+        step_veh = get_vehicles(cell_scale=cell_scale, veh_coeff=math.sqrt(readjust_coeff))
+        # merge_scale = cell_scale * 2
+        # edge_cells = 100 // merge_scale * 3
+        # cur_demand = [
+        #     sum(step_veh[edge_cells * (i - 1) : edge_cells * (i)])
+        #     * merge_scale
+        #     * 10
+        #     * (3600 / 100)
+        #     / veh_coeff
+        #     # * readjust_coeff
+        #     for i in [1, 4, 5, 8]
+        # ]
+        cur_duration = phase4webster([_ for _ in cur_demand])
         cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
 
         sim0 = ctm.simulation("i_Test4")
         generate_init_file(
             cellscale=1,
-            seconds=cur_cycle_len,
-            offset=cur_steps,
+            seconds=cur_cycle_len*2,
+            offset=0,
             filename="Test4",
             arc_demand=cur_demand,
+            # arc_demand=[0,0,0,0],
             phases_duration=cur_duration,
-            demand_coeff=0.4,
         )
         sim0.initialize_with_occu("i_Test4", step_veh)
         delay0 = sim0.execute() * 10
+        avg_ctm_delay = sim0.get_avg_delay()
+        sim0.output_result()
         sim0.stepend()
-        ctm_delay.append(delay0 / sum(cur_demand) / (cur_cycle_len / 3600))
-
+        ctm_delay.append(delay0 / ((sum(cur_demand) * cur_cycle_len * 2 / 3600) + sum(step_veh)))
+        ctm_avg_delay.append(avg_ctm_delay)
+        
         set_sumo_logic("0", cur_duration)
-        print("--------------------------------\n")
+        print("------------cycle{}--------------------\n".format(cycle))
         print("set traffic\n")
         print("demand:{}\n".format(str(cur_demand)))
         print("duration:{}\n".format(str(cur_duration)))
+        print("delay0:{}\n".format(str(delay0)))
+        og_ctm_delay.append(delay0)
+        print("sum(cur_demand):{}\n".format(str(sum(cur_demand))))
+        sum_cur_demand.append(sum(cur_demand))
+        print("sum(step_veh):{}\n".format(str(sum(step_veh))))
+        sum_step_veh.append(sum(step_veh))
+        print("ctm_delay:{}\n".format(str(ctm_delay[-1])))
+        print("ctm_avg_delay:{}\n".format(str(ctm_avg_delay[-1])))
         print("--------------------------------\n")
 
     time0.append(time0[-1] + cur_cycle_len)
 
+    cur_demand = [0, 0, 0, 0]
+    steplen = 5
+    times = cur_cycle_len // steplen
     for step in range(cur_cycle_len):  # 0 ~ 99
+        if step % steplen == 0:
+            step_veh = get_vehicles(cell_scale=cell_scale, veh_coeff=math.sqrt(readjust_coeff))
+            # print("len:{}".format(len(step_veh)))
+            merge_scale = cell_scale * 2
+            edge_cells = 100 // merge_scale * 3
+            # for i in range(1,9):
+            #     print('number{}\n'.format(i))
+            #     print(step_veh[edge_cells * (i - 1) : edge_cells * (i - 1) + 49])
+            #     print(step_veh[edge_cells * (i - 1) + 50: edge_cells * (i - 1) + 99])
+            #     print(step_veh[edge_cells * (i - 1) + 100: edge_cells * (i - 1) + 149])
+            #     print('-------\n')
+            temp_cur_demand = get_demand(
+                vehicles = step_veh,
+                cell_scale = cell_scale,
+                demand_coeff = demand_coeff
+                # veh_coeff = veh_coeff,
+                )
+            cur_demand = [
+                (cur_demand[i] + temp_cur_demand[i] / times)
+                for i in range(4)
+            ]
         traci.simulationStep()
         step_cnt += 1
         if step_cnt == change_step:
-            print("--------------------------------\n")
-            print("change traffic\n")
-            print("--------------------------------\n")
+            print("!--------------------------------\n")
+            print("!--------------------------------\n")
+            print("change traffic at cycle{}\n".format(cycle))
+            print("!--------------------------------\n")
+            print("!--------------------------------\n")
+            
 
         step_loss = 0.0
         # total_steps = cycle * cycle_len + step
@@ -117,19 +160,31 @@ for cycle in range(total_cycles):
 
         step_loss /= len(id_list)
         cycle_loss += step_loss
-
+        
+    # print(cur_demand)
     cycle_loss /= cur_cycle_len
     sumo_delay.append(cycle_loss)
 
-    if len(ctm_delay) > 0:
-        readjust_coeff = sumo_delay[-1] / ctm_delay[-1] 
-
-time0 = time0[1+start_offset_cycles:]
-print("og_sumo:" + str(sumo_delay))
-print("og_ctm: " + str(ctm_delay))
+    # if len(ctm_delay) > 0:
+    #     mul_readjust_coeff = sumo_delay[-1] / ctm_delay[-1]
+    #     if mul_readjust_coeff < 0.5:
+    #         readjust_coeff = 0.5
+    #     elif mul_readjust_coeff > 1.5: 
+    #         readjust_coeff = 1.5
+    #     else:
+    #         readjust_coeff = mul_readjust_coeff
+        # if cycle == start_offset_cycles:
+            # ctm_delay[-1] = sumo_delay[-1]
+sumo_delay = sumo_delay[start_offset_cycles:]
+time0 = time0[1 + start_offset_cycles :]
+print("sumo:" + str(sumo_delay))
+print("ctm: " + str(ctm_delay))
+print("og_ctm_delay: " + str(og_ctm_delay))
+print("sum_cur_demand: " + str(sum_cur_demand))
+print("sum_step_veh: " + str(sum_step_veh))
+print("ctm_avg_delay: " + str(ctm_avg_delay))
 print(time0)
 # time0 = [cycle_len * i for i in range(output_cycles)]
-sumo_delay = sumo_delay[start_offset_cycles:]
 plt.plot(time0, sumo_delay, label="sumo", marker=".")
 plt.plot(time0, ctm_delay, label="ctm", marker=".")
 plt.legend()

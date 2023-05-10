@@ -5,9 +5,9 @@ import traci
 def get_vehicles(
     log=None,
     cell_scale: int = 1,
-    veh_coeff: float = 2.0
+    veh_coeff: float = 1.0
     # real_cell_length: int = 20
-    ):
+):
     merge_scale = cell_scale * 2
     cell_length = merge_scale * 10
     status_veh = []
@@ -26,15 +26,44 @@ def get_vehicles(
                 )
                 for det in range(100)
             ]
-            vehicles = [
-                
+            agg_vehicles = [
                 # sum(vehicles[a : a + merge_scale]) / merge_scale / 100 / 0.44 / real_cell_length
-                sum(vehicles[a : a + merge_scale]) / 100 / 0.44 / cell_length * veh_coeff
+                sum(vehicles[a : a + merge_scale])
+                / 100
+                / 0.44
+                / cell_length
+                * veh_coeff
                 for a in range(0, 100, merge_scale)
             ]
             if log != None:
-                log.write("arc_{} ".format(str(ctm_arc_id)) + str(vehicles) + "\n")
-            status_veh.extend(vehicles)
+                log.write("arc_{} ".format(str(ctm_arc_id)) + str(agg_vehicles) + "\n")
+            status_veh.extend(agg_vehicles)
     return status_veh
 
 
+def get_demand(
+    vehicles, cell_scale: int = 1, demand_coeff:float = 1.0
+):
+    merge_scale = cell_scale * 2
+    demand = [0, 0, 0, 0]
+    lane_numbers = [
+        [9, 1, 10],
+        [15, 4, 16],
+        [17, 5, 18],
+        [23, 8, 24],
+    ]
+    lane_cell_num = 100 // merge_scale
+    for i in range(4):
+        edge_flow = 0
+        lanes = lane_numbers[i]
+        for j in range(3):
+            edge_flow += sum(
+                vehicles[
+                    ((lanes[j] - 1) * lane_cell_num) : (lanes[j] * lane_cell_num) - 1
+                ]
+            )
+        edge_flow = (
+            edge_flow * merge_scale * 10 * (3600 / 100) * demand_coeff
+        )
+        demand[i] = edge_flow
+    return demand
