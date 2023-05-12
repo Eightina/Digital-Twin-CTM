@@ -18,7 +18,7 @@ cur_duration = phase4webster(cur_demand)
 # duration = [_ * 2 for _ in duration]
 
 # phase_num = len(duration0)
-phase_num = 4
+phase_num = 6
 cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
 start_offset_cycles = 10
 output_cycles = 24

@@ -1,28 +1,13 @@
-
 setting
-% Section I - Setting parameters.
-clock 2
-% The discrete time interval between clock ticks. The unit of time is second.
-epsilon 0.001
-% Any quantities smaller than epsilon will be ignored.
-initoccp 0
-% The initial cell occupation percentage.
-initctrl 0
-% The initial control strategy: 
-% 0 - every phase length is assigned the minimum green time and the cycle length is minimum green time multiplied by number of phase.
-% 1 - both phase length and cycle length are fixed according to Webster's formula.
-cellscale 1
-% Cell lenth factor.
-losttime 4
-% Lost time.
+clock	2
+epsilon	0.001
+initoccp	0
+initctrl	0
+cellscale	7
+losttime	4
 end
 
 geometry
-% Section II - Geometry structure
-% 
-% Node information as follows: 
-%          (1)      (2)       (3)        (4)
-%           No.    type        x          y
 node        1        1        1100        2300
 node        2        0        1100        1300
 node        3        2        1200        2300
@@ -71,19 +56,6 @@ node       45        0        1300        1240
 node       46        1        2300        1240
 node       47        0        1300        1160
 node       48        1        2300        1160
-
-% There are 4 columns above: 
-% 1. Column (1) numbers every node.
-% 2. Column (2) specifies types of nodes: 
-%    a) Type 0 indicates an ordinary node.
-%    b) Type 1 indicates an origin node.
-%    c) Type 2 indicates a destination node.
-% 3. The last two columns (3)(4) are the coordinates of nodes.
-% 
-% Arc information as follows: 
-%         (1)      (2)      (3)      (4)       (5)       (6)        (7)
-%                  up      down      free      max       jam        
-%         No.     node     node     speed      flow    density     delta
 arc        1         1        2       10.0     10.0       0.11      0.6
 arc        2         4        3       10.0     10.0       0.11      0.6
 arc        3         5        6       10.0     10.0       0.11      0.6
@@ -108,11 +80,4 @@ arc       21        41       42       10.0     10.0       0.11      0.6
 arc       22        43       44       10.0     10.0       0.11      0.6
 arc       23        46       45       10.0     10.0       0.11      0.6
 arc       24        48       47       10.0     10.0       0.11      0.6
-
-
-% There are 7 columns above: 
-% 1. Column (1) numbers every arc.
-% 2. Columns (2)(3) are upstream node and downstream node of arc respectively.
-% 3. Columns (4)(5)(6) are the free flow speed, maximum flow and jam density of arc.
-% 4. Column (7) is the ratio of the backward wave speed to the free flow speed.
 end

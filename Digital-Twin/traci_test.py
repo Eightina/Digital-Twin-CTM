@@ -1,6 +1,6 @@
 import CTMCoreImprove as ctm
 from get_vehicles import get_vehicles
-from generate_init_file import generate_init_file
+from generate_constr_file import generate_init_file
 import traci
 
 traci.start(["sumo-gui", "-c", "./SUMO_Input/Test4.sumocfg"])

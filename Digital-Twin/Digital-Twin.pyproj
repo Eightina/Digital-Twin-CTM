@@ -34,7 +34,7 @@
     <Compile Include="ac_p60_proto.py" />
     <Compile Include="ac_p60_x.py" />
     <Compile Include="ac_p61.py" />
-    <Compile Include="ac_p62.py" />
+    <Compile Include="ac_p6x.py" />
     <Compile Include="delay_simulate.py" />
     <Compile Include="Digital_Twin.py" />
     <Compile Include="generate_detectors.py" />

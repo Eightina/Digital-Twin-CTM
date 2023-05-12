@@ -5,7 +5,7 @@
 
 simulation::simulation(char* inputname) {
 	std::cout << "simulation object" << inputname << std::endl;
-	print_start();
+	//print_start();
 	scanfile_construct(inputname);
 	strcpy(simuname, inputname);
 
@@ -67,15 +67,15 @@ void simulation::print_start() {
 }
 
 void simulation::output_result() {
-	printf("Total delay (before optimization): %7.2lf veh*sec.\n", delay0);
-	printf("Running time: %.3f seconds.\n\n", double(clock() - start) / CLOCKS_PER_SEC);
-	printoccup(simuname, delay0);
+	//printf("Total delay (before optimization): %7.2lf veh*sec.\n", delay0);
+	//printf("Running time: %.3f seconds.\n\n", double(clock() - start) / CLOCKS_PER_SEC);
+	//printoccup(simuname, delay0);
 	printplan(simuname);
 	printdelay(simuname);
-	printf("Timing plan output files\n >>t_%s.txt\n", &simuname[2]);
-	printf("Cell occupation output files\n >>o_%s.txt\n", &simuname[2]);
-	printf("Detail delay output files\n >>d_%s.txt\n", &simuname[2]);
-	printf("\nSimulation %s Done.\n\n", simuname);
+	//printf("Timing plan output files\n >>t_%s.txt\n", &simuname[2]);
+	//printf("Cell occupation output files\n >>o_%s.txt\n", &simuname[2]);
+	//printf("Detail delay output files\n >>d_%s.txt\n", &simuname[2]);
+	//printf("\nSimulation %s Done.\n\n", simuname);
 	//system("pause");
 }
 

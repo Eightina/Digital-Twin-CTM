@@ -4,7 +4,7 @@ from typing import List
 def generate_init_file(
     cell_scale: int = 1,  # in ctm, in update_origin_flow, tick scale is multiplied, so dont add that in
     seconds: int = 1800,
-    arc_demand: List[int] = [800, 800, 800, 800],  # up1 down4 left5 right8
+    arc_demand: List[int] = [300, 300, 300, 300],  # up1 down4 left5 right8
     turn_rate: dict = {"r": 0.2, "s": 0.7, "l": 0.1},
     phase_num: int = 4,
     phases: List[List] = [

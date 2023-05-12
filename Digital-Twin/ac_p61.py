@@ -21,7 +21,7 @@ total_cycles = start_offset_cycles + output_cycles
 change_step = 1050
 
 
-cell_scale = 1
+cell_scale = 2
 readjust_coeff = 1
 demand_coeff = 1
 sumo_coeff = 2
