@@ -44,5 +44,4 @@ def delay_simulate(
                 lane_index * lane_cell_num : lane_index * lane_cell_num + move_steps
             ] = [filler] * move_steps
             # print("{} : {}".format(lane_index * lane_cell_num, lane_index * lane_cell_num + move_steps))
-
     return res

@@ -688,7 +688,7 @@ void simulation::printdelay(char namestr[]) {
 	strcat(path, outputname);
 	strcpy(outputname, path);
 	//sprintf(outputname, ".\\Output\\%s", &outputname);
-	std::cout << outputname << std::endl;
+	//std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Cell Occupation Output File.\n", out);
@@ -718,7 +718,7 @@ void simulation::printplan(char namestr[]) {
 	strcat(path, outputname);
 	strcpy(outputname, path);
 	//sprintf(outputname, ".\\Output\\%s", &outputname);
-	std::cout << outputname << std::endl;
+	//std::cout << outputname << std::endl;
 	out = fopen(outputname, "w");
 
 	fputs("Green Signal Time Planning File.\n", out);

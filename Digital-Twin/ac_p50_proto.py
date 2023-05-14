@@ -4,6 +4,7 @@ from generate_init_file import generate_init_file
 from generate_cons_file import generate_cons_file
 from webster import phase4webster, best_duration
 from set_sumo_logic import set_sumo_logic
+from delay_simulate import delay_simulate
 
 from matplotlib import pyplot as plt
 import xml.etree.ElementTree as et
@@ -27,6 +28,8 @@ sim_cycle_num = 2
 sumo_coeff = 2
 ctm_coeff = 44
 search_backup_num = 7
+delay_units = 1
+delay_seconds_per_unit = 50
 
 # flow_record = []
 sumo_delay = []
@@ -56,9 +59,21 @@ for cycle in range(total_cycles):
         step_veh = get_vehicles(
             cell_scale=cell_scale, veh_coeff=math.sqrt(readjust_coeff)
         )
-
+        
+        step_veh = delay_simulate(
+            step_veh=step_veh,
+            filler_demand=cur_demand,
+            cell_scale=cell_scale,
+            delay_units=delay_units,
+            delay_seconds_per_unit=delay_seconds_per_unit
+        )
+        
         # cur_duration = phase4webster(cur_demand)
         # cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
+        # generate_cons_file(
+        #     cell_scale=cell_scale,
+        #     file_name="Test4",
+        # )
         # sim0 = ctm.simulation("i_Test4")
         # generate_init_file(
         #     cell_scale=cell_scale,
