@@ -41,6 +41,7 @@
     <Compile Include="delay_simulate.py" />
     <Compile Include="Digital_Twin.py" />
     <Compile Include="ga_test.py" />
+    <Compile Include="generate_cons_file.py" />
     <Compile Include="generate_detectors.py" />
     <Compile Include="generate_init_file.py" />
     <Compile Include="get_vehicles.py" />

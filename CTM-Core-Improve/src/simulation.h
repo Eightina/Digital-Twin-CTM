@@ -89,7 +89,7 @@ public:
 	float delay_record[MAX_CLOCK] = {};
 	float avg_delay =0.0;
 
-	debug* Log;
+	//debug* Log;
 
 	//float vehicle[MAX_CELL] = {};
 

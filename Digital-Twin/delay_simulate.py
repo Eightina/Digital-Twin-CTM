@@ -1,3 +1,4 @@
+from typing import List
 def delay_simulate(
     step_veh,
     filler_demand=[300, 300, 300, 300],
@@ -5,7 +6,7 @@ def delay_simulate(
     cell_scale=1,
     delay_units=1,
     delay_seconds_per_unit=1,
-) -> None:
+) -> List[int]:
     res = step_veh.copy()
     delay_seconds = delay_units * delay_seconds_per_unit
     move_steps = delay_seconds // (2 * cell_scale)

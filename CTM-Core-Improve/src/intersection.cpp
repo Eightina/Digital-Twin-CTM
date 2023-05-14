@@ -74,7 +74,7 @@ intersection::intersection(simulation* intersectionowner, int i,int t,int px,int
 			while( num_phases > phases.size() ) phases.push_back( phase() );
 			char str[256];
 			sprintf(str,"phases::size %03d",phases.size() );
-			owner->Log->process( str, owner->present_clock);
+			//owner->Log->process( str, owner->present_clock);
 }
 
 void intersection::add_node( const int& i ){

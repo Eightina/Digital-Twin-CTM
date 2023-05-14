@@ -101,9 +101,11 @@ def best_duration(
     fix=None,
     num=1,
     cell_scale=1,
-    ctm_coeff=44,
+    # ctm_coeff=44,
     sim_cycle_num=1,
 ):
+    merge_scale = cell_scale * 2
+    cell_length = merge_scale * 10
     phase_num = len(phases)
     durations = phase4webster(arc_demand, turn_rate, phases, None, num)
     print(durations)
@@ -125,13 +127,23 @@ def best_duration(
             phases_duration=cur_duration,
         )
         sim0.initialize_with_occu("i_Test4", step_veh)
-        delay0 = sim0.execute() * 10 / ctm_coeff
+        # delay0 = sim0.execute() * 10 / ctm_coeff
+        delay0 = sim0.execute() * 10
         sim0.output_result()
         sim0.stepend()
         if delay0 < res_delay:
             res_delay = delay0
             res_duration = cur_duration
     print(res_duration)
+    res_delay = (
+        res_delay
+        * 10
+        # )
+        / (
+            (sum(arc_demand) * cur_cycle_len * sim_cycle_num / 3600)
+            + (sum(step_veh) * cell_length)
+        )
+    )
     return res_delay, res_duration
 
 
@@ -141,7 +153,7 @@ class ga_func:
         step_veh,
         arc_demand: List[int] = [400, 400, 200, 200],  # 1,4,5,8
         cell_scale=1,
-        ctm_coeff=44,
+        # ctm_coeff=44,
         sim_cycle_num=1,
     ):
         self.step_veh = step_veh
@@ -153,7 +165,7 @@ class ga_func:
         self.L = self.phase_num * self.l + self.allred
         self.cell_scale = cell_scale
         self.sim_cycle_num = sim_cycle_num
-        self.ctm_coeff = ctm_coeff
+        # self.ctm_coeff = ctm_coeff
 
     def __call__(self, p):
         Ge = round(p[0])
@@ -165,6 +177,7 @@ class ga_func:
         duration = [round(_) for _ in Gi]
         phase_num = len(duration)
         cur_cycle_len = round(sum(duration) + phase_num * 4)
+        cell_length = self.cell_scale * 2 * 10
 
         generate_cons_file(
             cell_scale=self.cell_scale,
@@ -180,10 +193,22 @@ class ga_func:
             phases_duration=duration,
         )
         sim0.initialize_with_occu("i_Test4", self.step_veh)
-        delay0 = sim0.execute() * 10 / self.ctm_coeff
+        delay0 = sim0.execute()
+        # print(delay0)
+
+        delay0 = (
+            delay0
+            * 10
+            # )
+            / (
+                (sum(self.arc_demand) * cur_cycle_len * self.sim_cycle_num / 3600)
+                + (sum(self.step_veh) * cell_length)
+            )
+        )
         sim0.output_result()
         sim0.stepend()
         del sim0
+        print(duration)
         return delay0
 
 
@@ -198,9 +223,10 @@ def ga_best_duration(
         ["l", "r"],
     ],
     cell_scale=1,
-    ctm_coeff=44,
+    # ctm_coeff=44,
     sim_cycle_num=1,
 ):
+    cell_length = cell_scale * 2 * 10
     phase_num = len(arc_demand)
     A = 3  # 黄灯时间
     l = 4  # 每相位损失时间
@@ -251,10 +277,10 @@ def ga_best_duration(
     C0 = int((1.5 * L + 5) / (1 - Y))
     Ge = C0 - L
 
-    func = ga_func(step_veh, arc_demand, cell_scale, ctm_coeff, sim_cycle_num)
+    func = ga_func(step_veh, arc_demand, cell_scale, sim_cycle_num)
     upper_bound = [2 * Ge]
     upper_bound.extend([min(1, 2 * _) for _ in y])
-    lower_bound = [Ge / 2]
+    lower_bound = [Ge / 1.5]
     lower_bound.extend([_ / 2 for _ in y])
     print(Ge)
     print(lower_bound)
@@ -262,20 +288,32 @@ def ga_best_duration(
     ga = GA(
         func=func,
         n_dim=5,
-        size_pop=50,
-        max_iter=500,
-        prob_mut=0.001,
+        size_pop=10,
+        max_iter=20,
+        prob_mut=0.005,
         lb=lower_bound,
         ub=upper_bound,
-        precision=[1, 1e-4, 1e-4, 1e-4, 1e-4],
+        precision=[1, 1e-2, 1e-2, 1e-2, 1e-2],
     )
-    res = ga.run()
-    res_Ge = res[0]
-    res_y = res[1:]
+    res, delay0 = ga.run()
+    print(res)
+
+    res_Ge = int(res[0])
+    res_y = list(res[1:])
     res_Y = sum(res_y)
     res_gei = [(res_Ge * res_y[i] / res_Y) for i in range(len(res_y))]
     res_Gi = [res_gei[i] - A + l for i in range(len(res_gei))]
     res_duration = [round(_) for _ in res_Gi]
-    
+
+    cur_cycle_len = round(sum(res_duration) + phase_num * 4)
+    delay0 = (
+        float(delay0)
+        # / 10
+        * (
+            (sum(arc_demand) * cur_cycle_len * sim_cycle_num / 3600)
+            + (sum(step_veh) * cell_length)
+        )
+    )
+
     print("ga_best_duration:", res_duration)
-    return res_duration
+    return delay0, res_duration
