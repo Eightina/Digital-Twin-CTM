@@ -1,13 +1,13 @@
 traffic
-time 00:00:00 00:00:58
-demand	00:00:00	17	0.0001
-demand	00:00:00	1	0.0004
+time 00:00:00 00:00:50
+demand	00:00:00	17	0.0002
+demand	00:00:00	1	0.0008
 demand	00:00:00	19	0.0001
 demand	00:00:00	30	0.0001
-demand	00:00:00	8	0.0004
-demand	00:00:00	32	0.0001
+demand	00:00:00	8	0.0008
+demand	00:00:00	32	0.0002
 demand	00:00:00	33	0.0001
-demand	00:00:00	9	0.0007
+demand	00:00:00	9	0.0008
 demand	00:00:00	35	0.0002
 demand	00:00:00	46	0.0002
 demand	00:00:00	16	0.0008
@@ -44,9 +44,9 @@ phase	1	4	24	14
 phase	1	4	23	12
 phase	1	4	17	11
 phase	1	4	18	13
-duration	1	6
-duration	2	2
-duration	3	29
-duration	4	5
+duration	1	20
+duration	2	6
+duration	3	6
+duration	4	2
 offset	0
 end

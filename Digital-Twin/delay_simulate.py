@@ -7,6 +7,8 @@ def delay_simulate(
     delay_units=1,
     delay_seconds_per_unit=1,
 ) -> List[int]:
+    if (delay_seconds_per_unit <= 0):
+        return step_veh
     res = step_veh.copy()
     delay_seconds = delay_units * delay_seconds_per_unit
     move_steps = delay_seconds // (2 * cell_scale)

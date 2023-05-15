@@ -25,7 +25,7 @@ def ac_p6x(
     sim_cycle_num=1,
     # sumo_coeff = 2,
     # ctm_coeff = 44,
-    search_backup_num=7,
+    # search_backup_num=7,
 ):
     cur_duration = phase4webster(cur_demand)
     cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
