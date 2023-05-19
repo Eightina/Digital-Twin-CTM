@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-05-19 15:07:44 by Eclipse SUMO GUI Version 1.16.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="./SUMO_Input/./net/Test4.net.xml"/>
+        <route-files value="./SUMO_Input/./route/Test4.rou.xml"/>
+        <additional-files value="./SUMO_Input/dets.add.xml"/>
+    </input>
+
+    <output>
+        <fcd-output value="./SUMO_Input/../SUMO_Output/fcd.xml"/>
+        <tripinfo-output value="./SUMO_Input/../SUMO_Output/tripinfos.xml"/>
+        <tripinfo-output.write-unfinished value="true"/>
+        <statistic-output value="SUMO_Output/statistic.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="10000"/>
+    </time>
+
+    <report>
+        <duration-log.statistics value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="51492"/>
+    </traci_server>
+
+    <gui_only>
+        <gui-settings-file value="./SUMO_Input/Test4.settings.xml"/>
+    </gui_only>
+
+</configuration>
+--->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e2_file.xsd">
+</detector>

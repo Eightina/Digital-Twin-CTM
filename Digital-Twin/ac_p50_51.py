@@ -108,6 +108,7 @@ def ac_p50_51(
                 cell_scale=cell_scale,
                 # ctm_coeff=ctm_coeff,
                 sim_cycle_num=sim_cycle_num,
+                file_name="Test5051"
             )
 
             set_sumo_logic("0", cur_duration)
@@ -204,9 +205,7 @@ def ac_p50_51(
 sumo_df = pd.DataFrame()
 ctm_df = pd.DataFrame()
 time_df = pd.DataFrame()
-for seconds in [0, 5, 10,
-                # 15, 20, 30, 40, 50
-                ]:
+for seconds in [0, 5, 10, 15, 20, 30, 40, 50]:
     sumo_delay, og_ctm_delay, time0 = ac_p50_51(
         delay_seconds_per_unit=seconds
         # cell_scale=2,

@@ -150,6 +150,7 @@
         <phase duration="5" state="rrrgrGrrrgrG"/>
         <phase duration="3"  state="yyyyyyyyyyyy"/>
     </tlLogic>     -->
+
     <tlLogic id="0" type="static" programID="0" offset="0">
         <phase duration="1" state="gGrrrrgGrrrr"/> 
         <phase duration="3"  state="yyyyyyyyyyyy"/>
@@ -160,6 +161,24 @@
         <phase duration="1" state="rrrgrGrrrgrG"/>
         <phase duration="3"  state="yyyyyyyyyyyy"/>
     </tlLogic>
+
+    <!-- <tlLogic id="0" programID="0" offset="0" type="delay_based">
+        <param key="detectorRange" value="100" />
+        <param key="minTimeLoss" value="1" />
+        <param key="file" value="NULL"/>
+        <param key="freq" value="300"/>
+        <param key="show-detectors" value="false"/>
+        <param key="extendMaxDur" value="false"/>
+        <phase duration="1" minDur="5" maxDur="45" state="gGrrrrgGrrrr"/> 
+        <phase duration="3" minDur="5" maxDur="45" state="yyyyyyyyyyyy"/>
+        <phase duration="1" minDur="5" maxDur="45" state="grGrrrgrGrrr"/>
+        <phase duration="3" minDur="5" maxDur="45" state="yyyyyyyyyyyy"/>
+        <phase duration="1" minDur="5" maxDur="45" state="rrrgGrrrrgGr"/>
+        <phase duration="3" minDur="5" maxDur="45" state="yyyyyyyyyyyy"/>
+        <phase duration="1" minDur="5" maxDur="45" state="rrrgrGrrrgrG"/>
+        <phase duration="3" minDur="5" maxDur="45" state="yyyyyyyyyyyy"/>
+    </tlLogic> -->
+    
     <!-- <tlLogic id="0" type="static" programID="1" offset="0">
         <phase duration="47" state="GGGrrrGGGrrr"/>
         <phase duration="3"  state="yyyyyyyyyyyy"/>

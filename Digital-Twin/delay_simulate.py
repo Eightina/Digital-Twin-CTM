@@ -11,7 +11,7 @@ def delay_simulate(
         return step_veh
     res = step_veh.copy()
     delay_seconds = delay_units * delay_seconds_per_unit
-    move_steps = delay_seconds // (2 * cell_scale)
+    move_steps = int(delay_seconds // (2 * cell_scale))
 
     merge_scale = cell_scale * 2
     lane_cell_num = 1000 // (merge_scale * 10)
@@ -37,14 +37,15 @@ def delay_simulate(
                 total_demand * turn_rate[origin_type[i][j]] / 3600 / cell_scale / 10
             )
             res[
-                lane_index * lane_cell_num + move_steps : (lane_index + 1) * lane_cell_num
+                int(lane_index * lane_cell_num + move_steps) : int((lane_index + 1) * lane_cell_num)
             ] = \
-                res[
-                lane_index * lane_cell_num : lane_index * lane_cell_num - move_steps
-            ]
-            
             res[
-                lane_index * lane_cell_num : lane_index * lane_cell_num + move_steps
+                int(lane_index * lane_cell_num) : int(lane_index * lane_cell_num - move_steps)
+            ]
+            print(filler)
+            print(move_steps)
+            res[
+                int(lane_index * lane_cell_num) : int(lane_index * lane_cell_num + move_steps)
             ] = [filler] * move_steps
             # print("{} : {}".format(lane_index * lane_cell_num, lane_index * lane_cell_num + move_steps))
     return res

@@ -108,8 +108,9 @@ def ac_p52(
                 cell_scale=cell_scale,
                 # ctm_coeff=ctm_coeff,
                 sim_cycle_num=sim_cycle_num,
+                file_name="Test52"
             )
-
+            cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
             set_sumo_logic("0", cur_duration)
             og_ctm_delay.append(delay0)
 

@@ -3,7 +3,7 @@ clock	2
 epsilon	0.001
 initoccp	0
 initctrl	0
-cellscale	2
+cellscale	1
 losttime	4
 end
 

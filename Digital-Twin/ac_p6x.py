@@ -82,6 +82,7 @@ def ac_p6x(
                 cell_scale=cell_scale,
                 # ctm_coeff=ctm_coeff,
                 sim_cycle_num=sim_cycle_num,
+                file_name="Test6"
             )
             # [delay0, cur_duration] = best_duration(
             #     step_veh,
@@ -91,6 +92,7 @@ def ac_p6x(
             #     # ctm_coeff=ctm_coeff,
             #     sim_cycle_num=sim_cycle_num,
             # )
+            cur_cycle_len = round(sum(cur_duration) + phase_num * 4)
             set_sumo_logic("0", cur_duration)
             og_ctm_delay.append(delay0)
 
@@ -190,7 +192,7 @@ def ac_p6x(
 sumo_df = pd.DataFrame()
 ctm_df = pd.DataFrame()
 time_df = pd.DataFrame()
-for scale in range(2, 11):
+for scale in range(1, 11):
     sumo_delay, og_ctm_delay, time0 = ac_p6x(
         cell_scale=scale,
         # start_offset_cycles=1,
