@@ -236,7 +236,7 @@ sumo_df = pd.DataFrame()
 time_df = pd.DataFrame()
 # for max_iter in [50, 100, 150, 200, 250, 300, 400, 500]:
 sumo_delay, time0 = ac_p81(
-    cell_scale=1,
+    cell_scale=2,
     # start_offset_cycles=1,
     # output_cycles=2,
     # delay_seconds_per_unit=0.05,

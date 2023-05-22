@@ -30,6 +30,8 @@
     <Compile Include="accuracy_test1.py" />
     <Compile Include="accuracy_test2.py" />
     <Compile Include="accuracy_test3.py" />
+    <Compile Include="accuracy_test4.py" />
+    <Compile Include="accuracy_test5.py" />
     <Compile Include="ac_p50_51.py" />
     <Compile Include="ac_p50_proto.py" />
     <Compile Include="ac_p52.py" />
@@ -44,6 +46,8 @@
     <Compile Include="ac_p7x.py" />
     <Compile Include="ac_p80.py" />
     <Compile Include="ac_p81.py" />
+    <Compile Include="ac_p82.py" />
+    <Compile Include="ac_p83.py" />
     <Compile Include="bo_test.py" />
     <Compile Include="delay_simulate.py" />
     <Compile Include="Digital_Twin.py" />

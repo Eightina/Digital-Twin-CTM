@@ -37,7 +37,18 @@ public:
 	float delay0;
 
 	int present_clock = 0;
+
 	setting settings;
+
+	std::vector<std::vector<float>> get_occu_record() {
+		std::vector<std::vector<float>> res(settings.max_ticks, std::vector<float>(MAX_CELL, 0));
+		for (int i = 0; i < settings.max_ticks; i++) {
+			for (int j = 0; j < MAX_CELL; j++) {
+				res[i][j] = exist_vehicle[i][j];
+			}
+		}
+		return res;
+	}
 
 	// structure part
 	std::vector<node> nodes = {}; // len is number of nodes + 1

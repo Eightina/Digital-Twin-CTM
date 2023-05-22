@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
 #include <Windows.h>
 #include <cmath>
 
@@ -45,8 +46,10 @@ PYBIND11_MODULE(CTMCoreImprove, m) {
         .def("output_result", &simulation::output_result)
         .def("stepend", &simulation::stepend)
         .def("get_avg_delay", &simulation::get_avg_delay)
-
+        .def("get_occu_record", &simulation::get_occu_record)
         ;
+    //py::bind_vector<std::vector<std::vector<float>>>(m, "FloatVector2D");
+    //m.def("get_occu_record", &simulation::get_occu_record);
 
 
 #ifdef VERSION_INFO

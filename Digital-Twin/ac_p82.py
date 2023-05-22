@@ -31,7 +31,7 @@ def ac_p82(
     # ctm_coeff = 44,
     search_backup_num=8,
     # delay_units = 1,
-    delay_seconds_per_unit = 5,
+    delay_seconds_per_unit = 8,
 ):
     delay_units = search_backup_num * 5 * 5
     cur_duration = phase4webster(cur_demand)
@@ -227,7 +227,7 @@ ctm_df = pd.DataFrame()
 time_df = pd.DataFrame()
 
 sumo_delay, og_ctm_delay, time0 = ac_p82(
-    cell_scale=1,
+    cell_scale=2,
     # start_offset_cycles=1,
     # output_cycles=2,
     delay_seconds_per_unit=0.05,

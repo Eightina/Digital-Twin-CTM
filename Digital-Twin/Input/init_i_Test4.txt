@@ -1,5 +1,5 @@
 traffic
-time 00:00:00 00:00:53
+time 00:00:00 00:00:49
 demand	00:00:00	17	0.0022
 demand	00:00:00	1	0.0078
 demand	00:00:00	19	0.0011
@@ -44,9 +44,9 @@ phase	1	4	24	14
 phase	1	4	23	12
 phase	1	4	17	11
 phase	1	4	18	13
-duration	1	19
+duration	1	16
 duration	2	5
-duration	3	10
+duration	3	9
 duration	4	3
-offset	0
+offset	490
 end

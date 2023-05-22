@@ -43,6 +43,9 @@ print("test counting: 0 done")
 # nsim.output_result()
 # nsim.stepend()
 # print('test counting: 1 done')
-
-
+vehicles = nsim.get_occu_record()
+print(type(vehicles))
+print(len(vehicles))
+print(len(vehicles[0]))
+#print(vehicles)
 print("This is PYTHON")
